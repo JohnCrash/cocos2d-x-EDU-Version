@@ -54,7 +54,16 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           ../../../external/lua/luasocket/timeout.c \
           ../../../external/lua/luasocket/udp.c \
           ../../../external/lua/luasocket/unix.c \
-          ../../../external/lua/luasocket/usocket.c
+          ../../../external/lua/luasocket/usocket.c \
+		  ../../../external/lua/luacurl/luacurl.c \
+		  ../../../external/lua/luafilesystem/src/lfs.c \
+		  ../../../external/lua/luaexpat-1.3.0/src/lxplib.c \
+		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmlparse.c \
+		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmlrole.c \
+		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmltok.c \
+		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmltok_impl.c \
+		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmltok_ns.c \
+		  ../../../external/lua/luacrypto/src/lcrypto.c
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
