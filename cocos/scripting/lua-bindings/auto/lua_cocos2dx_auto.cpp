@@ -67227,6 +67227,20 @@ int lua_register_cocos2dx_ProtectedNode(lua_State* tolua_S)
     g_typeCast["ProtectedNode"] = "cc.ProtectedNode";
     return 1;
 }
+
+int lua_register_cocos2dx_utf8(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.utf8");
+    tolua_cclass(tolua_S,"utf8","cc.utf8","",nullptr);
+
+    tolua_beginmodule(tolua_S,"utf8");
+    tolua_endmodule(tolua_S);
+    std::string typeName = "utf8";
+    g_luaType[typeName] = "cc.utf8";
+    g_typeCast["utf8"] = "cc.utf8";
+    return 1;
+}
+
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -67234,6 +67248,8 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	tolua_module(tolua_S,"cc",0);
 	tolua_beginmodule(tolua_S,"cc");
 
+	lua_register_cocos2dx_utf8(tolua_S);
+	
 	lua_register_cocos2dx_Console(tolua_S);
 	lua_register_cocos2dx_Ref(tolua_S);
 	lua_register_cocos2dx_Node(tolua_S);

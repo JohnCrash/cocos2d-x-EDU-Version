@@ -5423,6 +5423,60 @@ static void extendGLProgramState(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+//cc.utf8.next(s,i)
+static int lua_utf8_next(lua_State* tolua_S)
+{
+	size_t byte_length;
+	
+	const char* bytes = luaL_checklstring(tolua_S,1,&byte_length);
+	
+	if( bytes != nullptr && lua_isnumber(tolua_S,2) )
+	{
+		int idx = luaL_checkinteger(tolua_S,2);
+		if( idx < byte_length && idx >= 0 )
+		{
+			const char* nexts = cc_utf8_next(bytes+idx);
+			lua_pushnumber(tolua_S,nexts-bytes-idx);
+			return 1;
+		}
+		else
+		{
+			lua_pushnumber(tolua_S,cc_utf8_strlen(bytes,byte_length));
+			return 1;
+		}
+	}
+	lua_pushnil(tolua_S);
+	return 1;
+}
+
+#include "ccUTF8.h"
+//cc.utf8.length(s)
+static int lua_utf8_length(lua_State* tolua_S)
+{
+	size_t byte_length;
+	const char* bytes;
+	bytes = luaL_checklstring(tolua_S,1,&byte_length);
+	if( bytes != nullptr )
+	{
+		lua_pushnumber(tolua_S,cc_utf8_strlen(bytes,byte_length));
+		return 1;
+	}
+	lua_pushnil(tolua_S);
+	return 1;
+}
+
+static void extendUtf8String(lua_State* tolua_S)
+{
+	lua_pushstring(tolua_S, "cc.utf8");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S,"next", lua_utf8_next);
+		tolua_function(tolua_S,"length",lua_utf8_length);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -5472,6 +5526,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendTMXTiledMap(tolua_S);
     extendConsole(tolua_S);
     extendGLProgramState(tolua_S);
-    
+	//add utf8 string
+	extendUtf8String(tolua_S);
     return 0;
 }
