@@ -11,6 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\external\lua\luacurl\luacurl.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmlparse.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmlrole.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_impl.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_ns.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\lxplib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luafilesystem\src\lfs.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\compat-5.2.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\des56.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\ldes56.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\md5.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\md5lib.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\auxiliar.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\buffer.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\except.c" />
@@ -59,10 +72,32 @@
     <ClCompile Include="..\manual\tolua_fix.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\external\lua\luacurl\luacurl.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\amigaconfig.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\ascii.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\asciitab.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\expat.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\expat_external.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\iasciitab.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\internal.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\latin1tab.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\macconfig.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\nametab.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\utf8tab.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\winconfig.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmlrole.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_impl.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\lxplib.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luafilesystem\src\lfs.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\compat-5.2.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\des56.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\ldes56.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\md5.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\auxiliar.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\buffer.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\except.h" />
@@ -109,6 +144,11 @@
     <ClInclude Include="..\manual\tolua_fix.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\external\lua\luacurl\luacurl.def" />
+    <None Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\lxp.def" />
+    <None Include="..\..\..\..\external\lua\luafilesystem\src\lfs.def" />
+    <None Include="..\..\..\..\external\lua\luamd5\src\des56.def" />
+    <None Include="..\..\..\..\external\lua\luamd5\src\md5.def" />
     <None Include="..\script\AudioEngine.lua" />
     <None Include="..\script\CCBReaderLoad.lua" />
     <None Include="..\script\Cocos2d.lua" />
@@ -140,8 +180,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>	
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -149,8 +189,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>	
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

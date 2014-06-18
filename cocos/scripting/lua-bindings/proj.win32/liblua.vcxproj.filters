@@ -19,6 +19,21 @@
     <Filter Include="luajit">
       <UniqueIdentifier>{cc863463-a948-487a-aacd-dc233c3e5200}</UniqueIdentifier>
     </Filter>
+    <Filter Include="luafiilesystem">
+      <UniqueIdentifier>{bef4de8d-3025-431e-9260-2c63315b2dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualxp">
+      <UniqueIdentifier>{fe0ae93d-d347-431f-9426-c4ead199998e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luamd5">
+      <UniqueIdentifier>{d19f5124-06ae-48ca-9fff-09d62d25c2bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luacurl">
+      <UniqueIdentifier>{c7a2beb8-b5c4-41a0-b4de-3e14992f5cb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="expat-1.3.0">
+      <UniqueIdentifier>{99074bd5-6cb6-4de8-929d-e0bde935658a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
@@ -158,6 +173,45 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
       <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luacurl\luacurl.c">
+      <Filter>luacurl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\compat-5.2.c">
+      <Filter>luamd5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\des56.c">
+      <Filter>luamd5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\ldes56.c">
+      <Filter>luamd5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\md5.c">
+      <Filter>luamd5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luamd5\src\md5lib.c">
+      <Filter>luamd5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\lxplib.c">
+      <Filter>lualxp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luafilesystem\src\lfs.c">
+      <Filter>luafiilesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmlparse.c">
+      <Filter>expat-1.3.0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmlrole.c">
+      <Filter>expat-1.3.0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok.c">
+      <Filter>expat-1.3.0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_impl.c">
+      <Filter>expat-1.3.0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_ns.c">
+      <Filter>expat-1.3.0</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +359,72 @@
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
       <Filter>luajit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luacurl\luacurl.h">
+      <Filter>luacurl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\compat-5.2.h">
+      <Filter>luamd5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\des56.h">
+      <Filter>luamd5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\ldes56.h">
+      <Filter>luamd5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luamd5\src\md5.h">
+      <Filter>luamd5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\lxplib.h">
+      <Filter>lualxp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luafilesystem\src\lfs.h">
+      <Filter>luafiilesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\amigaconfig.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\ascii.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\asciitab.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\expat.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\expat_external.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\iasciitab.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\internal.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\latin1tab.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\macconfig.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\nametab.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\utf8tab.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\winconfig.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmlrole.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_impl.h">
+      <Filter>expat-1.3.0</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\script\Cocos2dConstants.lua">
@@ -360,6 +480,21 @@
     </None>
     <None Include="..\script\Cocos2d.lua">
       <Filter>script</Filter>
+    </None>
+    <None Include="..\..\..\..\external\lua\luacurl\luacurl.def">
+      <Filter>luacurl</Filter>
+    </None>
+    <None Include="..\..\..\..\external\lua\luamd5\src\des56.def">
+      <Filter>luamd5</Filter>
+    </None>
+    <None Include="..\..\..\..\external\lua\luamd5\src\md5.def">
+      <Filter>luamd5</Filter>
+    </None>
+    <None Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\lxp.def">
+      <Filter>lualxp</Filter>
+    </None>
+    <None Include="..\..\..\..\external\lua\luafilesystem\src\lfs.def">
+      <Filter>luafiilesystem</Filter>
     </None>
   </ItemGroup>
 </Project>
