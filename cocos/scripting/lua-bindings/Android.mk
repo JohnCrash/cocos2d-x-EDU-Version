@@ -63,7 +63,11 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
 		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmltok.c \
 		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmltok_impl.c \
 		  ../../../external/lua/luaexpat-1.3.0/src/expat/lib/xmltok_ns.c \
-		  ../../../external/lua/luacrypto/src/lcrypto.c
+		  ../../../external/lua/luamd5/src/md5lib.c \
+		  ../../../external/lua/luamd5/src/md5.c \
+		  ../../../external/lua/luamd5/src/ldes56.c \
+		  ../../../external/lua/luamd5/src/des56.c \
+		  ../../../external/lua/luamd5/src/compat-5.2.c
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \

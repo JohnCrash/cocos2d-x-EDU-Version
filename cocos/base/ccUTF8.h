@@ -168,6 +168,8 @@ CC_DEPRECATED_ATTRIBUTE bool iscjk_unicode(unsigned short ch);
  **/
 CC_DEPRECATED_ATTRIBUTE long cc_utf8_strlen (const char * p, int max = -1);
 
+CC_DLL const char* cc_utf8_next(const char* p);
+
 /**
  * Find the last character that is not equal to the character given.
  *

@@ -7,10 +7,18 @@ extern "C" {
 // socket
 #include "luasocket/luasocket.h"
 #include "luasocket/mime.h"
+#include "luafilesystem/src/lfs.h"
+#include "luaexpat-1.3.0/src/lxplib.h"
+#include "luacurl/luacurl.h"
+#include "luamd5/src/md5.h"
 
 static luaL_Reg luax_exts[] = {
     {"socket.core", luaopen_socket_core},
     {"mime.core", luaopen_mime_core},
+	{"lfs",luaopen_lfs},
+	{"lxp",luaopen_lxp},
+	{"curl",luaopen_luacurl},
+	{"md5",luaopen_md5_core},
     {NULL, NULL}
 };
 

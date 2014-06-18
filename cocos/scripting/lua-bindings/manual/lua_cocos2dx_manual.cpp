@@ -5423,6 +5423,7 @@ static void extendGLProgramState(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+#include "base/ccUTF8.h"
 //cc.utf8.next(s,i)
 static int lua_utf8_next(lua_State* tolua_S)
 {
@@ -5449,7 +5450,6 @@ static int lua_utf8_next(lua_State* tolua_S)
 	return 1;
 }
 
-#include "ccUTF8.h"
 //cc.utf8.length(s)
 static int lua_utf8_length(lua_State* tolua_S)
 {
