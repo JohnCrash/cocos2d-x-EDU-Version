@@ -363,7 +363,8 @@ public:
      @since v3.0
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
-    
+    void performFunctionInCocosThread_ext(const std::function<void (void*)> &function,void *p);
+	
     /////////////////////////////////////
     
     // Deprecated methods:
@@ -460,6 +461,7 @@ protected:
     
     // Used for "perform Function"
     std::vector<std::function<void()>> _functionsToPerform;
+	std::vector<std::pair<std::function<void( void* )>,void*>> _functionsToPerform_ext;
     std::mutex _performMutex;
 };
 

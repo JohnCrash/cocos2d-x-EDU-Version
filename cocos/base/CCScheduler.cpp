@@ -811,6 +811,15 @@ void Scheduler::performFunctionInCocosThread(const std::function<void ()> &funct
     _performMutex.unlock();
 }
 
+void Scheduler::performFunctionInCocosThread_ext(const std::function<void (void*)> &function,void *p)
+{
+    _performMutex.lock();
+
+    _functionsToPerform_ext.push_back(std::pair<std::function<void( void* )>,void*>(function,p));
+
+    _performMutex.unlock();
+}
+
 // main loop
 void Scheduler::update(float dt)
 {
@@ -964,6 +973,17 @@ void Scheduler::update(float dt)
         }
         
     }
+    if( !_functionsToPerform_ext.empty() ) {
+        _performMutex.lock();
+        // fixed #4123: Save the callback functions, they must be invoked after '_performMutex.unlock()', otherwise if new functions are added in callback, it will cause thread deadlock.
+        auto temp = _functionsToPerform_ext;
+        _functionsToPerform_ext.clear();
+        _performMutex.unlock();
+		for( auto it = temp.begin();it!=temp.end();++it )
+			it->first(it->second);
+        
+    }
+	
 }
 
 void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)

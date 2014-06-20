@@ -18,7 +18,7 @@ static luaL_Reg luax_exts[] = {
 	{"lfs",luaopen_lfs},
 	{"lxp",luaopen_lxp},
 	{"curl",luaopen_luacurl},
-	{"md5",luaopen_md5_core},
+	{"md5.core",luaopen_md5_core},
     {NULL, NULL}
 };
 
