@@ -278,9 +278,9 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
             if (NULL != item)
             {
                 items.pushBack(item);
-                ++i;
             }
-            
+			//FIXBUG jump nil
+            ++i;
         }
         cocos2d::Menu* tolua_ret = cocos2d::Menu::createWithArray(items);
         //UnCheck
