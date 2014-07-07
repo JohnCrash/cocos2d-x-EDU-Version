@@ -90,6 +90,8 @@ public:
         TGA,
         //! Raw Data
         RAW_DATA,
+		//! Gif
+		GIF,
         //! Unknown format
         UNKOWN
     };
@@ -149,6 +151,7 @@ protected:
     bool initWithETCData(const unsigned char * data, ssize_t dataLen);
     bool initWithS3TCData(const unsigned char * data, ssize_t dataLen);
     bool initWithATITCData(const unsigned char *data, ssize_t dataLen);
+	bool initWithGifData(const unsigned char *data, ssize_t dataLen);
     typedef struct sImageTGA tImageTGA;
     bool initWithTGAData(tImageTGA* tgaData);
 

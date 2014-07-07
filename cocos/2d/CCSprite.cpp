@@ -310,6 +310,8 @@ static unsigned char cc_2x2_white_image[] = {
 void Sprite::setTexture(const std::string &filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+	if( !texture )return;
+
     setTexture(texture);
 
     Rect rect = Rect::ZERO;

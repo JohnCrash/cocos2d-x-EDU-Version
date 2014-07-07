@@ -43,6 +43,7 @@ extern "C"
 #include "tiffio.h"
 #include "base/etc1.h"
 #include "jpeglib.h"
+#include "giflib/gif_lib.h"
 }
 #include "base/s3tc.h"
 #include "base/atitc.h"
@@ -503,6 +504,9 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         case Format::ATITC:
             ret = initWithATITCData(unpackedData, unpackedLen);
             break;
+		case Format::GIF:
+			ret = initWidthGifData(unpackedData, unpackedLen);
+			break;
         default:
             {
                 // load and detect image format
@@ -1706,6 +1710,10 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
+bool Image::initWithGifData(const unsigned char *data, ssize_t dataLen)
+{
+	return true;
+}
 
 bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
 {
