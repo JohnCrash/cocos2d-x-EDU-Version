@@ -646,6 +646,10 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     {
         return Format::TIFF;
     }
+	else if(isGif(data,dataLen))
+	{
+		return Format::GIF;
+	}
     else if (isWebp(data, dataLen))
     {
         return Format::WEBP;
@@ -666,10 +670,6 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     {
         return Format::ATITC;
     }
-	else if(isGif(data,dataLen))
-	{
-		return Format::GIF;
-	}
     else
     {
         return Format::UNKOWN;
