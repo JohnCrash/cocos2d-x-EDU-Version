@@ -7,12 +7,16 @@ if you only require one of read and write capability, only one of these
 two modules will be linked.  Preserve this property!
 
 *****************************************************************************/
+#include "config.h"
 
 #include <stdlib.h>
 #include <limits.h>
 #include <stdint.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTED_H
 #include <unistd.h>
+#else
+#endif
 #include <stdio.h>
 #include <string.h>
 
@@ -51,8 +55,11 @@ DGifOpenFileName(const char *FileName, int *Error)
 {
     int FileHandle;
     GifFileType *GifFile;
-
+#ifdef _WIN32
+	if ((FileHandle = _open(FileName, O_RDONLY)) == -1) {
+#else
     if ((FileHandle = open(FileName, O_RDONLY)) == -1) {
+#endif
 	if (Error != NULL)
 	    *Error = D_GIF_ERR_OPEN_FAILED;
         return NULL;
@@ -78,7 +85,11 @@ DGifOpenFileHandle(int FileHandle, int *Error)
     if (GifFile == NULL) {
         if (Error != NULL)
 	    *Error = D_GIF_ERR_NOT_ENOUGH_MEM;
+#ifdef _WIN32
+		(void)_close(FileHandle);
+#else
         (void)close(FileHandle);
+#endif
         return NULL;
     }
 
@@ -92,7 +103,11 @@ DGifOpenFileHandle(int FileHandle, int *Error)
     if (Private == NULL) {
         if (Error != NULL)
 	    *Error = D_GIF_ERR_NOT_ENOUGH_MEM;
+#ifdef _WIN32
+		(void)_close(FileHandle);
+#else
         (void)close(FileHandle);
+#endif
         free((char *)GifFile);
         return NULL;
     }
@@ -100,7 +115,11 @@ DGifOpenFileHandle(int FileHandle, int *Error)
     _setmode(FileHandle, O_BINARY);    /* Make sure it is in binary mode. */
 #endif /* _WIN32 */
 
-    f = fdopen(FileHandle, "rb");    /* Make it into a stream: */
+#ifdef _WIN32
+    f = _fdopen(FileHandle, "rb");    /* Make it into a stream: */
+#else
+	f = fdopen(FileHandle, "rb");    /* Make it into a stream: */
+#endif
 
     /*@-mustfreeonly@*/
     GifFile->Private = (void *)Private;

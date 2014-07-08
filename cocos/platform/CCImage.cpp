@@ -43,7 +43,7 @@ extern "C"
 #include "tiffio.h"
 #include "base/etc1.h"
 #include "jpeglib.h"
-#include "giflib/gif_lib.h"
+#include "gif_lib.h"
 }
 #include "base/s3tc.h"
 #include "base/atitc.h"
