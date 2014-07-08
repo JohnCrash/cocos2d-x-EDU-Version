@@ -21,14 +21,13 @@ extern "C" {
 #include "config.h"
 
 #include <stddef.h>
-#ifdef HAVE_STDBOOL_H
-#include <stdbool.h>
-#else
-typedef char bool;
-#define false 0
-#define true 1
-#endif
 
+#ifndef FALSE
+	#define FALSE 0
+#endif
+#ifndef TRUE
+	#define TRUE 1
+#endif
 #define GIF_STAMP "GIFVER"          /* First chars in file - GIF stamp.  */
 #define GIF_STAMP_LEN sizeof(GIF_STAMP) - 1
 #define GIF_VERSION_POS 3           /* Version first character in stamp. */
@@ -48,13 +47,13 @@ typedef struct GifColorType {
 typedef struct ColorMapObject {
     int ColorCount;
     int BitsPerPixel;
-    bool SortFlag;
+    int SortFlag;
     GifColorType *Colors;    /* on malloc(3) heap */
 } ColorMapObject;
 
 typedef struct GifImageDesc {
     GifWord Left, Top, Width, Height;   /* Current image dimensions. */
-    bool Interlace;                     /* Sequential/Interlaced lines. */
+    int Interlace;                     /* Sequential/Interlaced lines. */
     ColorMapObject *ColorMap;           /* The local color map */
 } GifImageDesc;
 
@@ -120,11 +119,50 @@ typedef struct GraphicsControlBlock {
 #define DISPOSE_DO_NOT            1       /* Leave image in place */
 #define DISPOSE_BACKGROUND        2       /* Set area too background color */
 #define DISPOSE_PREVIOUS          3       /* Restore to previous content */
-    bool UserInputFlag;      /* User confirmation required before disposal */
+    int UserInputFlag;      /* User confirmation required before disposal */
     int DelayTime;           /* pre-display delay in 0.01sec units */
     int TransparentColor;    /* Palette index for transparency, -1 if none */
 #define NO_TRANSPARENT_COLOR	-1
 } GraphicsControlBlock;
+
+typedef unsigned char uint8_t;
+
+typedef struct
+{
+	uint8_t blue;
+	uint8_t green;
+	uint8_t red;
+	uint8_t alpha;
+} argb;
+
+
+typedef struct
+{
+	unsigned int duration;
+	int transpIndex;
+	unsigned char disposalMethod;
+} FrameInfo;
+
+typedef struct GifInfo GifInfo;
+typedef int
+(*RewindFunc)(GifInfo *);
+
+struct GifInfo
+{
+	GifFileType* gifFilePtr;
+	unsigned long lastFrameReaminder;
+	unsigned long nextStartTime;
+	int currentIndex;
+	unsigned int lastDrawIndex;
+	FrameInfo* infos;
+	argb* backupPtr;
+	int startPos;
+	unsigned char* rasterBits;
+	char* comment;
+	unsigned short loopCount;
+	int currentLoop;
+	RewindFunc rewindFunc;
+};
 
 /******************************************************************************
  GIF encoding routines
@@ -132,7 +170,7 @@ typedef struct GraphicsControlBlock {
 
 /* Main entry points */
 GifFileType *EGifOpenFileName(const char *GifFileName,
-                              const bool GifTestExistence, int *Error);
+                              const int GifTestExistence, int *Error);
 GifFileType *EGifOpenFileHandle(const int GifFileHandle, int *Error);
 GifFileType *EGifOpen(void *userPtr, OutputFunc writeFunc, int *Error);
 int EGifSpew(GifFileType * GifFile);
@@ -159,9 +197,9 @@ int EGifPutScreenDesc(GifFileType *GifFile,
 int EGifPutImageDesc(GifFileType *GifFile, 
 		     const int GifLeft, const int GifTop,
                      const int GifWidth, const int GifHeight, 
-		     const bool GifInterlace,
+		     const int GifInterlace,
                      const ColorMapObject *GifColorMap);
-void EGifSetGifVersion(GifFileType *GifFile, const bool gif89);
+void EGifSetGifVersion(GifFileType *GifFile, const int gif89);
 int EGifPutLine(GifFileType *GifFile, GifPixelType *GifLine,
                 int GifLineLen);
 int EGifPutPixel(GifFileType *GifFile, const GifPixelType GifPixel);
@@ -188,6 +226,7 @@ GifFileType *DGifOpenFileHandle(int GifFileHandle, int *Error);
 int DGifSlurp(GifFileType * GifFile);
 GifFileType *DGifOpen(void *userPtr, InputFunc readFunc, int *Error);    /* new one (TVT) */
 int DGifCloseFile(GifFileType * GifFile);
+int DDGifSlurp(GifFileType *GifFile, GifInfo* info, int shouldDecode);
 
 #define D_GIF_ERR_OPEN_FAILED    101    /* And DGif possible errors. */
 #define D_GIF_ERR_READ_FAILED    102
@@ -206,7 +245,7 @@ int DGifCloseFile(GifFileType * GifFile);
 /* These are legacy.  You probably do not want to call them directly */
 int DGifGetScreenDesc(GifFileType *GifFile);
 int DGifGetRecordType(GifFileType *GifFile, GifRecordType *GifType);
-int DGifGetImageDesc(GifFileType *GifFile, bool changeImageCount);
+int DGifGetImageDesc(GifFileType *GifFile, int changeImageCount);
 int DGifGetLine(GifFileType *GifFile, GifPixelType *GifLine, int GifLineLen);
 int DGifGetPixel(GifFileType *GifFile, GifPixelType GifPixel);
 int DGifGetComment(GifFileType *GifFile, char *GifComment);

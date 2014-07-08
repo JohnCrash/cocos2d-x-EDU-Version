@@ -201,6 +201,7 @@ protected:
     bool isEtc(const unsigned char * data, ssize_t dataLen);
     bool isS3TC(const unsigned char * data,ssize_t dataLen);
     bool isATITC(const unsigned char *data, ssize_t dataLen);
+	bool isGif(const unsigned char *data, ssize_t dataLen);
 };
 
 // end of platform group

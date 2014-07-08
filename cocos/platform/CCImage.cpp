@@ -505,7 +505,7 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
             ret = initWithATITCData(unpackedData, unpackedLen);
             break;
 		case Format::GIF:
-			ret = initWidthGifData(unpackedData, unpackedLen);
+			ret = initWithGifData(unpackedData, unpackedLen);
 			break;
         default:
             {
@@ -666,6 +666,10 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     {
         return Format::ATITC;
     }
+	else if(isGif(data,dataLen))
+	{
+		return Format::GIF;
+	}
     else
     {
         return Format::UNKOWN;
@@ -1710,9 +1714,97 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
+struct myGifData
+{
+	const unsigned char *data;
+	ssize_t len;
+	ssize_t seek;
+	myGifData(const unsigned char * d,ssize_t l):data(d),len(l),seek(0){}
+};
+
+int gifInputFunc(GifFileType *gf,GifByteType *buf,int len)
+{
+	if( gf && gf->UserData && buf && len > 0 )
+	{
+		myGifData *pdata = (myGifData *)gf->UserData;
+		ssize_t llen = pdata->len-pdata->seek;
+		ssize_t tlen = len > llen ? llen:len;
+		if( tlen > 0 )
+		{
+			memcpy(buf,pdata->data+pdata->seek,tlen);
+			pdata->seek += tlen;
+		}
+		return tlen;
+	}
+	return -1;
+}
+
+bool Image::isGif(const unsigned char *data, ssize_t dataLen)
+{
+	if( data && dataLen > 3 && data[0]=='G' && data[1]=='I' && data[2]=='F' )
+		return true;
+	return false;
+}
+
 bool Image::initWithGifData(const unsigned char *data, ssize_t dataLen)
 {
-	return true;
+	GifFileType *gifFile;
+	int err;
+	bool ret = false;
+	myGifData mydata(data,dataLen);
+	gifFile = DGifOpen(&mydata,gifInputFunc,&err);
+	if( gifFile )
+	{
+		DGifSlurp(gifFile);
+		//仅仅取第一帧
+		if( gifFile->ImageCount > 0 )
+		{
+			SavedImage *sp = &gifFile->SavedImages[0];
+			if( sp && sp->RasterBits )
+			{
+				ColorMapObject *pcmap;
+				pcmap = sp->ImageDesc.ColorMap? sp->ImageDesc.ColorMap:gifFile->SColorMap;
+				if( pcmap )
+				{
+					_width = gifFile->SWidth;
+					_height = gifFile->SHeight;
+					_renderFormat = Texture2D::PixelFormat::RGBA8888;
+					_fileType = Format::GIF;
+					_preMulti = false; //?
+					int bytePerPixel = 4;
+					_dataLen = _width * _height * bytePerPixel;
+					_data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+					for( int y = 0;y < sp->ImageDesc.Height;++y )
+					{
+						unsigned char *pline = _data+(y+sp->ImageDesc.Top)*_width*bytePerPixel;
+						unsigned char *psrc = sp->RasterBits + y*sp->ImageDesc.Width;
+						for(int x=0;x < sp->ImageDesc.Width;++x )
+						{
+							unsigned char *pc = pline + (x+sp->ImageDesc.Left)*bytePerPixel;
+							if( psrc[x] >= 0 && psrc[x] < pcmap->ColorCount )
+							{
+								GifColorType c = pcmap->Colors[psrc[x]];
+								pc[0] = c.Red;
+								pc[1] = c.Green;
+								pc[2] = c.Blue;
+								pc[3] = 255; //solid?
+							}
+							else
+							{
+								pc[0] = 0;
+								pc[1] = 0;
+								pc[2] = 0;
+								pc[3] = 0; //transparent?
+							}
+						}
+					}
+					ret = true;
+				}
+			}
+		}
+		DGifCloseFile(gifFile);
+	}
+	return ret;
 }
 
 bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)

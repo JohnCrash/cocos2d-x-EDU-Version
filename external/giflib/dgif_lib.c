@@ -247,7 +247,7 @@ int
 DGifGetScreenDesc(GifFileType *GifFile)
 {
     int BitsPerPixel;
-    bool SortFlag;
+    int SortFlag;
     GifByteType Buf[3];
     GifFilePrivateType *Private = (GifFilePrivateType *)GifFile->Private;
 
@@ -346,7 +346,7 @@ DGifGetRecordType(GifFileType *GifFile, GifRecordType* Type)
  Note it is assumed the Image desc. header has been read.
 ******************************************************************************/
 int
-DGifGetImageDesc(GifFileType *GifFile, bool changeImageCount)
+DGifGetImageDesc(GifFileType *GifFile, int changeImageCount)
 {
     unsigned int BitsPerPixel;
     GifByteType Buf[3];
@@ -371,7 +371,7 @@ DGifGetImageDesc(GifFileType *GifFile, bool changeImageCount)
         return GIF_ERROR;
     }
     BitsPerPixel = (Buf[0] & 0x07) + 1;
-    GifFile->Image.Interlace = (Buf[0] & 0x40) ? true : false;
+    GifFile->Image.Interlace = (Buf[0] & 0x40) ? TRUE : FALSE;
 
     /* Setup the colormap */
     if (GifFile->Image.ColorMap) {
@@ -617,7 +617,7 @@ int DGifSavedExtensionToGCB(GifFileType *GifFile,
 	return GIF_ERROR;
 
     GCB->DisposalMode = DISPOSAL_UNSPECIFIED;
-    GCB->UserInputFlag = false;
+    GCB->UserInputFlag = FALSE;
     GCB->DelayTime = 0;
     GCB->TransparentColor = NO_TRANSPARENT_COLOR;
 
@@ -1079,7 +1079,7 @@ DGifBufferedInput(GifFileType *GifFile, GifByteType *Buf, GifByteType *NextByte)
  This routine reads an entire GIF into core, hanging all its state info off
  the GifFileType pointer.  Call DGifOpenFileName() or DGifOpenFileHandle()
  first to initialize I/O.  Its inverse is EGifSpew().
-
+ */
 int
 DGifSlurp(GifFileType *GifFile)
 {
@@ -1097,7 +1097,7 @@ DGifSlurp(GifFileType *GifFile)
             return (GIF_ERROR);
         switch (RecordType) {
           case IMAGE_DESC_RECORD_TYPE:
-              if (DGifGetImageDesc(GifFile) == GIF_ERROR)
+              if (DGifGetImageDesc(GifFile,TRUE) == GIF_ERROR)
                   return (GIF_ERROR);
 
               sp = &GifFile->SavedImages[GifFile->ImageCount - 1];
@@ -1182,5 +1182,3 @@ DGifSlurp(GifFileType *GifFile)
 
     return (GIF_OK);
 }
-
- end */
