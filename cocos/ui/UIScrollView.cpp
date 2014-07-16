@@ -1574,12 +1574,6 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
     }
 }
 
-void ScrollView::checkChildInfo(int handleState,Widget* sender,const Vec2 &touchPoint)
-{
-	if( isEnabled() )
-		interceptTouchEvent(handleState, sender, touchPoint);
-}
-
 void ScrollView::scrollToTopEvent()
 {
     if (_scrollViewEventListener && _scrollViewEventSelector)

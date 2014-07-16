@@ -499,12 +499,6 @@ void PageView::handleReleaseLogic(Touch *touch)
     }
 }
 
-void PageView::checkChildInfo(int handleState,Widget* sender, const Vec2 &touchPoint)
-{
-	if( isEnabled() )
-		interceptTouchEvent(handleState, sender, touchPoint);
-}
-
 void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *touch)
 {
     Vec2 touchPoint = touch->getLocation();

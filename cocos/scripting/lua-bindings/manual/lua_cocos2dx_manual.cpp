@@ -6571,6 +6571,5 @@ int register_all_cocos2dx_module_manual(lua_State* tolua_S)
         tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
->>>>>>> e1b29a8ef61248ec047b17be921e031d0d637904
     return 0;
 }
