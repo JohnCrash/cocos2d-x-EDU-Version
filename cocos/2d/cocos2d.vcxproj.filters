@@ -55,6 +55,9 @@
     <Filter Include="3d">
       <UniqueIdentifier>{a20c4bdc-bd4c-40c1-a78a-fe31cd3ec76a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\giflib">
+      <UniqueIdentifier>{e2f18408-957d-43c8-8286-e246bc83db79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -564,6 +567,15 @@
     </ClCompile>
     <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\dgif_lib.c">
+      <Filter>external\giflib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\gif_hash.c">
+      <Filter>external\giflib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\gifalloc.c">
+      <Filter>external\giflib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1143,6 +1155,15 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DDataCache.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\giflib\gif_hash.h">
+      <Filter>external\giflib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\giflib\gif_lib.h">
+      <Filter>external\giflib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\giflib\gif_lib_private.h">
+      <Filter>external\giflib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
