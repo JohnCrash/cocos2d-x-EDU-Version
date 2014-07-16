@@ -33,6 +33,8 @@
     </Filter>
     <Filter Include="expat-1.3.0">
       <UniqueIdentifier>{99074bd5-6cb6-4de8-929d-e0bde935658a}</UniqueIdentifier>
+    <Filter Include="xxtea">
+      <UniqueIdentifier>{1fa7ff75-c142-4928-8aef-e6a2eb2b465f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +214,8 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_ns.c">
       <Filter>expat-1.3.0</Filter>
+    <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp">
+      <Filter>xxtea</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +428,8 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luaexpat-1.3.0\src\expat\lib\xmltok_impl.h">
       <Filter>expat-1.3.0</Filter>
+    <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
+      <Filter>xxtea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

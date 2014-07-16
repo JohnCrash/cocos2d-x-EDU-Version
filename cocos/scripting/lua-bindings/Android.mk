@@ -67,7 +67,8 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
 		  ../../../external/lua/luamd5/src/md5.c \
 		  ../../../external/lua/luamd5/src/ldes56.c \
 		  ../../../external/lua/luamd5/src/des56.c \
-		  ../../../external/lua/luamd5/src/compat-5.2.c
+		  ../../../external/lua/luamd5/src/compat-5.2.c \
+          ../../../external/xxtea/xxtea.cpp
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
@@ -78,10 +79,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../editor-support/cocosbuilder \
                     $(LOCAL_PATH)/../../editor-support/cocostudio \
                     $(LOCAL_PATH)/../../ui \
+                    $(LOCAL_PATH)/../../2d \
+                    $(LOCAL_PATH)/../../3d \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \
-                    $(LOCAL_PATH)/manual/platform/android/jni
+                    $(LOCAL_PATH)/manual/platform/android/jni \
+                    $(LOCAL_PATH)/../../../external/xxtea
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
