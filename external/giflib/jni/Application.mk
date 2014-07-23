@@ -1,0 +1,1 @@
+﻿APP_ABI := all

@@ -10,6 +10,8 @@
  */
 
 #include "config.h"
+#include "json_config.h"
+
 #undef realloc
 
 #include <stdio.h>
