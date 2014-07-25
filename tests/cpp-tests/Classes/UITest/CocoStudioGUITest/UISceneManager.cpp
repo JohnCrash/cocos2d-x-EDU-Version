@@ -74,15 +74,16 @@ static const char* s_testArray[] =
     "UITextAtlasTest",
     "UITextTest",
     "UITextTest_LineWrap",
-    /*
+    
     "UILabelTest_Effect",
-     */
+    
     "UITextTest_TTF",
     "UITextBMFontTest",
     "UITextFieldTest",
     "UITextFieldTest_MaxLength",
     "UITextFieldTest_Password",
     "UITextFieldTest_LineWrap",
+    "UITextFieldTest_TrueTypeFont",
     "UILayoutTest",
     "UILayoutTest_Color",
     "UILayoutTest_Gradient",
@@ -100,7 +101,8 @@ static const char* s_testArray[] =
     "UIScrollViewTest_Both",
     "UIScrollViewTest_ScrollToPercentBothDirection",
     "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",    
-    "UIPageViewTest,",
+    "UIPageViewTest",
+    "UIPageViewButtonTest",
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
     /*
@@ -118,12 +120,13 @@ static const char* s_testArray[] =
     "UIFocusTest-NestedLayout1",
     "UIFocusTest-NestedLayout2",
     "UIFocusTest-NestedLayout3",
+    "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest"
 #endif
 };
 
-static UISceneManager *sharedInstance = NULL;
+static UISceneManager *sharedInstance = nullptr;
 
 
 UISceneManager::UISceneManager()
@@ -138,7 +141,7 @@ UISceneManager::~UISceneManager()
 
 UISceneManager * UISceneManager::sharedUISceneManager()
 {
-    if (sharedInstance == NULL)
+    if (sharedInstance == nullptr)
     {
         sharedInstance = new UISceneManager();
     }
@@ -157,7 +160,6 @@ Scene *UISceneManager::nextUIScene()
     {
         _currentUISceneId = _minUISceneId;
     }
-//    _currentUISceneId = (_currentUISceneId + 1) % kUITestMax;
     
     return currentUIScene();
 }
@@ -169,13 +171,6 @@ Scene *UISceneManager::previousUIScene()
     {
         _currentUISceneId = _maxUISceneId;
     }
-    /*
-    _currentUISceneId = _currentUISceneId - 1;
-    if (_currentUISceneId < 0)
-    {
-        _currentUISceneId = kUITestMax - 1;
-    }
-     */
     
     return currentUIScene();
 }
@@ -205,22 +200,6 @@ Scene *UISceneManager::currentUIScene()
         case kUISliderTest_Scale9:
             return UISliderTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
-        case kUIPotentiometerTest:
-            return UIPotentiometerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
-            /*
-        case kUISwitchTest_Horizontal:
-            return UISwitchTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUISwitchTest_Vertical:
-            return UISwitchTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUISwitchTest_VerticalAndTitleVertical:
-            return UISwitchTest_VerticalAndTitleVertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
         case kUIImageViewTest:
             return UIImageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -239,29 +218,6 @@ Scene *UISceneManager::currentUIScene()
         case kUILoadingBarTest_Right_Scale9:
             return UILoadingBarTest_Right_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
-        case kUIProgressTimerTest_Radial:
-            return UIProgressTimerTest_Radial::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_Horizontal:
-            return UIProgressTimerTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_Vertical:
-            return UIProgressTimerTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_RadialMidpointChanged:
-            return UIProgressTimerTest_RadialMidpointChanged::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_BarVarious:
-            return UIProgressTimerTest_BarVarious::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_BarTintAndFade:
-            return UIProgressTimerTest_BarTintAndFade::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_WithSpriteFrame:
-            return UIProgressTimerTest_WithSpriteFrame::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
         case kUITextAtlasTest:
             return UITextAtlasTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -274,10 +230,10 @@ Scene *UISceneManager::currentUIScene()
         case kUITextTest_LineWrap:
             return UITextTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
+            
         case kUILabelTest_Effect:
             return UILabelTest_Effect::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
+            
             
         case kUITextTest_TTF:
             return UITextTest_TTF::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -293,7 +249,9 @@ Scene *UISceneManager::currentUIScene()
             
         case kUITextFieldTest_LineWrap:
             return UITextFieldTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUITextFieldTest_TrueTypeFont:
+            return UITextFieldTest_TrueTypeFont::sceneWithTitle(s_testArray[_currentUISceneId]);
+        
         case kUILayoutTest:
             return UILayoutTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -321,11 +279,6 @@ Scene *UISceneManager::currentUIScene()
         case kUILayoutTest_Layout_Relative_Location:
             return UILayoutTest_Layout_Relative_Location::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
-        case kUILayoutTest_Layout_Grid:
-            return UILayoutTest_Layout_Grid::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
         case kUIScrollViewTest_Vertical:
             return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -343,28 +296,13 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUIPageViewButtonTest:
+            return UIPageViewButtonTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIListViewTest_Horizontal:
             return UIListViewTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-            /*
-        case kUIGridViewTest_Mode_Column:
-            return UIGridViewTest_Mode_Column::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIGridViewTest_Mode_Row:
-            return UIGridViewTest_Mode_Row::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
-            /*
-        case kUIPickerViewTest_Vertical:
-            return UIPickerViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIPickerViewTest_Horizontal:
-            return UIPickerViewTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            */
             
         case kUIWidgetAddNodeTest:
             return UIWidgetAddNodeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -381,10 +319,12 @@ Scene *UISceneManager::currentUIScene()
             return UIFocusTestNestedLayout2::sceneWithTitle(s_testArray[_currentUISceneId]);
         case KUIFocusTest_NestedLayout3:
             return UIFocusTestNestedLayout3::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIFocusTest_ListView:
+            return UIFocusTestListView::sceneWithTitle(s_testArray[_currentUISceneId]);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
     }
-    return NULL;
+    return nullptr;
 }

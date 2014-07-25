@@ -64,15 +64,15 @@ enum
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,
-    /*
+    
     kUILabelTest_Effect,
-     */
     kUITextTest_TTF,
     kUITextBMFontTest,
     kUITextFieldTest,
     kUITextFieldTest_MaxLength,
     kUITextFieldTest_Password,
     kUITextFieldTest_LineWrap,
+    kUITextFieldTest_TrueTypeFont,
     kUILayoutTest,
     kUILayoutTest_Color,
     kUILayoutTest_Gradient,
@@ -91,6 +91,7 @@ enum
     kUIScrollViewTest_ScrollToPercentBothDirection,
     kUIScrollViewTest_ScrollToPercentBothDirection_Bounce,    
     kUIPageViewTest,
+    kUIPageViewButtonTest,
     kUIListViewTest_Vertical,
     kUIListViewTest_Horizontal,
     /*
@@ -106,6 +107,7 @@ enum
     KUIFocusTest_NestedLayout1,
     KUIFocusTest_NestedLayout2,
     KUIFocusTest_NestedLayout3,
+    kUIFocusTest_ListView,
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif
