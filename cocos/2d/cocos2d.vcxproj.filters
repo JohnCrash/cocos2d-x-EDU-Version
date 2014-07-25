@@ -55,6 +55,9 @@
     <Filter Include="3d">
       <UniqueIdentifier>{a20c4bdc-bd4c-40c1-a78a-fe31cd3ec76a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\gif">
+      <UniqueIdentifier>{15f9bd83-c820-4f09-bb96-5be1c43fed7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -403,9 +406,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -588,6 +588,18 @@
     </ClCompile>
     <ClCompile Include="CCFastTMXTiledMap.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\dgif_lib.c">
+      <Filter>external\gif</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\gif.c">
+      <Filter>external\gif</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\gif_hash.c">
+      <Filter>external\gif</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\giflib\gifalloc.c">
+      <Filter>external\gif</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

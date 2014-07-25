@@ -40,7 +40,7 @@ static int setupBackupBmp(GifInfo* info, int transpIndex)
 {
 	GifFileType* fGIF = info->gifFilePtr;
 	argb paintingColor;
-	info->backupPtr = calloc(fGIF->SWidth * fGIF->SHeight, sizeof(argb));
+	info->backupPtr = (argb *)calloc(fGIF->SWidth * fGIF->SHeight, sizeof(argb));
 	if (!info->backupPtr)
 	{
 		info->gifFilePtr->Error = D_GIF_ERR_NOT_ENOUGH_MEM;
@@ -60,7 +60,7 @@ static int getComment(GifByteType* Bytes, char** cmt)
 {
 	unsigned int len = (unsigned int) Bytes[0];
 	unsigned int offset = *cmt != NULL ? strlen(*cmt) : 0;
-	char* ret = realloc(*cmt, (len + offset + 1) * sizeof(char));
+	char* ret = (char *)realloc(*cmt, (len + offset + 1) * sizeof(char));
 	if (ret != NULL)
 	{
 		memcpy(ret + offset, &Bytes[1], len);
@@ -104,8 +104,8 @@ static int readExtensions(int ExtFunction, GifByteType *ExtData, GifInfo* info)
 	}
 	else if (ExtFunction == APPLICATION_EXT_FUNC_CODE && ExtData[0] == 11)
 	{
-		if (strncmp("NETSCAPE2.0", &ExtData[1], 11) == 0
-				|| strncmp("ANIMEXTS1.0", &ExtData[1], 11) == 0)
+		if (strncmp("NETSCAPE2.0", (const char *)&ExtData[1], 11) == 0
+				|| strncmp("ANIMEXTS1.0",(const char *)&ExtData[1], 11) == 0)
 		{
 			if (DGifGetExtensionNext(info->gifFilePtr, &ExtData,
 					&ExtFunction)==GIF_ERROR)
@@ -221,7 +221,7 @@ int DDGifSlurp(GifFileType *GifFile, GifInfo* info, int shouldDecode)
 
 			if (!shouldDecode)
 			{
-				info->infos = realloc(info->infos,
+				info->infos = (FrameInfo *)realloc(info->infos,
 						(GifFile->ImageCount + 1) * sizeof(FrameInfo));
 
 				if (readExtensions(ExtFunction, ExtData, info) == GIF_ERROR)
