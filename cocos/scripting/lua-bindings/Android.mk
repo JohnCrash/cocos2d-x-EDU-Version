@@ -71,7 +71,7 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
 		  ../../../external/lua/luamd5/src/md5.c \
 		  ../../../external/lua/luamd5/src/ldes56.c \
 		  ../../../external/lua/luamd5/src/des56.c \
-		  ../../../external/lua/luamd5/src/compat-5.2.c
+		  ../../../external/lua/luamd5/src/compat-5.2.c \
           ../../../external/xxtea/xxtea.cpp
 
 
