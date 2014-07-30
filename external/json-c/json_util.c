@@ -261,6 +261,7 @@ int json_parse_int64(const char *buf, int64_t *retval)
 		else
 			num64 = INT64_MAX;
 	}
+
 	*retval = num64;
 	return 0;
 }

@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
-
+#define JSON_C_HAVE_INTTYPES_H 1
 #define HAVE_DECL_NAN 1
 #define HAVE_DECL_INFINITY 1
 #define HAVE_DECL_ISINF 1
