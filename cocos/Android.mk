@@ -204,7 +204,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/ConvertUTF \
-                    $(LOCAL_PATH)/../external/nslog
+                    $(LOCAL_PATH)/../external/nslog \
+					$(LOCAL_PATH)/../external/giflib
 
 
 LOCAL_LDLIBS := -lGLESv2 \
