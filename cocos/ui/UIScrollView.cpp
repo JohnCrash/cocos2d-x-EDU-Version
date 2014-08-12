@@ -1500,27 +1500,27 @@ bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        handlePressLogic(touch);
+			handlePressLogic(touch);
     }
     return pass;
 }
 
 void ScrollView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    Layout::onTouchMoved(touch, unusedEvent);
-    handleMoveLogic(touch);
+	Layout::onTouchMoved(touch, unusedEvent);
+	handleMoveLogic(touch);
 }
 
 void ScrollView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchEnded(touch, unusedEvent);
-    handleReleaseLogic(touch);
+	handleReleaseLogic(touch);
 }
 
 void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
-    handleReleaseLogic(touch);
+	handleReleaseLogic(touch);
 }
 
 void ScrollView::update(float dt)
@@ -1546,6 +1546,8 @@ void ScrollView::recordSlidTime(float dt)
 
 void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender,Touch* touch)
 {
+	if( !_enabled )return;
+
     Vec2 touchPoint = touch->getLocation();
     switch (event)
     {
