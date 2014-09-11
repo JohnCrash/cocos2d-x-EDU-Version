@@ -171,8 +171,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         Cocos2dxEditText edittext = new Cocos2dxEditText(this);
         edittext.setLayoutParams(edittext_layout_params);
 
-        // ...add to FrameLayout
-        mFrameLayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
@@ -180,6 +178,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // ...add to FrameLayout
         mFrameLayout.addView(this.mGLSurfaceView);
 
+        // ...add to FrameLayout
+        mFrameLayout.addView(edittext);
+        
+        edittext.setVisibility(4);
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);

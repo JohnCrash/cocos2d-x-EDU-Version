@@ -84,22 +84,22 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		//}
 		int nModified = s.length() - this.mText.length();
 		if (nModified > 0) {
-			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
+			//final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
+			//this.mCocos2dxGLSurfaceView.insertText(insertText);
 			/*
 			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "insertText(" + insertText + ")");
 			}
 			*/
 		} else {
-			for (; nModified < 0; ++nModified) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
+		//	for (; nModified < 0; ++nModified) {
+		//		this.mCocos2dxGLSurfaceView.deleteBackward();
 				/*
 				if (BuildConfig.DEBUG) {
 					Log.d(TAG, "deleteBackward");
 				}
 				*/
-			}
+		//	}
 		}
 		this.mText = s.toString();
 	}
@@ -121,7 +121,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
+		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView ) {
 			// user press the action button, delete all old text and insert new text
 			if (null != mOriginText) {
 				for (int i = this.mOriginText.length(); i > 0; i--) {
