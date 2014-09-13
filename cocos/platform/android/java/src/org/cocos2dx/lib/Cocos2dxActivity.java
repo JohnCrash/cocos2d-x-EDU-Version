@@ -181,7 +181,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // ...add to FrameLayout
         mFrameLayout.addView(edittext);
         
-        edittext.setVisibility(4);
+        edittext.setVisibility(4); //hide edittext
+        edittext.setImeOptions(6); //actionDone|flagNoFullscreen
+        edittext.setSingleLine();
+        
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);

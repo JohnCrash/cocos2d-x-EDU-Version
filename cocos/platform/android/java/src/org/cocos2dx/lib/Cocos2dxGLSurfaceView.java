@@ -101,9 +101,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 					case HANDLER_CLOSE_IME_KEYBOARD:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
-							final String text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().toString();
-							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-							Log.d("GLSurfaceView", "HideSoftInput"+text);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(4);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
