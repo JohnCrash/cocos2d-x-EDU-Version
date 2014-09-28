@@ -166,7 +166,6 @@ public:
     virtual bool isSecureTextEntry();
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-
 protected:
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface
@@ -189,6 +188,13 @@ protected:
 
     bool _secureTextEntry;
 
+	int _cpos;
+	float _cursordt;
+	float _cx,_cy;
+	float _cwidth,_cheight;
+	bool _cursorb;
+	bool _showcursor;
+	void drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags);
 private:
     class LengthStack;
     LengthStack * _lens;

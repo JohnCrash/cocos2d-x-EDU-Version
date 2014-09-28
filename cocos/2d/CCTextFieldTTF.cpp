@@ -27,6 +27,9 @@ THE SOFTWARE.
 
 #include "base/CCDirector.h"
 #include "CCGLView.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "CCDrawingPrimitives.h"
 
 NS_CC_BEGIN
 
@@ -58,6 +61,11 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _secureTextEntry(false)
 , _colorText(Color4B::WHITE)
+,_cpos(0)
+,_cursordt(0)
+,_cursorb(false)
+,_cx(0),_cy(0),_cwidth(2),_cheight(32)
+,_showcursor(false)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
@@ -65,6 +73,30 @@ TextFieldTTF::TextFieldTTF()
 
 TextFieldTTF::~TextFieldTTF()
 {
+}
+
+void TextFieldTTF::drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags)
+{
+	if( _showcursor )
+	{
+		auto director = Director::getInstance();
+		double d = director->getAnimationInterval();
+		_cursordt += d;
+		if( _cursordt>0.5 )
+		{
+			_cursorb = !_cursorb;
+			_cursordt-=0.5;
+		}
+		if( _cursorb )
+		{
+			MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
+			director->pushMatrix(currentActiveStackType);
+			director->loadMatrix(currentActiveStackType,transform);
+			glLineWidth(_cwidth);
+			DrawPrimitives::drawLine(Vec2(_cx,_cy),Vec2(_cx,_cy+_cheight));
+			director->popMatrix(currentActiveStackType);
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -144,6 +176,7 @@ bool TextFieldTTF::attachWithIME()
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
+			_showcursor = true;
         }
     }
     return ret;
@@ -159,6 +192,7 @@ bool TextFieldTTF::detachWithIME()
         if (glView)
         {
             glView->setIMEKeyboardState(false);
+			_showcursor = false;
         }
     }
     return ret;
@@ -270,6 +304,7 @@ void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         return;
     }
     Label::visit(renderer,parentTransform,parentFlags);
+	drawCursor(renderer,parentTransform,parentFlags);
 }
 
 const Color4B& TextFieldTTF::getColorSpaceHolder()
