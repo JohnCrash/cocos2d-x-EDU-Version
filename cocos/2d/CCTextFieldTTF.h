@@ -195,6 +195,7 @@ protected:
 	bool _cursorb;
 	bool _showcursor;
 	void drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags);
+	void updateCursor();
 private:
     class LengthStack;
     LengthStack * _lens;

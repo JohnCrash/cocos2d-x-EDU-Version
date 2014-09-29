@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTextFieldTTF.h"
-
+#include "2d/CCSprite.h"
 #include "base/CCDirector.h"
 #include "CCGLView.h"
 #include "renderer/CCRenderer.h"
@@ -73,6 +73,25 @@ TextFieldTTF::TextFieldTTF()
 
 TextFieldTTF::~TextFieldTTF()
 {
+}
+
+void TextFieldTTF::updateCursor()
+{
+	if( _cpos > _inputText.length() )
+		_cpos = _inputText.length();
+	std::string s = _inputText.substr(0,_cpos);
+	if( s.length() > 0 )
+	{
+		auto texture = new Texture2D();
+		texture->initWithString(s.c_str(),_fontDefinition);
+		auto textSprite = Sprite::createWithTexture(texture);
+		_cx = textSprite->getContentSize().width;
+		texture->release();
+	}
+	else
+	{
+		_cx = 0;
+	}
 }
 
 void TextFieldTTF::drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags)
@@ -177,6 +196,8 @@ bool TextFieldTTF::attachWithIME()
         {
             pGlView->setIMEKeyboardState(true);
 			_showcursor = true;
+			_cpos = _inputText.length();
+			updateCursor();
         }
     }
     return ret;
@@ -230,7 +251,14 @@ void TextFieldTTF::insertText(const char * text, size_t len)
 
         _charCount += _calcCharCount(insert.c_str());
         std::string sText(_inputText);
-        sText.append(insert);
+
+		if(!(_cpos>=0||_cpos<=sText.length()))
+		{
+			_cpos = 0;
+		}
+		sText.insert(_cpos,insert);
+
+		_cpos += len;
         setString(sText);
     }
 
@@ -260,7 +288,10 @@ void TextFieldTTF::deleteBackward()
     // get the delete byte number
     size_t deleteLen = 1;    // default, erase 1 byte
 
-    while(0x80 == (0xC0 & _inputText.at(len - deleteLen)))
+	if( _cpos <= 0 )
+		return;
+
+    while(0x80 == (0xC0 & _inputText.at(_cpos - deleteLen)))
     {
         ++deleteLen;
     }
@@ -276,13 +307,19 @@ void TextFieldTTF::deleteBackward()
     {
         _inputText = "";
         _charCount = 0;
+		_cpos = 0;
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
+		updateCursor();
         return;
     }
 
     // set new input text
-    std::string text(_inputText.c_str(), len - deleteLen);
+	int bpos = _cpos - deleteLen;
+
+    std::string text(_inputText.c_str(), bpos);
+	text += _inputText.substr(_cpos);
+	_cpos -= deleteLen;
     setString(text);
 }
 
@@ -368,6 +405,7 @@ void TextFieldTTF::setString(const std::string &text)
         Label::setString(displayText);
     }
     _charCount = _calcCharCount(_inputText.c_str());
+	updateCursor();
 }
 
 const std::string& TextFieldTTF::getString() const

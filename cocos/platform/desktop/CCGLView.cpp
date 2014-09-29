@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCEventMouse.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
+#include "base/ccUTF8.h"
 
 #include <unordered_map>
 
@@ -658,7 +659,14 @@ void GLView::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int ac
 
 void GLView::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
 {
+#ifdef _WIN32
+	std::u16string u16((char16_t*)&character,1);
+	std::string u8;
+	StringUtils::UTF16ToUTF8(u16,u8);
+	IMEDispatcher::sharedDispatcher()->dispatchInsertText(u8.c_str(), u8.length());
+#else
     IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
+#endif
 }
 
 void GLView::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
