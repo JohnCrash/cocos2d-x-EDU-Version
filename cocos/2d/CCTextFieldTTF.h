@@ -194,8 +194,11 @@ protected:
 	float _cwidth,_cheight;
 	bool _cursorb;
 	bool _showcursor;
+	static TextFieldTTF *_currentActive;
+	CustomCommand _renderCmd;
 	void drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags);
 	void updateCursor();
+	void onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags);
 private:
     class LengthStack;
     LengthStack * _lens;
