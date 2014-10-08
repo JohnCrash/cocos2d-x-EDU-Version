@@ -969,8 +969,8 @@ void Label::updateContent()
             _fontDefinition._alignment = _hAlignment;
             _fontDefinition._vertAlignment = _vAlignment;
 
-            _fontDefinition._dimensions.width = _labelWidth;
-            _fontDefinition._dimensions.height = _labelHeight;
+            _fontDefinition._dimensions.width = 0;
+            _fontDefinition._dimensions.height = 0;
 
             _fontDefinition._fontFillColor.r = _textColor.r;
             _fontDefinition._fontFillColor.g = _textColor.g;

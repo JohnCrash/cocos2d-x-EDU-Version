@@ -85,7 +85,7 @@ void TextFieldTTF::updateCursor()
 	if( s.length() > 0 )
 	{
 		FontDefinition fontDef = _fontDefinition;
-		_cheight = fontDef._fontSize;
+		_cheight = _labelHeight>fontDef._fontSize?_labelHeight:fontDef._fontSize;
 		fontDef._dimensions.width = 0;
 		fontDef._dimensions.height = 0;
 		auto texture = new Texture2D();
