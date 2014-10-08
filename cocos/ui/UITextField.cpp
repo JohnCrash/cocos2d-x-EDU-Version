@@ -606,6 +606,7 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
+		_textFieldRenderer->onClick(touch->getLocation());
     } else {
         this->didNotSelectSelf();
     }

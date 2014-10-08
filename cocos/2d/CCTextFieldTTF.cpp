@@ -85,19 +85,84 @@ void TextFieldTTF::updateCursor()
 	if( s.length() > 0 )
 	{
 		FontDefinition fontDef = _fontDefinition;
-		_cheight = _labelHeight>fontDef._fontSize?_labelHeight:fontDef._fontSize;
-		fontDef._dimensions.width = 0;
-		fontDef._dimensions.height = 0;
-		auto texture = new Texture2D();
-		texture->initWithString(s.c_str(),fontDef);
-		auto textSprite = Sprite::createWithTexture(texture);
-		_cx = textSprite->getContentSize().width;
-		texture->release();
+		_cheight = fontDef._fontSize;
+		Size size;
+		getStringSize(s,size);
+		_cx = size.width;
+		_cy = (float)_labelHeight - _cheight;
+		if( _cy < 0 )_cy = 0;
 	}
 	else
 	{
+		_cheight = _fontDefinition._fontSize;
+		_cy = (float)_labelHeight - _cheight;
+		if( _cy < 0 )_cy = 0;
 		_cx = 0;
 	}
+}
+
+void TextFieldTTF::getStringSize(const std::string& str,Size& size)
+{
+	FontDefinition fontDef = _fontDefinition;
+	fontDef._dimensions.width = 0;
+	fontDef._dimensions.height = 0;
+	auto texture = new Texture2D();
+	texture->initWithString(str.c_str(),fontDef);
+	size = texture->getContentSize();
+	texture->release();
+	if( size.height<= 0 )size.height = fontDef._fontSize;
+}
+
+void TextFieldTTF::cursorPos(Vec2 pt)
+{
+	Size size;
+	pt = convertToNodeSpace(pt);
+	int len = _inputText.length();
+	getStringSize(_inputText,size);
+	if( size.width > 0 )
+	{
+		float v = pt.x/size.width;
+		if( v>=0 || v < 1 )
+		{
+			int i = len*v;
+			int flag = 0;
+			float last_width;
+			do{
+				std::string s = _inputText.substr(0,i);
+				getStringSize(s,size);
+				if( size.width > pt.x )
+				{
+					if( flag == 2 )
+					{
+						if( pt.x > (last_width+size.width)/2 )
+							_cpos = i;
+						else
+							_cpos = i-1;
+						break;
+					}
+					i--;
+					flag = 1;
+				}
+				else
+				{
+					if( flag == 1 )
+					{
+						if( pt.x > (last_width+size.width)/2 )
+							_cpos = i;
+						else
+							_cpos = i-1;
+						break;
+					}
+					i++;
+					flag = 2;
+				}
+				last_width = size.width;
+			}while(i>0 &&i<len);
+		}
+	}
+	if( _cpos < 0 )_cpos = 0;
+	if( _cpos > len )_cpos = len;
+	updateCursor();
 }
 
 void TextFieldTTF::onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags)
@@ -201,6 +266,10 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
     return true;
 }
 
+void TextFieldTTF::onClick(Vec2 pt)
+{
+	cursorPos(pt);
+}
 //////////////////////////////////////////////////////////////////////////
 // IMEDelegate
 //////////////////////////////////////////////////////////////////////////
