@@ -649,9 +649,31 @@ void GLView::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int ac
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
 #ifdef _WIN32
-		if( key==GLFW_KEY_BACKSPACE&&GLFW_PRESS == action)
+		if(GLFW_PRESS == action||action==GLFW_REPEAT)
 		{
-			IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+			switch( key)
+			{
+				case GLFW_KEY_BACKSPACE:
+					IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+					break;
+				case GLFW_KEY_DELETE:
+					IMEDispatcher::sharedDispatcher()->dispatchDeleteForward();
+					break;
+				case GLFW_KEY_LEFT:
+				case GLFW_KEY_RIGHT:
+				case GLFW_KEY_HOME:
+				case GLFW_KEY_END:
+					IMEDispatcher::sharedDispatcher()->dispatchMoveCursor(key,mods==GLFW_MOD_SHIFT);
+					break;
+				case GLFW_KEY_V:
+				case GLFW_KEY_C:
+				case GLFW_KEY_A:
+				case GLFW_KEY_Z:
+				case GLFW_KEY_X:
+					if( mods==GLFW_MOD_CONTROL )
+						IMEDispatcher::sharedDispatcher()->dispatchOptKey(key);
+					break;
+			}
 		}
 #endif
     }

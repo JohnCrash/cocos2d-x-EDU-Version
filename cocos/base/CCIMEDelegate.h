@@ -112,6 +112,9 @@ protected:
     */
     virtual void deleteBackward() {}
 
+	virtual void deleteForward(){}
+	virtual void moveCursor(int,bool){}
+	virtual void optKey(int){}
     /**
     @brief    Called by IMEDispatcher for text stored in delegate.
     * @js NA

@@ -613,6 +613,12 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     return pass;
 }
 
+void TextField::onTouchMoved(Touch *touch, Event *unusedEvent)
+{
+	Widget::onTouchMoved(touch, unusedEvent);
+	_textFieldRenderer->selectDrag(touch->getLocation());
+}
+
 void TextField::setMaxLengthEnabled(bool enable)
 {
     _textFieldRenderer->setMaxLengthEnabled(enable);

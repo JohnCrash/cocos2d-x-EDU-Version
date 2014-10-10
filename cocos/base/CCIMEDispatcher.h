@@ -73,6 +73,9 @@ public:
      */
     void dispatchDeleteBackward();
 
+	void dispatchMoveCursor(int,bool);
+	void dispatchDeleteForward();
+	void dispatchOptKey(int);
     /**
      @brief Get the content text from IMEDelegate, retrieved previously from IME.
      * @js NA
