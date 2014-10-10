@@ -204,12 +204,10 @@ protected:
 	float _selx;
 	static TextFieldTTF *_currentActive;
 	CustomCommand _renderCmd;
-	CustomCommand _renderCmdSelect;
 
 	void drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags);
 	void updateCursor();
 	void onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags);
-	void onDrawSelectRect(const cocos2d::Mat4 &transform, uint32_t flags);
 	int cursorPos(Vec2 pt);
 	void getStringSize(const std::string& str,Size& size);
 	void deleteSelect();

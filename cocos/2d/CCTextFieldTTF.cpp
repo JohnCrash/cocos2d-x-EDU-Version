@@ -123,6 +123,7 @@ void TextFieldTTF::updateCursor()
 {
 	if( _cpos > _inputText.length() )
 		_cpos = _inputText.length();
+	if( _cpos < 0 )_cpos = 0;
 	std::string s = _inputText.substr(0,_cpos);
 	if( s.length() > 0 )
 	{
@@ -131,16 +132,14 @@ void TextFieldTTF::updateCursor()
 		Size size;
 		getStringSize(s,size);
 		_cx = size.width;
-		//_cy = (float)_labelHeight - _cheight;
-		//if( _cy < 0 )_cy = 0;
-		_cy = 0;
+		_cy = (float)_labelHeight - _cheight;
+		if( _cy < 0 )_cy = 0;
 	}
 	else
 	{
 		_cheight = _fontDefinition._fontSize;
-		//_cy = (float)_labelHeight - _cheight;
-		//if( _cy < 0 )_cy = 0;
-		_cy = 0;
+		_cy = (float)_labelHeight - _cheight;
+		if( _cy < 0 )_cy = 0;
 		_cx = 0;
 	}
 	_cursorb = 0.5; //show cursor
@@ -247,28 +246,23 @@ void TextFieldTTF::selectDrag(Vec2 pt)
 
 void TextFieldTTF::onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags)
 {
-	GL::blendFunc(GL_ONE ,GL_ONE );
 	GLint mode;
-	glGetIntegerv(GL_BLEND_EQUATION_RGB,&mode);
-	glBlendEquation(GL_FUNC_SUBTRACT);
 	auto director = Director::getInstance();
 	MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
 	director->pushMatrix(currentActiveStackType);
 	director->loadMatrix(currentActiveStackType,transform);
-	glLineWidth(_cwidth);
-	DrawPrimitives::setDrawColor4B(255,255,255,255);
-	DrawPrimitives::drawLine(Vec2(_cx,_cy),Vec2(_cx,_cy+_cheight));
-	glBlendEquation(mode);
-	director->popMatrix(currentActiveStackType);
-}
-
-void TextFieldTTF::onDrawSelectRect(const cocos2d::Mat4 &transform, uint32_t flags)
-{
-	auto director = Director::getInstance();
-	MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
-	director->pushMatrix(currentActiveStackType);
-	director->loadMatrix(currentActiveStackType,transform);
-	DrawPrimitives::drawSolidRect(Vec2(_cx,_cy),Vec2(_selx,_cy+_cheight),Color4F(0,0,1,0.5));
+	if(_selpos>=0)
+		DrawPrimitives::drawSolidRect(Vec2(_cx,_cy),Vec2(_selx,_cy+_cheight),Color4F(0,0,1,0.5));
+	if(_cursorb)
+	{
+		GL::blendFunc(GL_ONE ,GL_ONE );
+		glGetIntegerv(GL_BLEND_EQUATION_RGB,&mode);
+		glBlendEquation(GL_FUNC_SUBTRACT);
+		glLineWidth(_cwidth);
+		DrawPrimitives::setDrawColor4B(255,255,255,255);
+		DrawPrimitives::drawLine(Vec2(_cx,_cy),Vec2(_cx,_cy+_cheight));
+		glBlendEquation(mode);
+	}
 	director->popMatrix(currentActiveStackType);
 }
 
@@ -284,18 +278,9 @@ void TextFieldTTF::drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform,
 			_cursorb = !_cursorb;
 			_cursordt-=0.5;
 		}
-		if( _cursorb )
-		{
-			_renderCmd.init(_globalZOrder);
-			_renderCmd.func = CC_CALLBACK_0(TextFieldTTF::onDrawCursor, this, transform, flags);
-			renderer->addCommand(&_renderCmd);
-		}
-		if( _selpos>=0  )
-		{
-			_renderCmdSelect.init(_globalZOrder);
-			_renderCmdSelect.func = CC_CALLBACK_0(TextFieldTTF::onDrawSelectRect, this, transform, flags);
-			renderer->addCommand(&_renderCmdSelect);
-		}
+		_renderCmd.init(_globalZOrder);
+		_renderCmd.func = CC_CALLBACK_0(TextFieldTTF::onDrawCursor, this, transform, flags);
+		renderer->addCommand(&_renderCmd);
 	}
 }
 
@@ -819,6 +804,7 @@ void TextFieldTTF::setString(const std::string &text)
         Label::setString(displayText);
     }
     _charCount = _calcCharCount(_inputText.c_str());
+	_selpos = -1;
 	updateCursor();
 }
 
