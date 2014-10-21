@@ -538,6 +538,7 @@ void TextFieldTTF::deleteForward()
 
 void TextFieldTTF::moveCursor(int a,bool sel)
 {
+#ifdef _WIN32
 	int len = _inputText.length();
 	if( sel )
 	{
@@ -586,6 +587,7 @@ void TextFieldTTF::moveCursor(int a,bool sel)
 	if( _cpos < 0 )_cpos = 0;
 	if( _cpos > len) _cpos = len;
 	updateCursor();
+#endif
 }
 
 void TextFieldTTF::optKey(int key)
