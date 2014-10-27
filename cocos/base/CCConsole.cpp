@@ -369,7 +369,9 @@ bool Console::listenOnTCP(int port)
     }
 
     listen(listenfd, 50);
-
+	
+	cocos2d::log("ERROR in Console::listenOnTCP inet_ntop");
+/* xp not support inet_ntop
     if (res->ai_family == AF_INET) {
         char buf[INET_ADDRSTRLEN] = "";
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
@@ -385,7 +387,7 @@ bool Console::listenOnTCP(int port)
         else
             perror("inet_ntop");
     }
-
+*/
 
     freeaddrinfo(ressave);
     return listenOnFileDescriptor(listenfd);
