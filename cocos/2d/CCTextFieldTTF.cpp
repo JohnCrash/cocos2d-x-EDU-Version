@@ -403,6 +403,28 @@ bool TextFieldTTF::canDetachWithIME()
     return (_delegate) ? (! _delegate->onTextFieldDetachWithIME(this)) : true;
 }
 
+void TextFieldTTF::setText(const char * text, size_t len)
+{
+    std::string insert(text, len);
+
+	if( _selpos > 0 )
+	{
+		deleteSelect();
+	}
+    // insert \n means input end
+    int pos = static_cast<int>(insert.find('\n'));
+    if ((int)insert.npos != pos)
+    {
+        len = pos;
+        insert.erase(pos);
+    }
+	
+	_charCount = _calcCharCount(insert.c_str());
+	_cpos = len;
+	setString(insert);
+    detachWithIME();	
+}
+
 void TextFieldTTF::insertText(const char * text, size_t len)
 {
     std::string insert(text, len);

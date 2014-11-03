@@ -227,6 +227,19 @@ void IMEDispatcher::dispatchInsertText(const char * text, size_t len)
     } while (0);
 }
 
+void IMEDispatcher::dispatchSetText(const char * text, size_t len)
+{
+    do 
+    {
+        CC_BREAK_IF(! _impl || ! text || len <= 0);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(! _impl->_delegateWithIme);
+
+        _impl->_delegateWithIme->setText(text, len);
+    } while (0);
+}
+
 void IMEDispatcher::dispatchDeleteBackward()
 {
     do 

@@ -155,6 +155,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private static native void nativeInsertText(final String pText);
+	private static native void nativeSetText(final String pText);
 	private static native void nativeDeleteBackward();
 	private static native String nativeGetContentText();
 
@@ -162,6 +163,10 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 		Cocos2dxRenderer.nativeInsertText(pText);
 	}
 
+	public void handleSetText(final String pText)
+	{
+		Cocos2dxRenderer.nativeSetText(pText);
+	}
 	public void handleDeleteBackward() {
 		Cocos2dxRenderer.nativeDeleteBackward();
 	}

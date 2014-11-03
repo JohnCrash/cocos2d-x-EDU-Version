@@ -105,6 +105,7 @@ protected:
     */
     virtual void insertText(const char * text, size_t len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
+	virtual void setText(const char *text,size_t len ) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
     /**
     @brief    Called by IMEDispatcher after the user clicks the backward key.
     * @js NA

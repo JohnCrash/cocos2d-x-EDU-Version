@@ -76,6 +76,8 @@ public:
 	void dispatchMoveCursor(int,bool);
 	void dispatchDeleteForward();
 	void dispatchOptKey(int);
+	
+	void dispatchSetText( const char *text,size_t len);
     /**
      @brief Get the content text from IMEDelegate, retrieved previously from IME.
      * @js NA

@@ -176,6 +176,7 @@ protected:
     virtual bool canAttachWithIME() override;
     virtual bool canDetachWithIME() override;
     virtual void insertText(const char * text, size_t len) override;
+	virtual void setText(const char * text, size_t len) override;
     virtual void deleteBackward() override;
 	virtual void deleteForward() override;
 	virtual void moveCursor(int,bool) override;

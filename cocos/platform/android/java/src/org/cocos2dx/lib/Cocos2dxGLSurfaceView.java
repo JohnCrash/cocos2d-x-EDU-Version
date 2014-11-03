@@ -346,10 +346,20 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		});
 	}
 
+	public void setText(final String pText) {
+		this.queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleSetText(pText);
+			}
+		});
+	}
+	
 	public void deleteBackward() {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
+				Log.d("deleteBackward","");
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleDeleteBackward();
 			}
 		});

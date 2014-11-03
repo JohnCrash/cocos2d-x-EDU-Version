@@ -34,7 +34,13 @@ extern "C" {
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
         env->ReleaseStringUTFChars(text, pszText);
     }
-
+	
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeSetText(JNIEnv* env, jobject thiz, jstring text) {
+        const char* pszText = env->GetStringUTFChars(text, NULL);
+        cocos2d::IMEDispatcher::sharedDispatcher()->dispatchSetText(pszText, strlen(pszText));
+        env->ReleaseStringUTFChars(text, pszText);
+    }
+	
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
