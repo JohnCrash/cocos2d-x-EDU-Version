@@ -301,6 +301,14 @@ const std::string& IMEDispatcher::getContentText()
     return STD_STRING_EMPTY;
 }
 
+Rect IMEDispatcher::getContentRect()
+{
+    if (_impl && _impl->_delegateWithIme)
+    {
+        return _impl->_delegateWithIme->getContentRect();
+    }
+	return Rect();
+}
 //////////////////////////////////////////////////////////////////////////
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////

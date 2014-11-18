@@ -122,7 +122,8 @@ protected:
     * @lua NA
     */
     virtual const std::string& getContentText() { return STD_STRING_EMPTY; }
-
+	
+	virtual Rect getContentRect(){ return Rect(); }
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////

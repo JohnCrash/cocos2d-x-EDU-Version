@@ -749,6 +749,25 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
+Rect TextFieldTTF::getContentRect()
+{
+	Vec2 p = getPosition();
+	Size s = getContentSize();
+	Vec2 ap = this->getAnchorPoint();
+	p.x -= s.width*ap.x;
+	p.y = p.y - s.height*ap.y + s.height;
+	Vec2 pp;
+	pp.x = p.x + s.width;
+	pp.y = p.y + s.height;
+	Vec2 wp = convertToWindowSpace(p);
+	Vec2 wpp = convertToWindowSpace(pp);
+	CCLOG("p= %f,%f s = %f,%f", p.x, p.y, s.width, s.height);
+	CCLOG("wp= %f,%f ws = %f,%f",wp.x, wp.y,wpp.x-wp.x,wpp.y-wp.y);
+	CCLOG("getContentRect AnchorPoint = %f,%f",ap.x,ap.y);
+
+	return Rect(wp.x, wp.y, abs(wpp.x-wp.x),abs(wpp.y-wp.y));
+}
+
 void TextFieldTTF::setTextColor(const Color4B &color)
 {
     _colorText = color;

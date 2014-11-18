@@ -182,7 +182,8 @@ protected:
 	virtual void moveCursor(int,bool) override;
 	virtual void optKey(int) override;
     virtual const std::string& getContentText() override;
-
+	virtual Rect getContentRect() override;
+	
     TextFieldDelegate * _delegate;
     int _charCount;
 
