@@ -34,7 +34,13 @@ extern "C" {
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
         env->ReleaseStringUTFChars(text, pszText);
     }
-
+	
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeSetText(JNIEnv* env, jobject thiz, jstring text) {
+        const char* pszText = env->GetStringUTFChars(text, NULL);
+        cocos2d::IMEDispatcher::sharedDispatcher()->dispatchSetText(pszText, strlen(pszText));
+        env->ReleaseStringUTFChars(text, pszText);
+    }
+	
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
@@ -48,4 +54,19 @@ extern "C" {
         std::string pszText = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
         return env->NewStringUTF(pszText.c_str());
     }
+	
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentRect() {
+        JNIEnv * env = 0;
+		JniMethodInfo t;
+		
+        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
+            return;
+        }
+        Rect rect = cocos2d::IMEDispatcher::sharedDispatcher()->getContentRect();
+		if(JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxRenderer", "SetContentTextRect", "(IIII)V")) { 
+			CCLOG("getContentRect x=%d,y=%d,w=%d,h=%d", (int)rect.origin.x,(int)rect.origin.y,(int)rect.size.width,(int)rect.size.height);
+			t.env->CallStaticVoidMethod(t.classID, t.methodID, (int)rect.origin.x,(int)rect.origin.y,(int)rect.size.width,(int)rect.size.height);
+			t.env->DeleteLocalRef(t.classID);
+		}
+    }	
 }

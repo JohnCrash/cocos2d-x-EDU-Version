@@ -1,8 +1,8 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := json-c_static
-LOCAL_MODULE_FILENAME := json-c
-LOCAL_SRC_FILES := $(TARGET_ARCH_ABI)/libjson-c.a
+LOCAL_MODULE := amrnb_static
+LOCAL_MODULE_FILENAME := amrnb
+LOCAL_SRC_FILES := $(TARGET_ARCH_ABI)/libamrnb.a
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../
 include $(PREBUILT_STATIC_LIBRARY)

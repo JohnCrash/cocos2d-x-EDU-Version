@@ -166,7 +166,8 @@ public:
     virtual bool isSecureTextEntry();
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-
+	void onClick(Vec2 pt);
+	void selectDrag(Vec2 pt);
 protected:
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface
@@ -175,9 +176,14 @@ protected:
     virtual bool canAttachWithIME() override;
     virtual bool canDetachWithIME() override;
     virtual void insertText(const char * text, size_t len) override;
+	virtual void setText(const char * text, size_t len) override;
     virtual void deleteBackward() override;
+	virtual void deleteForward() override;
+	virtual void moveCursor(int,bool) override;
+	virtual void optKey(int) override;
     virtual const std::string& getContentText() override;
-
+	virtual Rect getContentRect() override;
+	
     TextFieldDelegate * _delegate;
     int _charCount;
 
@@ -188,7 +194,25 @@ protected:
     Color4B _colorText;
 
     bool _secureTextEntry;
+	//cursor
+	int _cpos;
+	float _cursordt;
+	float _cx,_cy;
+	float _cwidth,_cheight;
+	bool _cursorb;
+	bool _showcursor;
+	//select
+	int _selpos;
+	float _selx;
+	static TextFieldTTF *_currentActive;
+	CustomCommand _renderCmd;
 
+	void drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags);
+	void updateCursor();
+	void onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags);
+	int cursorPos(Vec2 pt);
+	void getStringSize(const std::string& str,Size& size);
+	void deleteSelect();
 private:
     class LengthStack;
     LengthStack * _lens;

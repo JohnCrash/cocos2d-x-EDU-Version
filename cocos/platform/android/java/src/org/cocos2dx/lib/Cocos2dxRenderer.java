@@ -25,7 +25,7 @@ package org.cocos2dx.lib;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
+import android.graphics.Rect;
 import android.opengl.GLSurfaceView;
 
 import org.cocos2dx.lib.Cocos2dxHelper;
@@ -123,7 +123,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private static native void nativeOnSurfaceChanged(final int pWidth, final int pHeight);
 	private static native void nativeOnPause();
 	private static native void nativeOnResume();
-
+	
 	public void handleActionDown(final int pID, final float pX, final float pY) {
 		Cocos2dxRenderer.nativeTouchesBegin(pID, pX, pY);
 	}
@@ -155,13 +155,29 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private static native void nativeInsertText(final String pText);
+	private static native void nativeSetText(final String pText);
 	private static native void nativeDeleteBackward();
 	private static native String nativeGetContentText();
+	private static native void nativeGetContentRect();
 
+	static int _left,_right,_top,_bottom;
+	
+	private static void SetContentTextRect(final int x,final int y,final int width,final int height)
+	{
+		_left = x;
+		_top = y;
+		_right = x+width;
+		_bottom = y+height;
+	}
+	
 	public void handleInsertText(final String pText) {
 		Cocos2dxRenderer.nativeInsertText(pText);
 	}
 
+	public void handleSetText(final String pText)
+	{
+		Cocos2dxRenderer.nativeSetText(pText);
+	}
 	public void handleDeleteBackward() {
 		Cocos2dxRenderer.nativeDeleteBackward();
 	}
@@ -170,6 +186,11 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 		return Cocos2dxRenderer.nativeGetContentText();
 	}
 
+	public Rect getContextRect()
+	{
+		Cocos2dxRenderer.nativeGetContentRect();
+		return new Rect( _left,_top,_right,_bottom );
+	}
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================

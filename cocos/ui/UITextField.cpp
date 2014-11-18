@@ -487,11 +487,10 @@ void TextField::setText(const std::string& text)
             int unicode = 0;
             int end = 0;
             int count = 0;
-            
-            for (int i = 0; i < total * 3; ++i)
+			int len = text.length();
+            for (int i = 0; i < len; ++i)
             {
                 char value = text[i];
-                
                 if (value >= 0 && value <= 127) // ascii
                 {
                     ascii++;
@@ -606,10 +605,17 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
+		_textFieldRenderer->onClick(touch->getLocation());
     } else {
         this->didNotSelectSelf();
     }
     return pass;
+}
+
+void TextField::onTouchMoved(Touch *touch, Event *unusedEvent)
+{
+	Widget::onTouchMoved(touch, unusedEvent);
+	_textFieldRenderer->selectDrag(touch->getLocation());
 }
 
 void TextField::setMaxLengthEnabled(bool enable)

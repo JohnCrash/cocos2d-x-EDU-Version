@@ -31,6 +31,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.util.Log;
 
 public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListener {
 	// ===========================================================
@@ -102,6 +103,9 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		//	}
 		}
 		this.mText = s.toString();
+	
+		//Log.d("afterTextChanged",this.mText);
+		//this.mCocos2dxGLSurfaceView.setText(this.mText);
 	}
 
 	@Override
@@ -112,6 +116,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		}
 		*/
 		this.mText = pCharSequence.toString();
+		//Log.d("beforeTextChanged",this.mText);
 	}
 
 	@Override
@@ -126,6 +131,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			if (null != mOriginText) {
 				for (int i = this.mOriginText.length(); i > 0; i--) {
 					this.mCocos2dxGLSurfaceView.deleteBackward();
+					Log.d("deleteBackward",mOriginText);
 					/*
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "deleteBackward");
@@ -138,6 +144,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			
 			if (text != null) {
 				/* If user input nothing, translate "\n" to engine. */
+			
 				if ( text.compareTo("") == 0) {
 					text = "\n";
 				}
@@ -145,10 +152,12 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 				if ( '\n' != text.charAt(text.length() - 1)) {
 					text += '\n';
 				}
-			}
+			} 
 			
 			final String insertText = text;
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
+			//Log.d("mCocos2dxGLSurfaceView.insertText",text);
+			//this.mCocos2dxGLSurfaceView.insertText(insertText);
+			this.mCocos2dxGLSurfaceView.setText(insertText);
 			/*
 			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "insertText(" + insertText + ")");

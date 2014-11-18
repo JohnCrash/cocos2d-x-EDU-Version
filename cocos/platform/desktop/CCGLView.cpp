@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCEventMouse.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
+#include "base/ccUTF8.h"
 
 #include <unordered_map>
 
@@ -647,12 +648,47 @@ void GLView::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int ac
         EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
+#ifdef _WIN32
+		if(GLFW_PRESS == action||action==GLFW_REPEAT)
+		{
+			switch( key)
+			{
+				case GLFW_KEY_BACKSPACE:
+					IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+					break;
+				case GLFW_KEY_DELETE:
+					IMEDispatcher::sharedDispatcher()->dispatchDeleteForward();
+					break;
+				case GLFW_KEY_LEFT:
+				case GLFW_KEY_RIGHT:
+				case GLFW_KEY_HOME:
+				case GLFW_KEY_END:
+					IMEDispatcher::sharedDispatcher()->dispatchMoveCursor(key,mods==GLFW_MOD_SHIFT);
+					break;
+				case GLFW_KEY_V:
+				case GLFW_KEY_C:
+				case GLFW_KEY_A:
+				case GLFW_KEY_Z:
+				case GLFW_KEY_X:
+					if( mods==GLFW_MOD_CONTROL )
+						IMEDispatcher::sharedDispatcher()->dispatchOptKey(key);
+					break;
+			}
+		}
+#endif
     }
 }
 
 void GLView::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
 {
+#ifdef _WIN32
+	std::u16string u16((char16_t*)&character,1);
+	std::string u8;
+	StringUtils::UTF16ToUTF8(u16,u8);
+	IMEDispatcher::sharedDispatcher()->dispatchInsertText(u8.c_str(), u8.length());
+#else
     IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
+#endif
 }
 
 void GLView::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)

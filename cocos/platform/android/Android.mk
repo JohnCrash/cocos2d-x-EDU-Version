@@ -42,7 +42,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
                        -lz \
                        -landroid
 
-LOCAL_WHOLE_STATIC_LIBRARIES	:= cocos_png_static cocos_jpeg_static cocos_tiff_static cocos_webp_static gif_static json-c_static
+LOCAL_WHOLE_STATIC_LIBRARIES	:= cocos_png_static cocos_jpeg_static cocos_tiff_static cocos_webp_static gif_static json-c_static amrnb_static
 
 
 include $(BUILD_STATIC_LIBRARY)
@@ -53,3 +53,4 @@ $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,giflib/obj/local)
 $(call import-module,json-c/obj/local)
+$(call import-module,amrnb/obj/local)

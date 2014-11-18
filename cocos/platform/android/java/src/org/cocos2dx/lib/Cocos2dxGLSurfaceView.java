@@ -32,8 +32,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
+import android.graphics.Rect;
+import android.widget.FrameLayout;
+import android.os.ResultReceiver;
+import android.os.Bundle;
+import android.view.ViewTreeObserver
+;public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
-public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -55,7 +60,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 	private Cocos2dxRenderer mCocos2dxRenderer;
 	private Cocos2dxEditText mCocos2dxEditText;
-
+	private Cocos2dxEditText mCocos2dxEditMask;
+	private static int sEditTextMinHeight = 96;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -72,20 +78,63 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.initView();
 	}
 
+	protected void enableEdit(boolean b)
+	{
+		if(null == Cocos2dxGLSurfaceView.this.mCocos2dxEditText)return;
+		if(b)
+		{
+			Rect rect = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentRect();
+			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(0);
+			int height = rect.height() > sEditTextMinHeight ?rect.height():sEditTextMinHeight;
+			FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(rect.width(),height);
+			//lp.setMargins(rect.left,rect.top,rect.right,rect.bottom);
+			lp.setMargins(rect.left,rect.top,rect.right,rect.bottom);
+			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setLayoutParams(lp);
+		}
+		else
+		{
+			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(4);
+		}
+	}
+	private static int _softinputHeight = 0;
+	/*
+	 	下面代码当软键盘打开时给调用，可以计算出软键盘的高度(heightDifference)
+	 */
+	protected void calcSoftKeyboardHeight()
+	{
+		mCocos2dxGLSurfaceView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			 @Override
+             public void onGlobalLayout() {
+                 // TODO Auto-generated method stub
+                 Rect r = new Rect();
+                 mCocos2dxGLSurfaceView.getWindowVisibleDisplayFrame(r);
+
+                 int screenHeight = mCocos2dxGLSurfaceView.getRootView().getHeight();
+                 int heightDifference = screenHeight - (r.bottom - r.top);
+                 if( heightDifference > 0 )
+                 {
+                	 _softinputHeight = heightDifference; //最近一次软键盘的高度
+                 }
+             }			
+		});
+	}
+	private boolean _imeIsOpen = false;
 	protected void initView() {
 		this.setEGLContextClientVersion(2);
 		this.setFocusableInTouchMode(true);
-
+		/*
+		 * 暂时没有使用因为我发现在FrameLayout中加入多加入一个EditText，弹出时就可以正常看到编辑框了
+		 */
+		//calcSoftKeyboardHeight();
 		Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
 		Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper = new Cocos2dxTextInputWraper(this);
-
 		Cocos2dxGLSurfaceView.sHandler = new Handler() {
 			@Override
 			public void handleMessage(final Message msg) {
 				switch (msg.what) {
 					case HANDLER_OPEN_IME_KEYBOARD:
-						if(null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText)
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(0);
+						enableEdit(true);
+						if(_imeIsOpen) return;
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
@@ -94,18 +143,46 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
+							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0 );
 							Log.d("GLSurfaceView", "showSoftInput");
+							_imeIsOpen = true;
+							//下面代码可以监视软键盘的打开和关闭
+							/*,
+							 * new ResultReceiver(Cocos2dxGLSurfaceView.sHandler)
+							{
+								@Override
+								protected void onReceiveResult(int resultCode,Bundle resultData)
+								{
+									switch(resultCode)
+									{
+									case InputMethodManager.RESULT_HIDDEN:
+										Log.d("GLSurfaceView", "hidden");
+										break;
+									case InputMethodManager.RESULT_SHOWN:
+										Rect r = new Rect();
+										Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getWindowVisibleDisplayFrame(r);
+										int screenHeight =Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getHeight();
+										int heightDifference = screenHeight - (r.bottom - r.top);
+										Log.d("Keyboard Size","Size: " + heightDifference );
+										Log.d("GLSurfaceView", "shown");
+										break;
+									default:
+										Log.d("GLSurfaceView", "other");
+									}
+								}
+							});	*/
 						}
 						break;
 
 					case HANDLER_CLOSE_IME_KEYBOARD:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(4);
+							enableEdit(false);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
+							
 							Cocos2dxGLSurfaceView.this.requestFocus();
+							_imeIsOpen = false;
 							Log.d("GLSurfaceView", "HideSoftInput");
 						}
 						break;
@@ -141,12 +218,18 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		return this.mCocos2dxRenderer.getContentText();
 	}
 
+	private Rect getContentRect()
+	{
+		return this.mCocos2dxRenderer.getContextRect();
+	}
 	public Cocos2dxEditText getCocos2dxEditText() {
 		return this.mCocos2dxEditText;
 	}
 
-	public void setCocos2dxEditText(final Cocos2dxEditText pCocos2dxEditText) {
+	public void setCocos2dxEditText(final Cocos2dxEditText pCocos2dxEditText,final Cocos2dxEditText pMask) {
 		this.mCocos2dxEditText = pCocos2dxEditText;
+		this.mCocos2dxEditMask = pMask;
+		
 		if (null != this.mCocos2dxEditText && null != Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper) {
 			this.mCocos2dxEditText.setOnEditorActionListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 			this.mCocos2dxEditText.setCocos2dxGLSurfaceView(this);
@@ -346,10 +429,20 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		});
 	}
 
+	public void setText(final String pText) {
+		this.queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleSetText(pText);
+			}
+		});
+	}
+	
 	public void deleteBackward() {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
+				Log.d("deleteBackward","");
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleDeleteBackward();
 			}
 		});

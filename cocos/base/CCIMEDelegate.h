@@ -105,6 +105,7 @@ protected:
     */
     virtual void insertText(const char * text, size_t len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
+	virtual void setText(const char *text,size_t len ) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
     /**
     @brief    Called by IMEDispatcher after the user clicks the backward key.
     * @js NA
@@ -112,13 +113,17 @@ protected:
     */
     virtual void deleteBackward() {}
 
+	virtual void deleteForward(){}
+	virtual void moveCursor(int,bool){}
+	virtual void optKey(int){}
     /**
     @brief    Called by IMEDispatcher for text stored in delegate.
     * @js NA
     * @lua NA
     */
     virtual const std::string& getContentText() { return STD_STRING_EMPTY; }
-
+	
+	virtual Rect getContentRect(){ return Rect(); }
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////

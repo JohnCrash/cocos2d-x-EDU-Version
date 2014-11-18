@@ -1804,6 +1804,20 @@ bool Image::initWithGifData(const unsigned char *data, ssize_t dataLen)
 					int bytePerPixel = 4;
 					_dataLen = _width * _height * bytePerPixel;
 					_data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+					unsigned char transparent_idx;
+					bool has_transparent = false;
+					if( sp->ExtensionBlockCount>0 &&sp->ExtensionBlocks )
+					{
+						if( sp->ExtensionBlocks[0].ByteCount == 4 &&sp->ExtensionBlocks[0].Bytes )
+						{
+							unsigned char packed_fields = sp->ExtensionBlocks[0].Bytes[0];
+							if( packed_fields & 1 )
+							{ //has transparent index
+								transparent_idx = sp->ExtensionBlocks[0].Bytes[3];
+								has_transparent = true;
+							}
+						}
+					}
 					for( int y = 0;y < sp->ImageDesc.Height;++y )
 					{
 						unsigned char *pline = _data+(y+sp->ImageDesc.Top)*_width*bytePerPixel;
@@ -1811,9 +1825,17 @@ bool Image::initWithGifData(const unsigned char *data, ssize_t dataLen)
 						for(int x=0;x < sp->ImageDesc.Width;++x )
 						{
 							unsigned char *pc = pline + (x+sp->ImageDesc.Left)*bytePerPixel;
-							if( psrc[x] >= 0 && psrc[x] < pcmap->ColorCount )
+							unsigned char idx = psrc[x];
+							if( has_transparent && idx==transparent_idx )
 							{
-								GifColorType c = pcmap->Colors[psrc[x]];
+								pc[0] = 0;
+								pc[1] = 0;
+								pc[2] = 0;
+								pc[3] = 0; //transparent
+							}
+							else if( idx >= 0 && idx < pcmap->ColorCount )
+							{
+								GifColorType c = pcmap->Colors[idx];
 								pc[0] = c.Red;
 								pc[1] = c.Green;
 								pc[2] = c.Blue;

@@ -165,9 +165,22 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         mFrameLayout.setLayoutParams(framelayout_params);
 
         // Cocos2dxEditText layout
+        
         ViewGroup.LayoutParams edittext_layout_params =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                       ViewGroup.LayoutParams.WRAP_CONTENT);
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                       ViewGroup.LayoutParams.WRAP_CONTENT); 
+        
+        /*
+         这里增加一个额外的控件，用来在软键盘弹出的时候作为一个mask
+         因为在软键盘弹出的时候将上推图层，但是不会上推FrameLayout中mask空洞。
+         这导致编辑控件被绘制覆盖
+         */
+        Cocos2dxEditText mask = new Cocos2dxEditText(this);
+        ViewGroup.LayoutParams mask_layout_params =
+                new ViewGroup.LayoutParams(1,
+                                           1);         
+        mask.setLayoutParams(mask_layout_params);
+                
         Cocos2dxEditText edittext = new Cocos2dxEditText(this);
         edittext.setLayoutParams(edittext_layout_params);
 
@@ -178,6 +191,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // ...add to FrameLayout
         mFrameLayout.addView(this.mGLSurfaceView);
 
+        mFrameLayout.addView(mask);
+        
         // ...add to FrameLayout
         mFrameLayout.addView(edittext);
         
@@ -190,7 +205,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
 
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-        this.mGLSurfaceView.setCocos2dxEditText(edittext);
+        this.mGLSurfaceView.setCocos2dxEditText(edittext,mask);
 
         // Set framelayout as the content view
 		setContentView(mFrameLayout);

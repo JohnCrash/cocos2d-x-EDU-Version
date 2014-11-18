@@ -146,7 +146,8 @@ public:
     const std::string& getStringValue()const;
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
-    
+    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
+
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled()const;
     void setMaxLength(int length);

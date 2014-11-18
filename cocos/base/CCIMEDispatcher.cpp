@@ -227,6 +227,19 @@ void IMEDispatcher::dispatchInsertText(const char * text, size_t len)
     } while (0);
 }
 
+void IMEDispatcher::dispatchSetText(const char * text, size_t len)
+{
+    do 
+    {
+        CC_BREAK_IF(! _impl || ! text || len <= 0);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(! _impl->_delegateWithIme);
+
+        _impl->_delegateWithIme->setText(text, len);
+    } while (0);
+}
+
 void IMEDispatcher::dispatchDeleteBackward()
 {
     do 
@@ -240,6 +253,45 @@ void IMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
+void IMEDispatcher::dispatchMoveCursor(int a,bool b)
+{
+    do 
+    {
+        CC_BREAK_IF(! _impl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(! _impl->_delegateWithIme);
+
+		_impl->_delegateWithIme->moveCursor(a,b);
+    } while (0);
+}
+
+void IMEDispatcher::dispatchOptKey( int key )
+{
+    do 
+    {
+        CC_BREAK_IF(! _impl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(! _impl->_delegateWithIme);
+
+		_impl->_delegateWithIme->optKey(key);
+    } while (0);
+}
+
+void IMEDispatcher::dispatchDeleteForward()
+{
+    do 
+    {
+        CC_BREAK_IF(! _impl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(! _impl->_delegateWithIme);
+
+		_impl->_delegateWithIme->deleteForward();
+    } while (0);
+}
+
 const std::string& IMEDispatcher::getContentText()
 {
     if (_impl && _impl->_delegateWithIme)
@@ -249,6 +301,14 @@ const std::string& IMEDispatcher::getContentText()
     return STD_STRING_EMPTY;
 }
 
+Rect IMEDispatcher::getContentRect()
+{
+    if (_impl && _impl->_delegateWithIme)
+    {
+        return _impl->_delegateWithIme->getContentRect();
+    }
+	return Rect();
+}
 //////////////////////////////////////////////////////////////////////////
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////

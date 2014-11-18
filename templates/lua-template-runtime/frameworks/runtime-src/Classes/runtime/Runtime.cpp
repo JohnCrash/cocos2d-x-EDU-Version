@@ -352,7 +352,8 @@ bool FileServer::listenOnTCP(int port)
     }
 
     listen(listenfd, 1);
-
+	cocos2d::log("ERROR in Console::listenOnTCP inet_ntop");
+	/* xp not support inet_ntop
     if (res->ai_family == AF_INET) 
     {
         char buf[INET_ADDRSTRLEN] = "";
@@ -370,6 +371,7 @@ bool FileServer::listenOnTCP(int port)
         else
             perror("inet_ntop");
     }
+	*/
     freeaddrinfo(ressave);
     _listenfd = listenfd;
     _receiveThread = std::thread( std::bind( &FileServer::loopReceiveFile, this) );

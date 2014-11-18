@@ -24,11 +24,17 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTextFieldTTF.h"
-
+#include "2d/CCSprite.h"
 #include "base/CCDirector.h"
 #include "CCGLView.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "CCDrawingPrimitives.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
+
+TextFieldTTF *TextFieldTTF::_currentActive = nullptr;
 
 static int _calcCharCount(const char * text)
 {
@@ -47,6 +53,46 @@ static int _calcCharCount(const char * text)
     return n;
 }
 
+static int utf8length(const std::string& str)
+{
+	return _calcCharCount(str.c_str());
+}
+
+static void utf8index(const std::string& str,int idx,int* pidx,int* plen )
+{
+	int len = str.length();
+	int n = 0;
+	*plen = -1;
+	*pidx = -1;
+	for( int i = 0;i<len;i++ )
+	{
+		char ch = str.at(i);
+		if( n == idx )
+			*pidx = i;
+		else if( n == idx + 1 )
+		{
+			*plen = i-*pidx;
+			return;
+		}
+		if( (0xC0&ch)!=0x80 )
+		{
+			++n;
+		}
+	}
+	if( *pidx != -1 && *plen != -1 )
+	{
+		return;
+	}
+	else if( *pidx != -1 )
+	{
+		*plen = len-*pidx;
+	}
+	else
+	{
+		*pidx = len;
+		*plen = 0;
+	}
+}
 //////////////////////////////////////////////////////////////////////////
 // constructor and destructor
 //////////////////////////////////////////////////////////////////////////
@@ -58,6 +104,12 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _secureTextEntry(false)
 , _colorText(Color4B::WHITE)
+,_cpos(0)
+,_cursordt(0)
+,_cursorb(false)
+,_cx(0),_cy(0),_cwidth(1),_cheight(32)
+,_showcursor(false)
+,_selpos(-1)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
@@ -65,6 +117,171 @@ TextFieldTTF::TextFieldTTF()
 
 TextFieldTTF::~TextFieldTTF()
 {
+}
+
+void TextFieldTTF::updateCursor()
+{
+	if( _cpos > _inputText.length() )
+		_cpos = _inputText.length();
+	if( _cpos < 0 )_cpos = 0;
+	std::string s = _inputText.substr(0,_cpos);
+	if( s.length() > 0 )
+	{
+		FontDefinition fontDef = _fontDefinition;
+		_cheight = fontDef._fontSize;
+		Size size;
+		getStringSize(s,size);
+		_cx = size.width;
+		_cy = (float)_labelHeight - _cheight;
+		if( _cy < 0 )_cy = 0;
+	}
+	else
+	{
+		_cheight = _fontDefinition._fontSize;
+		_cy = (float)_labelHeight - _cheight;
+		if( _cy < 0 )_cy = 0;
+		_cx = 0;
+	}
+	_cursorb = 0.5; //show cursor
+}
+
+void TextFieldTTF::getStringSize(const std::string& str,Size& size)
+{
+	FontDefinition fontDef = _fontDefinition;
+	fontDef._dimensions.width = 0;
+	fontDef._dimensions.height = 0;
+	auto texture = new Texture2D();
+	texture->initWithString(str.c_str(),fontDef);
+	size = texture->getContentSize();
+	texture->release();
+	if( size.height<= 0 )size.height = fontDef._fontSize;
+}
+
+int TextFieldTTF::cursorPos(Vec2 pt)
+{
+	Size size;
+	pt = convertToNodeSpace(pt);
+	int len = utf8length(_inputText);//_inputText.length();
+	int cpos = 0;
+	int idx,uclen; //char index
+	getStringSize(_inputText,size);
+	if( size.width > 0 )
+	{
+		float v = pt.x/size.width;
+		if( v>=0 && v < 1 )
+		{
+			int i = len*v; //utf8 index
+			int flag = 0;
+			float last_width;
+			do{
+				if( i==len )
+					idx = _inputText.length();
+				else
+					utf8index(_inputText,i,&idx,&uclen);
+				std::string s = _inputText.substr(0,idx);
+				getStringSize(s,size);
+				if( size.width > pt.x )
+				{
+					if( flag == 2 )
+					{
+						if( pt.x > (last_width+size.width)/2 )
+							cpos = i;
+						else
+							cpos = i-1;
+						break;
+					}
+					i--;
+					flag = 1;
+				}
+				else
+				{
+					if( flag == 1 )
+					{
+						if( pt.x > (last_width+size.width)/2 )
+							cpos = i;
+						else
+							cpos = i-1;
+						break;
+					}
+					i++;
+					flag = 2;
+				}
+				last_width = size.width;
+			}while(i>0 &&i<=len);
+		}
+		else
+		{
+			if( v >= 1 )cpos = len;
+			if( v < 0 )cpos = 0;
+		}
+	}
+	if(cpos < 0 )cpos = 0;
+	if(cpos > len )cpos = len;
+	if( cpos == len )
+		idx = _inputText.length();
+	else
+		utf8index(_inputText,cpos,&idx,&uclen);
+	return idx;
+}
+
+void TextFieldTTF::selectDrag(Vec2 pt)
+{
+	if( _selpos < 0 )
+	{//first
+		_selx = _cx;
+		_selpos = _cpos;
+	}
+	_cpos = cursorPos(pt);
+
+	Size size;
+	std::string s = _inputText.substr(0,_cpos);
+	if( s.length()==0 )
+	{
+		_cx = 0;
+	}
+	else
+		getStringSize( s,size);
+	_cx = size.width;
+}
+
+void TextFieldTTF::onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags)
+{
+	GLint mode;
+	auto director = Director::getInstance();
+	MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
+	director->pushMatrix(currentActiveStackType);
+	director->loadMatrix(currentActiveStackType,transform);
+	if(_selpos>=0)
+		DrawPrimitives::drawSolidRect(Vec2(_cx,_cy),Vec2(_selx,_cy+_cheight),Color4F(0,0,1,0.5));
+	if(_cursorb)
+	{
+		GL::blendFunc(GL_ONE ,GL_ONE );
+		glGetIntegerv(GL_BLEND_EQUATION_RGB,&mode);
+		glBlendEquation(GL_FUNC_SUBTRACT);
+		glLineWidth(_cwidth);
+		DrawPrimitives::setDrawColor4B(255,255,255,255);
+		DrawPrimitives::drawLine(Vec2(_cx,_cy),Vec2(_cx,_cy+_cheight));
+		glBlendEquation(mode);
+	}
+	director->popMatrix(currentActiveStackType);
+}
+
+void TextFieldTTF::drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags)
+{
+	if( _showcursor && _currentActive==this )
+	{
+		auto director = Director::getInstance();
+		double d = director->getAnimationInterval();
+		_cursordt += d;
+		if( _cursordt>0.5 )
+		{
+			_cursorb = !_cursorb;
+			_cursordt-=0.5;
+		}
+		_renderCmd.init(_globalZOrder);
+		_renderCmd.func = CC_CALLBACK_0(TextFieldTTF::onDrawCursor, this, transform, flags);
+		renderer->addCommand(&_renderCmd);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -130,6 +347,12 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
     return true;
 }
 
+void TextFieldTTF::onClick(Vec2 pt)
+{
+	_cpos = cursorPos(pt);
+	_selpos = -1;
+	updateCursor();
+}
 //////////////////////////////////////////////////////////////////////////
 // IMEDelegate
 //////////////////////////////////////////////////////////////////////////
@@ -144,6 +367,10 @@ bool TextFieldTTF::attachWithIME()
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
+			_currentActive = this;
+			_showcursor = true;
+			_cpos = _inputText.length();
+			updateCursor();
         }
     }
     return ret;
@@ -159,6 +386,8 @@ bool TextFieldTTF::detachWithIME()
         if (glView)
         {
             glView->setIMEKeyboardState(false);
+			_currentActive = nullptr;
+			_showcursor = false;
         }
     }
     return ret;
@@ -174,10 +403,36 @@ bool TextFieldTTF::canDetachWithIME()
     return (_delegate) ? (! _delegate->onTextFieldDetachWithIME(this)) : true;
 }
 
+void TextFieldTTF::setText(const char * text, size_t len)
+{
+    std::string insert(text, len);
+
+	if( _selpos > 0 )
+	{
+		deleteSelect();
+	}
+    // insert \n means input end
+    int pos = static_cast<int>(insert.find('\n'));
+    if ((int)insert.npos != pos)
+    {
+        len = pos;
+        insert.erase(pos);
+    }
+	
+	_charCount = _calcCharCount(insert.c_str());
+	_cpos = len;
+	setString(insert);
+    detachWithIME();	
+}
+
 void TextFieldTTF::insertText(const char * text, size_t len)
 {
     std::string insert(text, len);
 
+	if( _selpos > 0 )
+	{
+		deleteSelect();
+	}
     // insert \n means input end
     int pos = static_cast<int>(insert.find('\n'));
     if ((int)insert.npos != pos)
@@ -196,7 +451,14 @@ void TextFieldTTF::insertText(const char * text, size_t len)
 
         _charCount += _calcCharCount(insert.c_str());
         std::string sText(_inputText);
-        sText.append(insert);
+
+		if(!(_cpos>=0||_cpos<=sText.length()))
+		{
+			_cpos = 0;
+		}
+		sText.insert(_cpos,insert);
+
+		_cpos += len;
         setString(sText);
     }
 
@@ -214,6 +476,222 @@ void TextFieldTTF::insertText(const char * text, size_t len)
     detachWithIME();
 }
 
+void TextFieldTTF::deleteSelect()
+{
+	int _min,_max;
+	_min = _cpos > _selpos?_selpos:_cpos;
+	_max = _cpos < _selpos?_selpos:_cpos;
+	std::string s = _inputText.substr(0,_min);
+	s += _inputText.substr(_max);
+	_cpos = _min;
+	_selpos = -1;
+	int len = utf8length(_inputText);
+    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - (_max-_min), static_cast<int>(_max-_min)))
+    {
+        // delegate doesn't wan't to delete backwards
+        return;
+    }
+	if( s.length() == 0 )
+	{
+        _inputText = "";
+        _charCount = 0;
+		_cpos = 0;
+        Label::setTextColor(_colorSpaceHolder);
+        Label::setString(_placeHolder);
+		updateCursor();
+		return;
+	}
+	setString(s);
+}
+
+void TextFieldTTF::deleteForward()
+{
+    size_t len = _inputText.length();
+    if (! len)
+    {
+        // there is no string
+        return;
+    }
+
+	if( _selpos >= 0 )
+	{
+		deleteSelect();
+		return; 
+	}
+    // get the delete byte number
+    size_t deleteLen = 1;    // default, erase 1 byte
+
+	if( _cpos+deleteLen > len )
+		return;
+	if( _cpos+deleteLen!=len )
+	{
+		while(0x80 == (0xC0 & _inputText.at(_cpos + deleteLen)))
+		{
+			deleteLen++;
+			if( _cpos + deleteLen >= len )
+				break;
+		}
+	}
+    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - deleteLen, static_cast<int>(deleteLen)))
+    {
+        // delegate doesn't wan't to delete backwards
+        return;
+    }
+
+    // if all text deleted, show placeholder string
+    if (len <= deleteLen)
+    {
+        _inputText = "";
+        _charCount = 0;
+		_cpos = 0;
+        Label::setTextColor(_colorSpaceHolder);
+        Label::setString(_placeHolder);
+		updateCursor();
+        return;
+    }
+
+    // set new input text
+	int bpos = _cpos + deleteLen;
+
+    std::string text(_inputText.c_str(), _cpos);
+	text += _inputText.substr(bpos);
+    setString(text);
+}
+
+void TextFieldTTF::moveCursor(int a,bool sel)
+{
+#ifdef _WIN32
+	int len = _inputText.length();
+	if( sel )
+	{
+		if( _selpos<0 )
+		{
+			_selpos = _cpos;
+			_selx = _cx;
+		}
+	}
+	else
+	{
+		_selpos = -1;
+	}
+	switch(a)
+	{
+	case GLFW_KEY_LEFT: //left
+		if( _cpos > 0 )
+		{
+			while(0x80 == (0xC0 & _inputText.at(--_cpos)))
+			{
+				if( _cpos <= 0 )break;
+			}
+		}
+		break;
+	case GLFW_KEY_RIGHT: //right
+		if( _cpos < len-1 )
+		{
+			while(0x80 == (0xC0 & _inputText.at(++_cpos)))
+			{
+				if( _cpos >= len-1 )
+				{
+					_cpos = len;
+					break;
+				}
+			}
+		}else
+			_cpos = len;
+		break;
+	case GLFW_KEY_HOME: //home
+		_cpos = 0;
+		break;
+	case GLFW_KEY_END: //end
+		_cpos = len;
+		break;
+	}
+	if( _cpos < 0 )_cpos = 0;
+	if( _cpos > len) _cpos = len;
+	updateCursor();
+#endif
+}
+
+void TextFieldTTF::optKey(int key)
+{
+#ifdef _WIN32
+	if( key == GLFW_KEY_C)
+	{
+		if( _selpos >= 0 )
+		{
+			int _min,_max;
+			_min = _cpos > _selpos?_selpos:_cpos;
+			_max = _cpos < _selpos?_selpos:_cpos;
+			if( _max > _min )
+			{
+				std::string s =_inputText.substr(_min,_max-_min);
+				if(!s.empty() && OpenClipboard(NULL))
+				{
+					EmptyClipboard();
+					std::u16string u16;
+					StringUtils::UTF8ToUTF16(s,u16);
+					HGLOBAL hcpy = GlobalAlloc(GMEM_MOVEABLE,(u16.length()+1)*sizeof(TCHAR));
+					if( hcpy )
+					{
+						TCHAR * pc = (TCHAR*)GlobalLock(hcpy);
+						if( pc )
+						{
+							pc[u16.length()] = 0;
+							memcpy(pc,u16.c_str(),u16.length()*sizeof(TCHAR));
+						}
+						GlobalUnlock(hcpy);
+					}
+					SetClipboardData(CF_UNICODETEXT,hcpy);
+					CloseClipboard();
+				}
+			}
+		}
+	}
+	else if(key==GLFW_KEY_V)
+	{
+		if( !IsClipboardFormatAvailable(CF_UNICODETEXT)) return;
+		if( OpenClipboard(NULL) )
+		{
+			if( _selpos >= 0 )
+				deleteSelect();
+			HGLOBAL hcpy = GetClipboardData(CF_UNICODETEXT);
+			if( hcpy )
+			{
+				TCHAR *pc =(TCHAR *)GlobalLock(hcpy);
+				if( pc )
+				{
+					std::u16string u16((char16_t*)pc);
+					std::string u8;
+					StringUtils::UTF16ToUTF8(u16,u8);
+					insertText(u8.c_str(),u8.length());
+					GlobalUnlock(hcpy);
+				}
+			}
+			CloseClipboard();
+		}
+	}
+	else if(key==GLFW_KEY_A)
+	{
+		_selpos = 0;
+		_selx = 0;
+		_cpos = _inputText.length();
+		updateCursor();
+	}
+	else if(key==GLFW_KEY_X)
+	{
+		if( _selpos >= 0 )
+		{
+			optKey(GLFW_KEY_C);
+			deleteSelect();
+		}
+	}
+	else if(key==GLFW_KEY_Z)
+	{
+		//undo
+	}
+#endif
+}
+
 void TextFieldTTF::deleteBackward()
 {
     size_t len = _inputText.length();
@@ -223,10 +701,18 @@ void TextFieldTTF::deleteBackward()
         return;
     }
 
+	if( _selpos >= 0 )
+	{
+		deleteSelect();
+		return; 
+	}
     // get the delete byte number
     size_t deleteLen = 1;    // default, erase 1 byte
 
-    while(0x80 == (0xC0 & _inputText.at(len - deleteLen)))
+	if( _cpos <= 0 )
+		return;
+
+    while(0x80 == (0xC0 & _inputText.at(_cpos - deleteLen)))
     {
         ++deleteLen;
     }
@@ -242,19 +728,44 @@ void TextFieldTTF::deleteBackward()
     {
         _inputText = "";
         _charCount = 0;
+		_cpos = 0;
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
+		updateCursor();
         return;
     }
 
     // set new input text
-    std::string text(_inputText.c_str(), len - deleteLen);
+	int bpos = _cpos - deleteLen;
+
+    std::string text(_inputText.c_str(), bpos);
+	text += _inputText.substr(_cpos);
+	_cpos -= deleteLen;
     setString(text);
 }
 
 const std::string& TextFieldTTF::getContentText()
 {
     return _inputText;
+}
+
+Rect TextFieldTTF::getContentRect()
+{
+	Vec2 p = getPosition();
+	Size s = getContentSize();
+	Vec2 ap = this->getAnchorPoint();
+	p.x -= s.width*ap.x;
+	p.y = p.y - s.height*ap.y + s.height;
+	Vec2 pp;
+	pp.x = p.x + s.width;
+	pp.y = p.y + s.height;
+	Vec2 wp = convertToWindowSpace(p);
+	Vec2 wpp = convertToWindowSpace(pp);
+	CCLOG("p= %f,%f s = %f,%f", p.x, p.y, s.width, s.height);
+	CCLOG("wp= %f,%f ws = %f,%f",wp.x, wp.y,wpp.x-wp.x,wpp.y-wp.y);
+	CCLOG("getContentRect AnchorPoint = %f,%f",ap.x,ap.y);
+
+	return Rect(wp.x, wp.y, abs(wpp.x-wp.x),abs(wpp.y-wp.y));
 }
 
 void TextFieldTTF::setTextColor(const Color4B &color)
@@ -269,6 +780,9 @@ void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     {
         return;
     }
+
+	uint32_t flags = processParentFlags(parentTransform, parentFlags);
+	drawCursor(renderer,_modelViewTransform,flags);
     Label::visit(renderer,parentTransform,parentFlags);
 }
 
@@ -333,6 +847,8 @@ void TextFieldTTF::setString(const std::string &text)
         Label::setString(displayText);
     }
     _charCount = _calcCharCount(_inputText.c_str());
+	_selpos = -1;
+	updateCursor();
 }
 
 const std::string& TextFieldTTF::getString() const
