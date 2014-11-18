@@ -7,6 +7,7 @@
 #define HAVE_DECL_NAN
 #define HAVE_DECL_INFINITY
 #define HAVE_DECL_ISINF
+#define JSON_C_HAVE_INTTYPES_H
 #define isinf(x) (0) //不支持无穷大判断
 #define isnan(x) (0)
 #else
