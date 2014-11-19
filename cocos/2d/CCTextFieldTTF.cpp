@@ -249,6 +249,7 @@ void TextFieldTTF::onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags)
 	GLint mode;
 	auto director = Director::getInstance();
 	MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
+	CCLOG("TextFieldTTF::onDrawCursor");
 	director->pushMatrix(currentActiveStackType);
 	director->loadMatrix(currentActiveStackType,transform);
 	if(_selpos>=0)
@@ -367,6 +368,8 @@ bool TextFieldTTF::attachWithIME()
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
+			CCLOG("===attachWithIME===");
+
 			_currentActive = this;
 			_showcursor = true;
 			_cpos = _inputText.length();
@@ -386,6 +389,7 @@ bool TextFieldTTF::detachWithIME()
         if (glView)
         {
             glView->setIMEKeyboardState(false);
+			CCLOG("===detachWithIME===");
 			_currentActive = nullptr;
 			_showcursor = false;
         }
@@ -754,17 +758,98 @@ Rect TextFieldTTF::getContentRect()
 	Vec2 p = getPosition();
 	Size s = getContentSize();
 	Vec2 ap = this->getAnchorPoint();
+	CCLOG("p = %f,%f", p.x, p.y);
 	p.x -= s.width*ap.x;
 	p.y = p.y - s.height*ap.y + s.height;
 	Vec2 pp;
 	pp.x = p.x + s.width;
 	pp.y = p.y + s.height;
+	CCLOG("anthor p = %f,%f", p.x,p.y);
+	CCLOG("anthor size_p = %f,%f", pp.x, pp.y);
 	Vec2 wp = convertToWindowSpace(p);
 	Vec2 wpp = convertToWindowSpace(pp);
-	CCLOG("p= %f,%f s = %f,%f", p.x, p.y, s.width, s.height);
-	CCLOG("wp= %f,%f ws = %f,%f",wp.x, wp.y,wpp.x-wp.x,wpp.y-wp.y);
-	CCLOG("getContentRect AnchorPoint = %f,%f",ap.x,ap.y);
-
+	CCLOG("wp = %f,%f", wp.x, wp.y);
+	CCLOG("size_wp = %f,%f", wpp.x, wpp.y);
+	//convertToWindowSpace并不考虑帧缓冲到屏幕的映射
+	//它仅仅映射到设计视图
+	GLView * pglview = Director::getInstance()->getOpenGLView();
+	Size frame_size = pglview->getFrameSize();
+	Size design_size = pglview->getDesignResolutionSize();
+	float sx = frame_size.width / design_size.width;
+	float sy = frame_size.height / design_size.height;
+	float dh = (frame_size.height - design_size.height*sx) / 2;
+	float dw = (frame_size.width - design_size.width*sy) / 2;
+	CCLOG("sx,sy = %f,%f", sx,sy);
+	CCLOG("dh,dw = %f,%f", dh, dw);
+	switch (pglview->getResolutionPolicy())
+	{
+	case ResolutionPolicy::FIXED_WIDTH:
+		CCLOG("FIXED_WIDTH");
+		wp.x *= sx;
+		wp.y *= sx + dh;
+		wpp.x *= sx;
+		wpp.y *= sx + dh;
+	case ResolutionPolicy::FIXED_HEIGHT:
+		CCLOG("FIXED_HEIGHT");
+		wp.x *= sy + dw;
+		wp.y *= sy;
+		wpp.x *= sy + dw;
+		wpp.y *= sy;
+	case ResolutionPolicy::NO_BORDER: //不太理解含义，暂时按SHOW_ALL处理
+	case ResolutionPolicy::SHOW_ALL:
+		CCLOG("SHOW_ALL");
+		{
+			float df = design_size.height / design_size.width;
+			float ff = frame_size.height / frame_size.width;
+			if (ff < df){//fixed_width
+				wp.x *= sx;
+				wp.y = wp.y*sx + dh;
+				wpp.x *= sx;
+				wpp.y = wpp.y*sx + dh;
+			}
+			else
+			{
+				wp.x = wp.x*sy + dw;
+				wp.y *= sy;
+				wpp.x = wpp.x*sy + dw;
+				wpp.y *= sy;
+			}
+		}
+		break;
+	case ResolutionPolicy::UNKNOWN:
+	case ResolutionPolicy::EXACT_FIT:
+		CCLOG("EXACT_FIT");
+	default:
+		wp.x *= sx;
+		wp.y *= sy;
+		wpp.x *= sx;
+		wpp.y *= sy;
+		break;
+	}
+	/*
+	float ssf = Director::getInstance()->getContentScaleFactor();
+	Size wsize = Director::getInstance()->getWinSizeInPixels();
+	Size vsize = Director::getInstance()->getVisibleSize();
+	Vec2 vorg = Director::getInstance()->getVisibleOrigin();
+	Size glsize = Director::getInstance()->getWinSize();
+	CCLOG("getContentScaleFactor = %f", ssf);
+	CCLOG("getWinSizeInPixels = %f,%f", wsize.width, wsize.height);
+	CCLOG("getWinSize = %f,%f", glsize.width, glsize.height);
+	CCLOG("getVisibleSize = %f,%f", vsize.width, vsize.height);
+	CCLOG("getVisibleOrigin = %f,%f", vorg.x, vorg.y);
+	GLView *pgl = Director::getInstance()->getOpenGLView();
+	Size fsize = pgl->getFrameSize();
+	Size dsize = pgl->getDesignResolutionSize();
+//	float fzf = pgl->getFrameZoomFactor();
+//	float rf = pgl->getRetinaFactor();
+	float sx = pgl->getScaleX();
+	float sy = pgl->getScaleY();
+	CCLOG("getFrameSize = %f,%f", fsize.width, fsize.height);
+	CCLOG("getDesignResolutionSize = %f,%f", dsize.width, dsize.height);
+//	CCLOG("getFrameZoomFactor = %f", fzf);
+//	CCLOG("getRetinaFactor = %f", rf);
+	CCLOG("Scale = %f,%f", sx,sy);
+	*/
 	return Rect(wp.x, wp.y, abs(wpp.x-wp.x),abs(wpp.y-wp.y));
 }
 
