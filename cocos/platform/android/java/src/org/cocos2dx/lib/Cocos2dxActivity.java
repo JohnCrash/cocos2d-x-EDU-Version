@@ -176,9 +176,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
          这导致编辑控件被绘制覆盖
          */
         Cocos2dxEditText mask = new Cocos2dxEditText(this);
-        ViewGroup.LayoutParams mask_layout_params =
-                new ViewGroup.LayoutParams(1,
+        FrameLayout.LayoutParams mask_layout_params =
+                new FrameLayout.LayoutParams(1,
                                            1);         
+        //mask_layout_params.setMargins(332,668,0, 0);
         mask.setLayoutParams(mask_layout_params);
                 
         Cocos2dxEditText edittext = new Cocos2dxEditText(this);
@@ -197,7 +198,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         mFrameLayout.addView(edittext);
         
         edittext.setVisibility(4); //hide edittext
-        edittext.setImeOptions(6); //actionDone|flagNoFullscreen
+        //edittext.setImeOptions(6); //actionDone|flagNoFullscreen
+        edittext.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI|android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        mask.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI|android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
         edittext.setSingleLine();
         
         // Switch to supported OpenGL (ARGB888) mode on emulator

@@ -604,9 +604,11 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
+		CCLOG("hitted...............");
         _textFieldRenderer->attachWithIME();
 		_textFieldRenderer->onClick(touch->getLocation());
     } else {
+		CCLOG("not hitted...............");
         this->didNotSelectSelf();
     }
     return pass;

@@ -458,6 +458,17 @@ void Director::resetMatrixStack()
     initMatrixStack();
 }
 
+static std::string open_logmat4;
+void logmat4(const char* name, Mat4& m)
+{
+	if (open_logmat4.empty())return;
+	CCLOG("Mat4 %s :", name);
+	for (int i = 0; i < 4; i++)
+	{
+		CCLOG("%f,%f,%f,%f", m.m[i * 4 + 0], m.m[i * 4 + 1], m.m[i * 4 + 2], m.m[i * 4 + 3]);
+	}
+}
+
 void Director::popMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
@@ -725,9 +736,31 @@ static void GLToClipTransform(Mat4 *transformOut)
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
     projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
 #endif
-
     Mat4 modelview;
     modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    *transformOut = projection * modelview;
+}
+
+static void GLToClipTransform2(Mat4 *transformOut)
+{
+    if(nullptr == transformOut) return;
+    
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
+    Mat4 projection;
+    projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
+    projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
+#endif
+	/*
+	BUG:投影矩阵没有被改变，其他线程可能改变模型矩阵
+	没有解决只是简单的处理.
+	*/
+    Mat4 modelview;
+    //director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     *transformOut = projection * modelview;
 }
 
@@ -751,16 +784,21 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
     return Vec2(glCoord.x * factor, glCoord.y * factor);
 }
 
-Vec2 Director::convertToUI(const Vec2& glPoint)
+/*
+	convertToUI本身并没有bug,但是GLToClipTransform,在调用
+	getMatrix的时候有可能被其他的线程破坏
+	这里简单的处理该bug
+*/
+Vec2 Director::convertToUI2(const Vec2& glPoint)
 {
     Mat4 transform;
-    GLToClipTransform(&transform);
 
+	GLToClipTransform2(&transform);
+	
     Vec4 clipCoord;
     // Need to calculate the zero depth from the transform.
     Vec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
     transform.transformVector(glCoord, &clipCoord);
-
 	/*
 	BUG-FIX #5506
 
@@ -775,6 +813,35 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
 
     Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0/glCoord.w;
+
+    return Vec2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
+}
+
+Vec2 Director::convertToUI(const Vec2& glPoint)
+{
+    Mat4 transform;
+
+	GLToClipTransform(&transform);
+	
+    Vec4 clipCoord;
+    // Need to calculate the zero depth from the transform.
+    Vec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
+    transform.transformVector(glCoord, &clipCoord);
+	/*
+	BUG-FIX #5506
+
+	a = (Vx, Vy, Vz, 1)
+	b = (a×M)T
+	Out = 1 ⁄ bw(bx, by, bz)
+	*/
+	
+	clipCoord.x = clipCoord.x / clipCoord.w;
+	clipCoord.y = clipCoord.y / clipCoord.w;
+	clipCoord.z = clipCoord.z / clipCoord.w;
+
+    Size glSize = _openGLView->getDesignResolutionSize();
+    float factor = 1.0/glCoord.w;
+
     return Vec2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 

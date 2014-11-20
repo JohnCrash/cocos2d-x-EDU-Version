@@ -84,16 +84,24 @@ import android.view.ViewTreeObserver
 		if(b)
 		{
 			Rect rect = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentRect();
-			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(0);
+			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.VISIBLE);
 			int height = rect.height() > sEditTextMinHeight ?rect.height():sEditTextMinHeight;
+			int dy = (height - rect.height())/2;
 			FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(rect.width(),height);
-			//lp.setMargins(rect.left,rect.top,rect.right,rect.bottom);
-			lp.setMargins(rect.left,rect.top,rect.right,rect.bottom);
+			int screenHeight = mCocos2dxGLSurfaceView.getHeight();
+			if( rect.top-dy + height > screenHeight )
+			{
+				dy += (rect.top-dy + height-screenHeight);
+			}
+			lp.setMargins(rect.left,rect.top-dy,rect.right,rect.bottom);
 			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setLayoutParams(lp);
 		}
 		else
 		{
-			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(4);
+			//Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.INVISIBLE);
+			FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(1,1);
+			lp.setMargins(0, 0, 1, 1);
+			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setLayoutParams(lp);
 		}
 	}
 	private static int _softinputHeight = 0;
@@ -180,8 +188,8 @@ import android.view.ViewTreeObserver
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
-							
 							Cocos2dxGLSurfaceView.this.requestFocus();
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.INVISIBLE);
 							_imeIsOpen = false;
 							Log.d("GLSurfaceView", "HideSoftInput");
 						}

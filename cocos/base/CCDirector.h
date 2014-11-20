@@ -242,7 +242,8 @@ public:
      Useful to convert node points to window points for calls such as glScissor
      */
     Vec2 convertToUI(const Vec2& point);
-
+	Vec2 convertToUI2(const Vec2& point);
+	
     /// XXX: missing description 
     float getZEye() const;
 
