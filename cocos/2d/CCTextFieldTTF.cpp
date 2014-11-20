@@ -249,7 +249,7 @@ void TextFieldTTF::onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags)
 	GLint mode;
 	auto director = Director::getInstance();
 	MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
-	CCLOG("TextFieldTTF::onDrawCursor");
+	
 	director->pushMatrix(currentActiveStackType);
 	director->loadMatrix(currentActiveStackType,transform);
 	if(_selpos>=0)
@@ -753,23 +753,31 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
+Vec2 TextFieldTTF::convertToWindowSpace2(const Vec2& nodePoint)const
+{
+	Vec2 worldPoint = this->convertToWorldSpace(nodePoint);
+	return Director::getInstance()->convertToUI2(worldPoint);
+}
+/*
+	这里坐标转换函数convertToUI存在问题，我将其改进为convertToUI2
+*/
 Rect TextFieldTTF::getContentRect()
 {
 	Vec2 p = getPosition();
 	Size s = getContentSize();
 	Vec2 ap = this->getAnchorPoint();
-	CCLOG("p = %f,%f", p.x, p.y);
+//	CCLOG("p = %f,%f", p.x, p.y);
 	p.x -= s.width*ap.x;
 	p.y = p.y - s.height*ap.y + s.height;
 	Vec2 pp;
 	pp.x = p.x + s.width;
 	pp.y = p.y + s.height;
-	CCLOG("anthor p = %f,%f", p.x,p.y);
-	CCLOG("anthor size_p = %f,%f", pp.x, pp.y);
-	Vec2 wp = convertToWindowSpace(p);
-	Vec2 wpp = convertToWindowSpace(pp);
-	CCLOG("wp = %f,%f", wp.x, wp.y);
-	CCLOG("size_wp = %f,%f", wpp.x, wpp.y);
+//	CCLOG("anthor p = %f,%f", p.x,p.y);
+//	CCLOG("anthor size_p = %f,%f", pp.x, pp.y);
+	Vec2 wp = convertToWindowSpace2(p);
+	Vec2 wpp = convertToWindowSpace2(pp);
+//	CCLOG("wp = %f,%f", wp.x, wp.y);
+//	CCLOG("size_wp = %f,%f", wpp.x, wpp.y);
 	//convertToWindowSpace并不考虑帧缓冲到屏幕的映射
 	//它仅仅映射到设计视图
 	GLView * pglview = Director::getInstance()->getOpenGLView();
@@ -779,25 +787,25 @@ Rect TextFieldTTF::getContentRect()
 	float sy = frame_size.height / design_size.height;
 	float dh = (frame_size.height - design_size.height*sx) / 2;
 	float dw = (frame_size.width - design_size.width*sy) / 2;
-	CCLOG("sx,sy = %f,%f", sx,sy);
-	CCLOG("dh,dw = %f,%f", dh, dw);
+//	CCLOG("sx,sy = %f,%f", sx,sy);
+//	CCLOG("dh,dw = %f,%f", dh, dw);
 	switch (pglview->getResolutionPolicy())
 	{
 	case ResolutionPolicy::FIXED_WIDTH:
-		CCLOG("FIXED_WIDTH");
+//		CCLOG("FIXED_WIDTH");
 		wp.x *= sx;
 		wp.y *= sx + dh;
 		wpp.x *= sx;
 		wpp.y *= sx + dh;
 	case ResolutionPolicy::FIXED_HEIGHT:
-		CCLOG("FIXED_HEIGHT");
+//		CCLOG("FIXED_HEIGHT");
 		wp.x *= sy + dw;
 		wp.y *= sy;
 		wpp.x *= sy + dw;
 		wpp.y *= sy;
 	case ResolutionPolicy::NO_BORDER: //不太理解含义，暂时按SHOW_ALL处理
 	case ResolutionPolicy::SHOW_ALL:
-		CCLOG("SHOW_ALL");
+//		CCLOG("SHOW_ALL");
 		{
 			float df = design_size.height / design_size.width;
 			float ff = frame_size.height / frame_size.width;
@@ -818,7 +826,7 @@ Rect TextFieldTTF::getContentRect()
 		break;
 	case ResolutionPolicy::UNKNOWN:
 	case ResolutionPolicy::EXACT_FIT:
-		CCLOG("EXACT_FIT");
+//		CCLOG("EXACT_FIT");
 	default:
 		wp.x *= sx;
 		wp.y *= sy;
