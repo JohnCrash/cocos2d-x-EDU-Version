@@ -142,7 +142,12 @@ import android.view.ViewTreeObserver
 				switch (msg.what) {
 					case HANDLER_OPEN_IME_KEYBOARD:
 						enableEdit(true);
-						if(_imeIsOpen) return;
+						if(_imeIsOpen){
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
+							final String text = (String) msg.obj;
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
+							return;
+						}
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
@@ -154,31 +159,6 @@ import android.view.ViewTreeObserver
 							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0 );
 							Log.d("GLSurfaceView", "showSoftInput");
 							_imeIsOpen = true;
-							//下面代码可以监视软键盘的打开和关闭
-							/*,
-							 * new ResultReceiver(Cocos2dxGLSurfaceView.sHandler)
-							{
-								@Override
-								protected void onReceiveResult(int resultCode,Bundle resultData)
-								{
-									switch(resultCode)
-									{
-									case InputMethodManager.RESULT_HIDDEN:
-										Log.d("GLSurfaceView", "hidden");
-										break;
-									case InputMethodManager.RESULT_SHOWN:
-										Rect r = new Rect();
-										Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getWindowVisibleDisplayFrame(r);
-										int screenHeight =Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getHeight();
-										int heightDifference = screenHeight - (r.bottom - r.top);
-										Log.d("Keyboard Size","Size: " + heightDifference );
-										Log.d("GLSurfaceView", "shown");
-										break;
-									default:
-										Log.d("GLSurfaceView", "other");
-									}
-								}
-							});	*/
 						}
 						break;
 

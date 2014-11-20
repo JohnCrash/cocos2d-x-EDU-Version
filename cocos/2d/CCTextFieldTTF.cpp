@@ -422,7 +422,12 @@ void TextFieldTTF::setText(const char * text, size_t len)
         len = pos;
         insert.erase(pos);
     }
-	
+	//´¥·¢ÊÂ¼þ
+	if (_delegate && _delegate->onTextFieldInsertText(this, insert.c_str(), len))
+	{
+		// delegate doesn't want to insert text
+		return;
+	}
 	_charCount = _calcCharCount(insert.c_str());
 	_cpos = len;
 	setString(insert);

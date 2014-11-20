@@ -129,10 +129,11 @@ void IMEDispatcher::addDelegate(IMEDelegate* delegate)
     _impl->_delegateList.push_front(delegate);
 }
 
-#define tf_str(b) (b?"true":"false")
+static bool isAttachIME = false;
 bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
 {
     bool ret = false;
+	if (isAttachIME)return false; //否决全部再次attach操作
     do
     {
         CC_BREAK_IF(! _impl || ! delegate);
@@ -148,8 +149,6 @@ bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
             // if old delegate canDetachWithIME return false 
             // or pDelegate canAttachWithIME return false,
             // do nothing.
-			CCLOG("attachDelegateWithIME current canDetach :%s,new canAttach :%s", tf_str(_impl->_delegateWithIme->canDetachWithIME()),
-				tf_str(delegate->canAttachWithIME()));
 
             CC_BREAK_IF(! _impl->_delegateWithIme->canDetachWithIME()
                 || ! delegate->canAttachWithIME());
@@ -164,8 +163,6 @@ bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
             ret = true;
             break;
         }
-		CCLOG("attachDelegateWithIME new canAttach :%s",
-			tf_str(delegate->canAttachWithIME()));
         // delegate hasn't attached to IME yet
         CC_BREAK_IF(! delegate->canAttachWithIME());
 
@@ -173,6 +170,8 @@ bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
         delegate->didAttachWithIME();
         ret = true;
     } while (0);
+	if ( ret )
+		isAttachIME = true;
     return ret;
 }
 
@@ -181,15 +180,11 @@ bool IMEDispatcher::detachDelegateWithIME(IMEDelegate * delegate)
     bool ret = false;
     do
     {
-		CCLOG("detachDelegateWithIME delegate:%s", tf_str(delegate));
         CC_BREAK_IF(! _impl || ! delegate);
 
-		CCLOG("detachDelegateWithIME ==:%s", tf_str(_impl->_delegateWithIme == delegate));
         // if pDelegate is not the current delegate attached to IME, return
         CC_BREAK_IF(_impl->_delegateWithIme != delegate);
 
-		CCLOG("detachDelegateWithIME current canDetach :%s",
-			tf_str(delegate->canAttachWithIME()));
         CC_BREAK_IF(! delegate->canDetachWithIME());
 
         _impl->_delegateWithIme = 0;
@@ -197,6 +192,8 @@ bool IMEDispatcher::detachDelegateWithIME(IMEDelegate * delegate)
 		CCLOG("detachDelegateWithIME");
         ret = true;
     } while (0);
+	if(ret)
+		isAttachIME = false;
     return ret;
 }
 
