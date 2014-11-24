@@ -854,6 +854,7 @@ void TextField::copySpecialProperties(Widget *widget)
         setDetachWithIME(textField->getDetachWithIME());
         setInsertText(textField->getInsertText());
         setDeleteBackward(textField->getDeleteBackward());
+		setPlaceHolder(textField->getPlaceHolder());
         _eventCallback = textField->_eventCallback;
         _textFieldEventListener = textField->_textFieldEventListener;
         _textFieldEventSelector = textField->_textFieldEventSelector;
