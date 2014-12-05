@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <list>
 
 NS_CC_BEGIN
+static bool isAttachIME = false;
 
 //////////////////////////////////////////////////////////////////////////
 // add/remove delegate in IMEDelegate Cons/Destructor
@@ -103,11 +104,13 @@ public:
 IMEDispatcher::IMEDispatcher()
 : _impl(new IMEDispatcher::Impl)
 {
+	isAttachIME = false;
     _impl->init();
 }
 
 IMEDispatcher::~IMEDispatcher()
 {
+	isAttachIME = false;
     CC_SAFE_DELETE(_impl);
 }
 
@@ -117,6 +120,7 @@ IMEDispatcher::~IMEDispatcher()
 
 void IMEDispatcher::addDelegate(IMEDelegate* delegate)
 {
+	isAttachIME = false;
     if (! delegate || ! _impl)
     {
         return;
@@ -129,7 +133,6 @@ void IMEDispatcher::addDelegate(IMEDelegate* delegate)
     _impl->_delegateList.push_front(delegate);
 }
 
-static bool isAttachIME = false;
 bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
 {
     bool ret = false;
@@ -199,6 +202,7 @@ bool IMEDispatcher::detachDelegateWithIME(IMEDelegate * delegate)
 
 void IMEDispatcher::removeDelegate(IMEDelegate* delegate)
 {
+	isAttachIME = false;
     do 
     {
         CC_BREAK_IF(! delegate || ! _impl);
