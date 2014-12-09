@@ -35,7 +35,61 @@
 		52538F271A35931D000E229F /* printbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538F0B1A35931D000E229F /* printbuf.h */; };
 		52538F281A35931D000E229F /* random_seed.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F0C1A35931D000E229F /* random_seed.c */; };
 		52538F291A35931D000E229F /* random_seed.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538F0D1A35931D000E229F /* random_seed.h */; };
+		52CDB3681A36AA6E005C737B /* json_c_ios.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52CDB3671A36AA6E005C737B /* json_c_ios.h */; };
+		52CDB36A1A36AA6E005C737B /* json_c_ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CDB3691A36AA6E005C737B /* json_c_ios.m */; };
+		52CDB3701A36AA6F005C737B /* libjson-c ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52CDB3651A36AA6E005C737B /* libjson-c ios.a */; };
+		52CDB3BE1A36C839005C737B /* arraylist.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF21A35931D000E229F /* arraylist.c */; };
+		52CDB3BF1A36C839005C737B /* arraylist.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF31A35931D000E229F /* arraylist.h */; };
+		52CDB3C01A36C839005C737B /* bits.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF41A35931D000E229F /* bits.h */; };
+		52CDB3C11A36C839005C737B /* config.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF51A35931D000E229F /* config.h */; };
+		52CDB3C21A36C839005C737B /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF61A35931D000E229F /* debug.c */; };
+		52CDB3C31A36C839005C737B /* debug.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF71A35931D000E229F /* debug.h */; };
+		52CDB3C41A36C839005C737B /* json_c_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF81A35931D000E229F /* json_c_version.c */; };
+		52CDB3C51A36C839005C737B /* json_c_version.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EF91A35931D000E229F /* json_c_version.h */; };
+		52CDB3C61A36C839005C737B /* json_config.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EFA1A35931D000E229F /* json_config.h */; };
+		52CDB3C71A36C839005C737B /* json_inttypes.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EFB1A35931D000E229F /* json_inttypes.h */; };
+		52CDB3C81A36C839005C737B /* json_object_iterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538EFC1A35931D000E229F /* json_object_iterator.c */; };
+		52CDB3C91A36C839005C737B /* json_object_iterator.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EFD1A35931D000E229F /* json_object_iterator.h */; };
+		52CDB3CA1A36C839005C737B /* json_object_private.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538EFE1A35931D000E229F /* json_object_private.h */; };
+		52CDB3CB1A36C839005C737B /* json_object.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538EFF1A35931D000E229F /* json_object.c */; };
+		52CDB3CC1A36C839005C737B /* json_object.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F001A35931D000E229F /* json_object.h */; };
+		52CDB3CD1A36C839005C737B /* json_tokener.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F011A35931D000E229F /* json_tokener.c */; };
+		52CDB3CE1A36C839005C737B /* json_tokener.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F021A35931D000E229F /* json_tokener.h */; };
+		52CDB3CF1A36C839005C737B /* json_util.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F031A35931D000E229F /* json_util.c */; };
+		52CDB3D01A36C839005C737B /* json_util.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F041A35931D000E229F /* json_util.h */; };
+		52CDB3D11A36C839005C737B /* json.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F051A35931D000E229F /* json.h */; };
+		52CDB3D21A36C839005C737B /* libjson.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F061A35931D000E229F /* libjson.c */; };
+		52CDB3D31A36C83A005C737B /* linkhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F071A35931D000E229F /* linkhash.c */; };
+		52CDB3D41A36C83A005C737B /* linkhash.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F081A35931D000E229F /* linkhash.h */; };
+		52CDB3D51A36C83A005C737B /* math_compat.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F091A35931D000E229F /* math_compat.h */; };
+		52CDB3D61A36C83A005C737B /* printbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F0A1A35931D000E229F /* printbuf.c */; };
+		52CDB3D71A36C83A005C737B /* printbuf.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F0B1A35931D000E229F /* printbuf.h */; };
+		52CDB3D81A36C83A005C737B /* random_seed.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F0C1A35931D000E229F /* random_seed.c */; };
+		52CDB3D91A36C83A005C737B /* random_seed.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F0D1A35931D000E229F /* random_seed.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52CDB3711A36AA6F005C737B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52538EE31A3592DD000E229F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52CDB3641A36AA6E005C737B;
+			remoteInfo = "json-c ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		52CDB3631A36AA6E005C737B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				52CDB3681A36AA6E005C737B /* json_c_ios.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		52538EEB1A3592DD000E229F /* libjson-c mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjson-c mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +121,11 @@
 		52538F0B1A35931D000E229F /* printbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = printbuf.h; path = ../printbuf.h; sourceTree = "<group>"; };
 		52538F0C1A35931D000E229F /* random_seed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = random_seed.c; path = ../random_seed.c; sourceTree = "<group>"; };
 		52538F0D1A35931D000E229F /* random_seed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = random_seed.h; path = ../random_seed.h; sourceTree = "<group>"; };
+		52CDB3651A36AA6E005C737B /* libjson-c ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjson-c ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDB3671A36AA6E005C737B /* json_c_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_c_ios.h; sourceTree = "<group>"; };
+		52CDB3691A36AA6E005C737B /* json_c_ios.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = json_c_ios.m; sourceTree = "<group>"; };
+		52CDB36F1A36AA6E005C737B /* json-c iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "json-c iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDB3751A36AA6F005C737B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +133,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB3621A36AA6E005C737B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB36C1A36AA6E005C737B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52CDB3701A36AA6F005C737B /* libjson-c ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +185,8 @@
 				52538F0B1A35931D000E229F /* printbuf.h */,
 				52538F0C1A35931D000E229F /* random_seed.c */,
 				52538F0D1A35931D000E229F /* random_seed.h */,
+				52CDB3661A36AA6E005C737B /* json-c ios */,
+				52CDB3731A36AA6F005C737B /* json-c iosTests */,
 				52538EEC1A3592DD000E229F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,8 +195,35 @@
 			isa = PBXGroup;
 			children = (
 				52538EEB1A3592DD000E229F /* libjson-c mac.a */,
+				52CDB3651A36AA6E005C737B /* libjson-c ios.a */,
+				52CDB36F1A36AA6E005C737B /* json-c iosTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		52CDB3661A36AA6E005C737B /* json-c ios */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3671A36AA6E005C737B /* json_c_ios.h */,
+				52CDB3691A36AA6E005C737B /* json_c_ios.m */,
+			);
+			path = "json-c ios";
+			sourceTree = "<group>";
+		};
+		52CDB3731A36AA6F005C737B /* json-c iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3741A36AA6F005C737B /* Supporting Files */,
+			);
+			path = "json-c iosTests";
+			sourceTree = "<group>";
+		};
+		52CDB3741A36AA6F005C737B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3751A36AA6F005C737B /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,6 +273,41 @@
 			productReference = 52538EEB1A3592DD000E229F /* libjson-c mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		52CDB3641A36AA6E005C737B /* json-c ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52CDB37A1A36AA6F005C737B /* Build configuration list for PBXNativeTarget "json-c ios" */;
+			buildPhases = (
+				52CDB3611A36AA6E005C737B /* Sources */,
+				52CDB3621A36AA6E005C737B /* Frameworks */,
+				52CDB3631A36AA6E005C737B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "json-c ios";
+			productName = "json-c ios";
+			productReference = 52CDB3651A36AA6E005C737B /* libjson-c ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		52CDB36E1A36AA6E005C737B /* json-c iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52CDB37B1A36AA6F005C737B /* Build configuration list for PBXNativeTarget "json-c iosTests" */;
+			buildPhases = (
+				52CDB36B1A36AA6E005C737B /* Sources */,
+				52CDB36C1A36AA6E005C737B /* Frameworks */,
+				52CDB36D1A36AA6E005C737B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52CDB3721A36AA6F005C737B /* PBXTargetDependency */,
+			);
+			name = "json-c iosTests";
+			productName = "json-c iosTests";
+			productReference = 52CDB36F1A36AA6E005C737B /* json-c iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -180,6 +318,12 @@
 				ORGANIZATIONNAME = john;
 				TargetAttributes = {
 					52538EEA1A3592DD000E229F = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					52CDB3641A36AA6E005C737B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					52CDB36E1A36AA6E005C737B = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -197,9 +341,21 @@
 			projectRoot = "";
 			targets = (
 				52538EEA1A3592DD000E229F /* json-c mac */,
+				52CDB3641A36AA6E005C737B /* json-c ios */,
+				52CDB36E1A36AA6E005C737B /* json-c iosTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52CDB36D1A36AA6E005C737B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52538EE71A3592DD000E229F /* Sources */ = {
@@ -220,7 +376,58 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		52CDB3611A36AA6E005C737B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52CDB3BE1A36C839005C737B /* arraylist.c in Sources */,
+				52CDB3BF1A36C839005C737B /* arraylist.h in Sources */,
+				52CDB3C01A36C839005C737B /* bits.h in Sources */,
+				52CDB3C11A36C839005C737B /* config.h in Sources */,
+				52CDB3C21A36C839005C737B /* debug.c in Sources */,
+				52CDB3C31A36C839005C737B /* debug.h in Sources */,
+				52CDB3C41A36C839005C737B /* json_c_version.c in Sources */,
+				52CDB3C51A36C839005C737B /* json_c_version.h in Sources */,
+				52CDB3C61A36C839005C737B /* json_config.h in Sources */,
+				52CDB3C71A36C839005C737B /* json_inttypes.h in Sources */,
+				52CDB3C81A36C839005C737B /* json_object_iterator.c in Sources */,
+				52CDB3C91A36C839005C737B /* json_object_iterator.h in Sources */,
+				52CDB3CA1A36C839005C737B /* json_object_private.h in Sources */,
+				52CDB3CB1A36C839005C737B /* json_object.c in Sources */,
+				52CDB3CC1A36C839005C737B /* json_object.h in Sources */,
+				52CDB3CD1A36C839005C737B /* json_tokener.c in Sources */,
+				52CDB3CE1A36C839005C737B /* json_tokener.h in Sources */,
+				52CDB3CF1A36C839005C737B /* json_util.c in Sources */,
+				52CDB3D01A36C839005C737B /* json_util.h in Sources */,
+				52CDB3D11A36C839005C737B /* json.h in Sources */,
+				52CDB3D21A36C839005C737B /* libjson.c in Sources */,
+				52CDB3D31A36C83A005C737B /* linkhash.c in Sources */,
+				52CDB3D41A36C83A005C737B /* linkhash.h in Sources */,
+				52CDB3D51A36C83A005C737B /* math_compat.h in Sources */,
+				52CDB3D61A36C83A005C737B /* printbuf.c in Sources */,
+				52CDB3D71A36C83A005C737B /* printbuf.h in Sources */,
+				52CDB3D81A36C83A005C737B /* random_seed.c in Sources */,
+				52CDB3D91A36C83A005C737B /* random_seed.h in Sources */,
+				52CDB36A1A36AA6E005C737B /* json_c_ios.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB36B1A36AA6E005C737B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52CDB3721A36AA6F005C737B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52CDB3641A36AA6E005C737B /* json-c ios */;
+			targetProxy = 52CDB3711A36AA6F005C737B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		52538EED1A3592DD000E229F /* Debug */ = {
@@ -314,6 +521,68 @@
 			};
 			name = Release;
 		};
+		52CDB3761A36AA6F005C737B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		52CDB3771A36AA6F005C737B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52CDB3781A36AA6F005C737B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "json-c iosTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		52CDB3791A36AA6F005C737B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "json-c iosTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -331,6 +600,24 @@
 			buildConfigurations = (
 				52538EF01A3592DD000E229F /* Debug */,
 				52538EF11A3592DD000E229F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52CDB37A1A36AA6F005C737B /* Build configuration list for PBXNativeTarget "json-c ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52CDB3761A36AA6F005C737B /* Debug */,
+				52CDB3771A36AA6F005C737B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52CDB37B1A36AA6F005C737B /* Build configuration list for PBXNativeTarget "json-c iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52CDB3781A36AA6F005C737B /* Debug */,
+				52CDB3791A36AA6F005C737B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

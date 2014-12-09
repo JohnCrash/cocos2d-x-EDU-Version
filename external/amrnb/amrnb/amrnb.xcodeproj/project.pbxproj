@@ -19,7 +19,45 @@
 		52538FE01A35A27F000E229F /* sp_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD41A35A27F000E229F /* sp_enc.c */; };
 		52538FE11A35A27F000E229F /* sp_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538FD51A35A27F000E229F /* sp_enc.h */; };
 		52538FE21A35A27F000E229F /* typedef.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538FD61A35A27F000E229F /* typedef.h */; };
+		52CDB3E11A36C89B005C737B /* amrnb_iOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52CDB3E01A36C89B005C737B /* amrnb_iOS.h */; };
+		52CDB3E31A36C89B005C737B /* amrnb_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CDB3E21A36C89B005C737B /* amrnb_iOS.m */; };
+		52CDB3E91A36C89B005C737B /* libamrnb iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52CDB3DE1A36C89A005C737B /* libamrnb iOS.a */; };
+		52CDB3F51A36C8A7005C737B /* interf_dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538FCB1A35A27F000E229F /* interf_dec.c */; };
+		52CDB3F61A36C8A7005C737B /* interf_dec.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FCC1A35A27F000E229F /* interf_dec.h */; };
+		52CDB3F71A36C8A7005C737B /* interf_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538FCD1A35A27F000E229F /* interf_enc.c */; };
+		52CDB3F81A36C8A7005C737B /* interf_enc.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FCE1A35A27F000E229F /* interf_enc.h */; };
+		52CDB3F91A36C8A7005C737B /* interf_rom.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FCF1A35A27F000E229F /* interf_rom.h */; };
+		52CDB3FA1A36C8A7005C737B /* rom_dec.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD01A35A27F000E229F /* rom_dec.h */; };
+		52CDB3FB1A36C8A7005C737B /* rom_enc.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD11A35A27F000E229F /* rom_enc.h */; };
+		52CDB3FC1A36C8A7005C737B /* sp_dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD21A35A27F000E229F /* sp_dec.c */; };
+		52CDB3FD1A36C8A7005C737B /* sp_dec.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD31A35A27F000E229F /* sp_dec.h */; };
+		52CDB3FE1A36C8A7005C737B /* sp_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD41A35A27F000E229F /* sp_enc.c */; };
+		52CDB3FF1A36C8A7005C737B /* sp_enc.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD51A35A27F000E229F /* sp_enc.h */; };
+		52CDB4001A36C8A7005C737B /* typedef.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538FD61A35A27F000E229F /* typedef.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52CDB3EA1A36C89B005C737B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52538FBC1A35A26E000E229F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52CDB3DD1A36C89A005C737B;
+			remoteInfo = "amrnb iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		52CDB3DC1A36C89A005C737B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				52CDB3E11A36C89B005C737B /* amrnb_iOS.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		52538FC41A35A26E000E229F /* libamrnb mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libamrnb mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,6 +73,14 @@
 		52538FD41A35A27F000E229F /* sp_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sp_enc.c; path = ../sp_enc.c; sourceTree = "<group>"; };
 		52538FD51A35A27F000E229F /* sp_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sp_enc.h; path = ../sp_enc.h; sourceTree = "<group>"; };
 		52538FD61A35A27F000E229F /* typedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = typedef.h; path = ../typedef.h; sourceTree = "<group>"; };
+		52CDB3411A36AA07005C737B /* amrnb_iso.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = amrnb_iso.h; sourceTree = "<group>"; };
+		52CDB3431A36AA07005C737B /* amrnb_iso.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = amrnb_iso.m; sourceTree = "<group>"; };
+		52CDB34F1A36AA07005C737B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52CDB3DE1A36C89A005C737B /* libamrnb iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libamrnb iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDB3E01A36C89B005C737B /* amrnb_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = amrnb_iOS.h; sourceTree = "<group>"; };
+		52CDB3E21A36C89B005C737B /* amrnb_iOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = amrnb_iOS.m; sourceTree = "<group>"; };
+		52CDB3E81A36C89B005C737B /* amrnb iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "amrnb iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDB3EE1A36C89B005C737B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +88,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB3DB1A36C89A005C737B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB3E51A36C89B005C737B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52CDB3E91A36C89B005C737B /* libamrnb iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +124,10 @@
 				52538FD41A35A27F000E229F /* sp_enc.c */,
 				52538FD51A35A27F000E229F /* sp_enc.h */,
 				52538FD61A35A27F000E229F /* typedef.h */,
+				52CDB3401A36AA07005C737B /* amrnb iso */,
+				52CDB34D1A36AA07005C737B /* amrnb isoTests */,
+				52CDB3DF1A36C89B005C737B /* amrnb iOS */,
+				52CDB3EC1A36C89B005C737B /* amrnb iOSTests */,
 				52538FC51A35A26E000E229F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,8 +136,60 @@
 			isa = PBXGroup;
 			children = (
 				52538FC41A35A26E000E229F /* libamrnb mac.a */,
+				52CDB3DE1A36C89A005C737B /* libamrnb iOS.a */,
+				52CDB3E81A36C89B005C737B /* amrnb iOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		52CDB3401A36AA07005C737B /* amrnb iso */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3411A36AA07005C737B /* amrnb_iso.h */,
+				52CDB3431A36AA07005C737B /* amrnb_iso.m */,
+			);
+			path = "amrnb iso";
+			sourceTree = "<group>";
+		};
+		52CDB34D1A36AA07005C737B /* amrnb isoTests */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB34E1A36AA07005C737B /* Supporting Files */,
+			);
+			path = "amrnb isoTests";
+			sourceTree = "<group>";
+		};
+		52CDB34E1A36AA07005C737B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB34F1A36AA07005C737B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52CDB3DF1A36C89B005C737B /* amrnb iOS */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3E01A36C89B005C737B /* amrnb_iOS.h */,
+				52CDB3E21A36C89B005C737B /* amrnb_iOS.m */,
+			);
+			path = "amrnb iOS";
+			sourceTree = "<group>";
+		};
+		52CDB3EC1A36C89B005C737B /* amrnb iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3ED1A36C89B005C737B /* Supporting Files */,
+			);
+			path = "amrnb iOSTests";
+			sourceTree = "<group>";
+		};
+		52CDB3ED1A36C89B005C737B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3EE1A36C89B005C737B /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -113,6 +230,41 @@
 			productReference = 52538FC41A35A26E000E229F /* libamrnb mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		52CDB3DD1A36C89A005C737B /* amrnb iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52CDB3F31A36C89B005C737B /* Build configuration list for PBXNativeTarget "amrnb iOS" */;
+			buildPhases = (
+				52CDB3DA1A36C89A005C737B /* Sources */,
+				52CDB3DB1A36C89A005C737B /* Frameworks */,
+				52CDB3DC1A36C89A005C737B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "amrnb iOS";
+			productName = "amrnb iOS";
+			productReference = 52CDB3DE1A36C89A005C737B /* libamrnb iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		52CDB3E71A36C89B005C737B /* amrnb iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52CDB3F41A36C89B005C737B /* Build configuration list for PBXNativeTarget "amrnb iOSTests" */;
+			buildPhases = (
+				52CDB3E41A36C89B005C737B /* Sources */,
+				52CDB3E51A36C89B005C737B /* Frameworks */,
+				52CDB3E61A36C89B005C737B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52CDB3EB1A36C89B005C737B /* PBXTargetDependency */,
+			);
+			name = "amrnb iOSTests";
+			productName = "amrnb iOSTests";
+			productReference = 52CDB3E81A36C89B005C737B /* amrnb iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -123,6 +275,12 @@
 				ORGANIZATIONNAME = john;
 				TargetAttributes = {
 					52538FC31A35A26E000E229F = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					52CDB3DD1A36C89A005C737B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					52CDB3E71A36C89B005C737B = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -140,9 +298,21 @@
 			projectRoot = "";
 			targets = (
 				52538FC31A35A26E000E229F /* amrnb mac */,
+				52CDB3DD1A36C89A005C737B /* amrnb iOS */,
+				52CDB3E71A36C89B005C737B /* amrnb iOSTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52CDB3E61A36C89B005C737B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52538FC01A35A26E000E229F /* Sources */ = {
@@ -156,7 +326,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		52CDB3DA1A36C89A005C737B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52CDB3F51A36C8A7005C737B /* interf_dec.c in Sources */,
+				52CDB3F61A36C8A7005C737B /* interf_dec.h in Sources */,
+				52CDB3F71A36C8A7005C737B /* interf_enc.c in Sources */,
+				52CDB3F81A36C8A7005C737B /* interf_enc.h in Sources */,
+				52CDB3F91A36C8A7005C737B /* interf_rom.h in Sources */,
+				52CDB3FA1A36C8A7005C737B /* rom_dec.h in Sources */,
+				52CDB3FB1A36C8A7005C737B /* rom_enc.h in Sources */,
+				52CDB3FC1A36C8A7005C737B /* sp_dec.c in Sources */,
+				52CDB3FD1A36C8A7005C737B /* sp_dec.h in Sources */,
+				52CDB3FE1A36C8A7005C737B /* sp_enc.c in Sources */,
+				52CDB3FF1A36C8A7005C737B /* sp_enc.h in Sources */,
+				52CDB4001A36C8A7005C737B /* typedef.h in Sources */,
+				52CDB3E31A36C89B005C737B /* amrnb_iOS.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB3E41A36C89B005C737B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52CDB3EB1A36C89B005C737B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52CDB3DD1A36C89A005C737B /* amrnb iOS */;
+			targetProxy = 52CDB3EA1A36C89B005C737B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		52538FC61A35A26E000E229F /* Debug */ = {
@@ -250,6 +455,68 @@
 			};
 			name = Release;
 		};
+		52CDB3EF1A36C89B005C737B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		52CDB3F01A36C89B005C737B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52CDB3F11A36C89B005C737B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "amrnb iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		52CDB3F21A36C89B005C737B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "amrnb iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -267,6 +534,23 @@
 			buildConfigurations = (
 				52538FC91A35A26E000E229F /* Debug */,
 				52538FCA1A35A26E000E229F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52CDB3F31A36C89B005C737B /* Build configuration list for PBXNativeTarget "amrnb iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52CDB3EF1A36C89B005C737B /* Debug */,
+				52CDB3F01A36C89B005C737B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		52CDB3F41A36C89B005C737B /* Build configuration list for PBXNativeTarget "amrnb iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52CDB3F11A36C89B005C737B /* Debug */,
+				52CDB3F21A36C89B005C737B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
