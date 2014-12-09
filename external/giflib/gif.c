@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
+#ifdef _WIN32
 #include <malloc.h>
+#else
+#include <unistd.h>
+#endif
 #include <string.h>
 #include "gif_lib.h"
 

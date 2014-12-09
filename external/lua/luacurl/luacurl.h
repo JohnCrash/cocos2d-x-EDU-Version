@@ -22,6 +22,15 @@
 #endif
 #endif
 
+#ifdef __APPLE__
+#include "../../curl/include/ios/curl/curl.h"
+#include "../../curl/include/ios/curl/easy.h"
+
+#ifndef LIBCURL_VERSION
+#include "../../curl/include/android/curl/curlver.h"
+#endif
+#endif
+
 /*-------------------------------------------------------------------------*\
 * This macro prefixes all exported API functions
 \*-------------------------------------------------------------------------*/
