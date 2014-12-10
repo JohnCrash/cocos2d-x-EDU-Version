@@ -289,7 +289,6 @@
 		5277758D1A3573140048D357 /* lxplib.c in Sources */ = {isa = PBXBuildFile; fileRef = 5277758A1A3573140048D357 /* lxplib.c */; };
 		5277758E1A3573140048D357 /* lxplib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5277758B1A3573140048D357 /* lxplib.h */; };
 		5277758F1A3573140048D357 /* lxplib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5277758B1A3573140048D357 /* lxplib.h */; };
-		C08D4F731974E00F00C87690 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D9BAFA1974D30000EC35BB /* liblua.a */; };
 		C0FEF4D618BE0E70001F446C /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0FEF4D418BE0E70001F446C /* lua_debugger.c */; };
 		C0FEF4D718BE0E70001F446C /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0FEF4D418BE0E70001F446C /* lua_debugger.c */; };
 		C0FEF4D818BE0E70001F446C /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEF4D518BE0E70001F446C /* lua_debugger.h */; };
@@ -453,7 +452,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C08D4F731974E00F00C87690 /* liblua.a in Frameworks */,
 				1ABCA1F418CD8F540087CE3A /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1228,6 +1226,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
 					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
+					"/Users/john/source/cocos2d-x/external/lua/luajit/prebuilt/ios",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
@@ -1253,6 +1252,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
 					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
+					"/Users/john/source/cocos2d-x/external/lua/luajit/prebuilt/ios",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
