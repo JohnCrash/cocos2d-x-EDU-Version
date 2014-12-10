@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		52538F421A359391000E229F /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538F3A1A359391000E229F /* config.h */; };
+		52538F431A359391000E229F /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3B1A359391000E229F /* dgif_lib.c */; };
+		52538F441A359391000E229F /* gif_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3C1A359391000E229F /* gif_hash.c */; };
+		52538F451A359391000E229F /* gif_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538F3D1A359391000E229F /* gif_hash.h */; };
+		52538F461A359391000E229F /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538F3E1A359391000E229F /* gif_lib_private.h */; };
+		52538F471A359391000E229F /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = 52538F3F1A359391000E229F /* gif_lib.h */; };
+		52538F481A359391000E229F /* gif.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F401A359391000E229F /* gif.c */; };
+		52538F491A359391000E229F /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F411A359391000E229F /* gifalloc.c */; };
+		52CDB3831A36AAF2005C737B /* gif_ios.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52CDB3821A36AAF2005C737B /* gif_ios.h */; };
+		52CDB3851A36AAF2005C737B /* gif_ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CDB3841A36AAF2005C737B /* gif_ios.m */; };
+		52CDB38B1A36AAF2005C737B /* libgif ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52CDB3801A36AAF2005C737B /* libgif ios.a */; };
+		52CDB3A81A36C296005C737B /* config.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3A1A359391000E229F /* config.h */; };
+		52CDB3A91A36C296005C737B /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3B1A359391000E229F /* dgif_lib.c */; };
+		52CDB3AA1A36C296005C737B /* gif_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3C1A359391000E229F /* gif_hash.c */; };
+		52CDB3AB1A36C296005C737B /* gif_hash.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3D1A359391000E229F /* gif_hash.h */; };
+		52CDB3AC1A36C296005C737B /* gif_lib_private.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3E1A359391000E229F /* gif_lib_private.h */; };
+		52CDB3AD1A36C296005C737B /* gif_lib.h in Sources */ = {isa = PBXBuildFile; fileRef = 52538F3F1A359391000E229F /* gif_lib.h */; };
+		52CDB3AE1A36C297005C737B /* gif.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F401A359391000E229F /* gif.c */; };
+		52CDB3AF1A36C297005C737B /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 52538F411A359391000E229F /* gifalloc.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52CDB38C1A36AAF2005C737B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52538F2B1A35937B000E229F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52CDB37F1A36AAF1005C737B;
+			remoteInfo = "gif ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		52CDB37E1A36AAF1005C737B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				52CDB3831A36AAF2005C737B /* gif_ios.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		52538F331A35937B000E229F /* libgif mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgif mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52538F3A1A359391000E229F /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../config.h; sourceTree = "<group>"; };
+		52538F3B1A359391000E229F /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dgif_lib.c; path = ../dgif_lib.c; sourceTree = "<group>"; };
+		52538F3C1A359391000E229F /* gif_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gif_hash.c; path = ../gif_hash.c; sourceTree = "<group>"; };
+		52538F3D1A359391000E229F /* gif_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_hash.h; path = ../gif_hash.h; sourceTree = "<group>"; };
+		52538F3E1A359391000E229F /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_lib_private.h; path = ../gif_lib_private.h; sourceTree = "<group>"; };
+		52538F3F1A359391000E229F /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_lib.h; path = ../gif_lib.h; sourceTree = "<group>"; };
+		52538F401A359391000E229F /* gif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gif.c; path = ../gif.c; sourceTree = "<group>"; };
+		52538F411A359391000E229F /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gifalloc.c; path = ../gifalloc.c; sourceTree = "<group>"; };
+		52CDB3261A36A97F005C737B /* gif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gif.h; sourceTree = "<group>"; };
+		52CDB3281A36A97F005C737B /* gif.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gif.m; sourceTree = "<group>"; };
+		52CDB3341A36A97F005C737B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52CDB3801A36AAF2005C737B /* libgif ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgif ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDB3821A36AAF2005C737B /* gif_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gif_ios.h; sourceTree = "<group>"; };
+		52CDB3841A36AAF2005C737B /* gif_ios.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gif_ios.m; sourceTree = "<group>"; };
+		52CDB38A1A36AAF2005C737B /* gif iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gif iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDB3901A36AAF2005C737B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		52538F301A35937B000E229F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB37D1A36AAF1005C737B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB3871A36AAF2005C737B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52CDB38B1A36AAF2005C737B /* libgif ios.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		52538F2A1A35937B000E229F = {
+			isa = PBXGroup;
+			children = (
+				52538F3A1A359391000E229F /* config.h */,
+				52538F3B1A359391000E229F /* dgif_lib.c */,
+				52538F3C1A359391000E229F /* gif_hash.c */,
+				52538F3D1A359391000E229F /* gif_hash.h */,
+				52538F3E1A359391000E229F /* gif_lib_private.h */,
+				52538F3F1A359391000E229F /* gif_lib.h */,
+				52538F401A359391000E229F /* gif.c */,
+				52538F411A359391000E229F /* gifalloc.c */,
+				52CDB3251A36A97F005C737B /* gif */,
+				52CDB3321A36A97F005C737B /* gifTests */,
+				52CDB3811A36AAF2005C737B /* gif ios */,
+				52CDB38E1A36AAF2005C737B /* gif iosTests */,
+				52538F341A35937B000E229F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		52538F341A35937B000E229F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				52538F331A35937B000E229F /* libgif mac.a */,
+				52CDB3801A36AAF2005C737B /* libgif ios.a */,
+				52CDB38A1A36AAF2005C737B /* gif iosTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		52CDB3251A36A97F005C737B /* gif */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3261A36A97F005C737B /* gif.h */,
+				52CDB3281A36A97F005C737B /* gif.m */,
+			);
+			path = gif;
+			sourceTree = "<group>";
+		};
+		52CDB3321A36A97F005C737B /* gifTests */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3331A36A97F005C737B /* Supporting Files */,
+			);
+			path = gifTests;
+			sourceTree = "<group>";
+		};
+		52CDB3331A36A97F005C737B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3341A36A97F005C737B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52CDB3811A36AAF2005C737B /* gif ios */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3821A36AAF2005C737B /* gif_ios.h */,
+				52CDB3841A36AAF2005C737B /* gif_ios.m */,
+			);
+			path = "gif ios";
+			sourceTree = "<group>";
+		};
+		52CDB38E1A36AAF2005C737B /* gif iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB38F1A36AAF2005C737B /* Supporting Files */,
+			);
+			path = "gif iosTests";
+			sourceTree = "<group>";
+		};
+		52CDB38F1A36AAF2005C737B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52CDB3901A36AAF2005C737B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		52538F311A35937B000E229F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52538F461A359391000E229F /* gif_lib_private.h in Headers */,
+				52538F421A359391000E229F /* config.h in Headers */,
+				52538F451A359391000E229F /* gif_hash.h in Headers */,
+				52538F471A359391000E229F /* gif_lib.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		52538F321A35937B000E229F /* gif mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52538F371A35937B000E229F /* Build configuration list for PBXNativeTarget "gif mac" */;
+			buildPhases = (
+				52538F2F1A35937B000E229F /* Sources */,
+				52538F301A35937B000E229F /* Frameworks */,
+				52538F311A35937B000E229F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "gif mac";
+			productName = gif;
+			productReference = 52538F331A35937B000E229F /* libgif mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		52CDB37F1A36AAF1005C737B /* gif ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52CDB3951A36AAF2005C737B /* Build configuration list for PBXNativeTarget "gif ios" */;
+			buildPhases = (
+				52CDB37C1A36AAF1005C737B /* Sources */,
+				52CDB37D1A36AAF1005C737B /* Frameworks */,
+				52CDB37E1A36AAF1005C737B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "gif ios";
+			productName = "gif ios";
+			productReference = 52CDB3801A36AAF2005C737B /* libgif ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		52CDB3891A36AAF2005C737B /* gif iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52CDB3961A36AAF2005C737B /* Build configuration list for PBXNativeTarget "gif iosTests" */;
+			buildPhases = (
+				52CDB3861A36AAF2005C737B /* Sources */,
+				52CDB3871A36AAF2005C737B /* Frameworks */,
+				52CDB3881A36AAF2005C737B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52CDB38D1A36AAF2005C737B /* PBXTargetDependency */,
+			);
+			name = "gif iosTests";
+			productName = "gif iosTests";
+			productReference = 52CDB38A1A36AAF2005C737B /* gif iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52538F2B1A35937B000E229F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = john;
+				TargetAttributes = {
+					52538F321A35937B000E229F = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					52CDB37F1A36AAF1005C737B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					52CDB3891A36AAF2005C737B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 52538F2E1A35937B000E229F /* Build configuration list for PBXProject "gif" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 52538F2A1A35937B000E229F;
+			productRefGroup = 52538F341A35937B000E229F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52538F321A35937B000E229F /* gif mac */,
+				52CDB37F1A36AAF1005C737B /* gif ios */,
+				52CDB3891A36AAF2005C737B /* gif iosTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52CDB3881A36AAF2005C737B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		52538F2F1A35937B000E229F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52538F491A359391000E229F /* gifalloc.c in Sources */,
+				52538F481A359391000E229F /* gif.c in Sources */,
+				52538F441A359391000E229F /* gif_hash.c in Sources */,
+				52538F431A359391000E229F /* dgif_lib.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB37C1A36AAF1005C737B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52CDB3A81A36C296005C737B /* config.h in Sources */,
+				52CDB3A91A36C296005C737B /* dgif_lib.c in Sources */,
+				52CDB3AA1A36C296005C737B /* gif_hash.c in Sources */,
+				52CDB3AB1A36C296005C737B /* gif_hash.h in Sources */,
+				52CDB3AC1A36C296005C737B /* gif_lib_private.h in Sources */,
+				52CDB3AD1A36C296005C737B /* gif_lib.h in Sources */,
+				52CDB3AE1A36C297005C737B /* gif.c in Sources */,
+				52CDB3AF1A36C297005C737B /* gifalloc.c in Sources */,
+				52CDB3851A36AAF2005C737B /* gif_ios.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52CDB3861A36AAF2005C737B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52CDB38D1A36AAF2005C737B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52CDB37F1A36AAF1005C737B /* gif ios */;
+			targetProxy = 52CDB38C1A36AAF2005C737B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		52538F351A35937B000E229F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		52538F361A35937B000E229F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		52538F381A35937B000E229F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		52538F391A35937B000E229F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		52CDB3911A36AAF2005C737B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		52CDB3921A36AAF2005C737B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52CDB3931A36AAF2005C737B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "gif iosTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		52CDB3941A36AAF2005C737B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "gif iosTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		52538F2E1A35937B000E229F /* Build configuration list for PBXProject "gif" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52538F351A35937B000E229F /* Debug */,
+				52538F361A35937B000E229F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52538F371A35937B000E229F /* Build configuration list for PBXNativeTarget "gif mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52538F381A35937B000E229F /* Debug */,
+				52538F391A35937B000E229F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52CDB3951A36AAF2005C737B /* Build configuration list for PBXNativeTarget "gif ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52CDB3911A36AAF2005C737B /* Debug */,
+				52CDB3921A36AAF2005C737B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52CDB3961A36AAF2005C737B /* Build configuration list for PBXNativeTarget "gif iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52CDB3931A36AAF2005C737B /* Debug */,
+				52CDB3941A36AAF2005C737B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 52538F2B1A35937B000E229F /* Project object */;
+}

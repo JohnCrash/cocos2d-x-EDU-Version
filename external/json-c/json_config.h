@@ -10,6 +10,18 @@
 #define isinf(x) (0) //不支持无穷大判断
 #define isnan(x) (0)
 #else
+#ifdef __APPLE__
+#define JSON_C_HAVE_INTTYPES_H 1
+#define HAVE_DECL_NAN 1
+#define HAVE_DECL_INFINITY 1
+#define HAVE_DECL_ISINF 1
+#define HAVE_SNPRINTF 1
+#define HAVE_STRDUP 1
+#define HAVE_STRNCASECMP 1
+#define HAVE_VSNPRINTF 1
+#define HAVE_VASPRINTF 1
+#define HAVE_UNISTD_H 1
+#else
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
@@ -22,4 +34,5 @@
 #define HAVE_STRNCASECMP 1
 #define HAVE_VSNPRINTF 1
 #define HAVE_VASPRINTF 1
+#endif
 #endif
