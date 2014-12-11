@@ -292,44 +292,6 @@ static int tolua_bnd_getpeer(lua_State* L) {
 };
 #endif
 
-/* Get the index which have been override
-    2014.6.5 by SunLightJuly
- */
-static int tolua_bnd_getcfunction(lua_State* L) {
-    if (!lua_isstring(L, 2)) {
-        lua_pushstring(L, "Invalid argument #2 to getcfunction: string expected.");
-        lua_error(L);
-    }
-    
-    if (!lua_getmetatable(L, 1)) {
-        lua_pushstring(L, "Invalid argument #1 to getcfunction: class or object expected.");
-        lua_error(L);
-    }
-    
-    /* stack: class key mt */
-    while (1) {
-        lua_pushstring(L, ".backup");
-        lua_rawget(L, -2);  /* stack: class key mt mt[".backup"] */
-        if (!lua_isnil(L, -1)) {
-            lua_pushvalue(L, 2);    /* stack: class key mt mt[".backup"] key */
-            lua_rawget(L, -2);
-            if (!lua_isnil(L, -1)) { // key had been found
-                return 1;
-            }
-            lua_pop(L, 1);
-        }
-        lua_pop(L, 1);  /* stack: class key mt */
-        
-        if (!lua_getmetatable(L, -1)) {
-            break;
-        }
-        /* stack: class key mt base_mt */
-        lua_remove(L, -2);  /* stack: class key base_mt */
-    }
-    
-    return 0;
-}
-
 /* static int class_gc_event (lua_State* L); */
 
 TOLUA_API void tolua_open (lua_State* L)
@@ -410,7 +372,6 @@ TOLUA_API void tolua_open (lua_State* L)
         tolua_function(L, "setpeer", tolua_bnd_setpeer);
         tolua_function(L, "getpeer", tolua_bnd_getpeer);
 #endif
-        tolua_function(L,"getcfunction", tolua_bnd_getcfunction);
 
         tolua_endmodule(L);
         tolua_endmodule(L);
@@ -481,27 +442,13 @@ TOLUA_API void tolua_usertype (lua_State* L, const char* type)
 */
 TOLUA_API void tolua_beginmodule (lua_State* L, const char* name)
 {
-    if (name) { // ... module
-//---- now module[name] is a table, get it's metatable to store keys
-        // get module[name]
-        lua_pushstring(L,name); // ... module name
-        lua_rawget(L,-2);       // ... module module[name]
-        // Is module[name] a class table?
-        lua_pushliteral(L, ".isclass");
-        lua_rawget(L, -2);                  // stack: ... module module[name] class_flag
-        if (lua_isnil(L, -1)) {
-            lua_pop(L, 1);                  // stack: ... module module[name]
-            return;                         // not a class table, use origin table
-        }
-        lua_pop(L, 1);                      // stack: ... module class_table
-        // get metatable
-        if (lua_getmetatable(L, -1)) {  // ... module class_table mt
-            lua_remove(L, -2);          // ... module mt
-        }
-//---- by SunLightJuly, 2014.6.5
-    } else {
-        lua_pushvalue(L,LUA_GLOBALSINDEX);
+    if (name)
+    {
+        lua_pushstring(L,name);
+        lua_rawget(L,-2);
     }
+    else
+        lua_pushvalue(L,LUA_GLOBALSINDEX);
 }
 
 /* End module
@@ -632,16 +579,8 @@ TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, 
     lua_rawset(L,-3);
     */
 
-//---- create a new class table, set it's metatable, and assign it to module
-    lua_newtable(L);                    // stack: module lname table
-    luaL_getmetatable(L,name);          // stack: module lname table mt
-    lua_setmetatable(L, -2);            // stack: module lname table
-    //Use a key named ".isclass" to be a flag of class_table
-    lua_pushliteral(L, ".isclass");
-    lua_pushboolean(L, 1);
-    lua_rawset(L, -3);                  // stack: module lname table
-    lua_rawset(L, -3);                  // stack: module
-//---- by SunLightJuly, 2014.6.5
+    luaL_getmetatable(L,name);
+    lua_rawset(L,-3);              /* assign class metatable to module */
 
     /* now we also need to store the collector table for the const
        instances of the class */

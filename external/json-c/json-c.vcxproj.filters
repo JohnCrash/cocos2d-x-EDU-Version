@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
     </Filter>
     <Filter Include="Documentation">
-      <UniqueIdentifier>{550012db-1e24-4d32-a23b-83a445df9414}</UniqueIdentifier>
+      <UniqueIdentifier>{b7d29f10-a457-4ec5-9c6a-17a5586551ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +37,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="printbuf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="random_seed.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
