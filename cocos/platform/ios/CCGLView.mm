@@ -94,7 +94,8 @@ bool GLView::initWithEAGLView(void *eaglview)
 {
     _eaglview = eaglview;
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
-
+    [glview retain];
+    
     _screenSize.width = _designResolutionSize.width = [glview getWidth];
     _screenSize.height = _designResolutionSize.height = [glview getHeight];
 //    _scaleX = _scaleY = [glview contentScaleFactor];
@@ -171,6 +172,18 @@ void GLView::end()
 
     [eaglview removeFromSuperview];
     [eaglview release];
+
+    /*
+        强制关闭App
+     */
+    UIApplication *app = [UIApplication sharedApplication];
+    [app performSelector:@selector(suspend)];
+    //wait 2 seconds while app is going background
+    [NSThread sleepForTimeInterval:1.0];
+    //exit app when app is in background
+    NSLog(@"exit");
+    exit(0);
+    
 }
 
 
