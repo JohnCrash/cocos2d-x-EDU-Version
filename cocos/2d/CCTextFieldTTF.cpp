@@ -415,12 +415,14 @@ void TextFieldTTF::setText(const char * text, size_t len)
 	{
 		deleteSelect();
 	}
+	bool isEnter = false;
     // insert \n means input end
     int pos = static_cast<int>(insert.find('\n'));
     if ((int)insert.npos != pos)
     {
         len = pos;
         insert.erase(pos);
+		isEnter = true;
     }
 	//´¥·¢ÊÂ¼þ
 	if (_delegate && _delegate->onTextFieldInsertText(this, insert.c_str(), len))
@@ -431,7 +433,8 @@ void TextFieldTTF::setText(const char * text, size_t len)
 	_charCount = _calcCharCount(insert.c_str());
 	_cpos = len;
 	setString(insert);
-    detachWithIME();	
+	if ( isEnter )
+		detachWithIME();	
 }
 
 void TextFieldTTF::insertText(const char * text, size_t len)

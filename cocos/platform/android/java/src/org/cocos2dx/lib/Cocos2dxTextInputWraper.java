@@ -103,9 +103,9 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		//	}
 		}
 		this.mText = s.toString();
-	
+
 		//Log.d("afterTextChanged",this.mText);
-		//this.mCocos2dxGLSurfaceView.setText(this.mText);
+		this.mCocos2dxGLSurfaceView.setText(this.mText);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-
+		
 	}
 
 	@Override

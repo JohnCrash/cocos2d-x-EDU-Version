@@ -52,6 +52,25 @@ import android.view.ViewTreeObserver
 	// Fields
 	// ===========================================================
 
+	/*
+	 	加入一组像素转换函数
+	 */
+    public static int px2sp(Context context, float pxValue) { 
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity; 
+        return (int) (pxValue / fontScale + 0.5f); 
+    }
+    public static int sp2px(Context context, float spValue) { 
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity; 
+        return (int) (spValue * fontScale + 0.5f); 
+    }
+    public static int dip2px(Context context, float dipValue) { 
+        final float scale = context.getResources().getDisplayMetrics().density; 
+        return (int) (dipValue * scale + 0.5f); 
+    } 
+    public static int px2dip(Context context, float pxValue) { 
+        final float scale = context.getResources().getDisplayMetrics().density; 
+        return (int) (pxValue / scale + 0.5f); 
+    } 
 	// TODO Static handler -> Potential leak!
 	private static Handler sHandler;
 
@@ -86,6 +105,7 @@ import android.view.ViewTreeObserver
 			Rect rect = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentRect();
 			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.VISIBLE);
 			int height = rect.height() > sEditTextMinHeight ?rect.height():sEditTextMinHeight;
+		//	Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setTextSize(px2sp(getContext(),rect.height()));
 			int dy = (height - rect.height())/2;
 			FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(rect.width(),height);
 			int screenHeight = mCocos2dxGLSurfaceView.getHeight();
