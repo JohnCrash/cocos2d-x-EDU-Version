@@ -132,7 +132,8 @@ void TextFieldTTF::updateCursor()
 		Size size;
 		getStringSize(s,size);
 		_cx = size.width;
-		_cy = (float)_labelHeight - _cheight;
+        int dh = (size.height-_cheight)/2;
+		_cy = (float)_labelHeight - _cheight - dh;
 		if( _cy < 0 )_cy = 0;
 	}
 	else

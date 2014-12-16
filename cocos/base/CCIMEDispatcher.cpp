@@ -24,7 +24,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/CCIMEDispatcher.h"
-
+#include <CCGLView.h>
+#include <CCDirector.h>
+#include <CCActionInterval.h>
+#include <CCScene.h>
 #include <list>
 
 NS_CC_BEGIN
@@ -136,7 +139,9 @@ void IMEDispatcher::addDelegate(IMEDelegate* delegate)
 bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
 {
     bool ret = false;
-	if (isAttachIME)return false; //���ȫ���ٴ�attach����
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	if (isAttachIME)return false; //∑Òæˆ»´≤ø‘Ÿ¥Œattach≤Ÿ◊˜
+#endif
     do
     {
         CC_BREAK_IF(! _impl || ! delegate);
@@ -323,6 +328,58 @@ Rect IMEDispatcher::getContentRect()
 //////////////////////////////////////////////////////////////////////////
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////
+static Scene *s_Scene = nullptr;
+
+static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBoxRect,bool b)
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    if( info.duration > 0 && info.duration < 2 )
+    {
+        Director * pDirector = Director::getInstance();
+        if( pDirector )
+        {
+            GLView * pview = pDirector->getOpenGLView();
+            Size size = pview->getFrameSize();
+            float sx = pview->getScaleX();
+            float sy = pview->getScaleY();
+            size.height /= sy;
+            size.width /= sx;
+            Scene *pscene = pDirector->getRunningScene();
+            if( b )
+            {
+                Vec2 p;
+                int vy = textBoxRect.origin.y/sy+info.end.size.height + textBoxRect.size.height;
+                if( vy > size.height )
+                {
+                    p.x = 0;
+                    p.y = vy-size.height + 12; //多向上推一点
+                    MoveTo *pmove = MoveTo::create(info.duration,p);
+
+                    pscene->runAction( pmove );
+                }
+                else{
+                    p.x = 0;
+                    p.y = 0;
+                }
+                s_Scene = pscene;
+            }else if(s_Scene == pscene )
+            {
+                MoveTo *pmove = MoveTo::create(info.duration,Vec2(0,0));
+                pscene->runAction( pmove );
+            }
+            else
+            {
+                CCLOG("moveSceneIfNeed close s_Scene != pscene");
+            }
+          //  pmove->release();
+        }
+    }
+    else
+    {
+        CCLOG("moveSceneIfNeed info.duration = %f",info.duration );
+    }
+#endif
+}
 
 void IMEDispatcher::dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
@@ -338,6 +395,9 @@ void IMEDispatcher::dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info)
                 delegate->keyboardWillShow(info);
             }
         }
+        /*
+         */
+        moveSceneIfNeed( info,getContentRect(),true );
     }
 }
 
@@ -372,6 +432,7 @@ void IMEDispatcher::dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info)
                 delegate->keyboardWillHide(info);
             }
         }
+        moveSceneIfNeed( info,getContentRect(),false );
     }
 }
 

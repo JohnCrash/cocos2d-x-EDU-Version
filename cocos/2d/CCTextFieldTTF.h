@@ -183,7 +183,7 @@ protected:
 	virtual void optKey(int) override;
     virtual const std::string& getContentText() override;
 	virtual Rect getContentRect() override;
-	
+
 	Vec2 convertToWindowSpace2(const Vec2& nodePoint)const;
 
     TextFieldDelegate * _delegate;
