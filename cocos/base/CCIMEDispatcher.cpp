@@ -24,10 +24,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/CCIMEDispatcher.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include <CCGLView.h>
 #include <CCDirector.h>
 #include <CCActionInterval.h>
 #include <CCScene.h>
+#endif
 #include <list>
 
 NS_CC_BEGIN
@@ -328,8 +330,9 @@ Rect IMEDispatcher::getContentRect()
 //////////////////////////////////////////////////////////////////////////
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 static Scene *s_Scene = nullptr;
-
+#endif
 static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBoxRect,bool b)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
