@@ -333,51 +333,58 @@ static Scene *s_Scene = nullptr;
 static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBoxRect,bool b)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    if( info.duration > 0 && info.duration < 2 )
-    {
         Director * pDirector = Director::getInstance();
         if( pDirector )
         {
             GLView * pview = pDirector->getOpenGLView();
-            Size size = pview->getFrameSize();
-            float sx = pview->getScaleX();
-            float sy = pview->getScaleY();
-            size.height /= sy;
-            size.width /= sx;
+            Size size = pview->getDesignResolutionSize();
             Scene *pscene = pDirector->getRunningScene();
+            Vec2 pp = pscene->getPosition();
             if( b )
             {
                 Vec2 p;
-                int vy = textBoxRect.origin.y/sy+info.end.size.height + textBoxRect.size.height;
-                if( vy > size.height )
+                if( pp.y == 0 && s_Scene==nullptr)
+                {
+                    // int vy = textBoxRect.origin.y+info.end.size.width + textBoxRect.size.height;
+                    int vy;
+                    if( info.begin.origin.x > 0 )
+                        vy = textBoxRect.origin.y - info.end.size.width;
+                    else
+                        vy = textBoxRect.origin.y - info.end.size.height;
+                    if( vy < 0 )
+                    {
+                        p.x = 0;
+                        p.y = -vy+12; //多向上推一点
+                        MoveTo *pmove = MoveTo::create(info.duration,p);
+                        pscene->runAction( pmove );
+                    }
+                    else{
+                        p.x = 0;
+                        p.y = 0;
+                    }
+                }else
                 {
                     p.x = 0;
-                    p.y = vy-size.height + 12; //多向上推一点
-                    MoveTo *pmove = MoveTo::create(info.duration,p);
-
-                    pscene->runAction( pmove );
-                }
-                else{
-                    p.x = 0;
-                    p.y = 0;
+                    if( info.begin.origin.x > 0 )
+                        p.y = pp.y + info.end.size.width - info.begin.size.width;
+                    else
+                        p.y = pp.y + info.end.size.width - info.begin.size.height;
+                    pscene->setPosition(p);
                 }
                 s_Scene = pscene;
             }else if(s_Scene == pscene )
             {
                 MoveTo *pmove = MoveTo::create(info.duration,Vec2(0,0));
                 pscene->runAction( pmove );
+                s_Scene = nullptr;
             }
             else
             {
+                s_Scene = nullptr;
                 CCLOG("moveSceneIfNeed close s_Scene != pscene");
             }
           //  pmove->release();
         }
-    }
-    else
-    {
-        CCLOG("moveSceneIfNeed info.duration = %f",info.duration );
-    }
 #endif
 }
 

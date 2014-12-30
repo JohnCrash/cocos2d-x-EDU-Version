@@ -424,7 +424,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
-
+    
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     glview->handleTouchesMove(i, (intptr_t*)ids, xs, ys);
 }
@@ -442,7 +442,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
-
+    
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     glview->handleTouchesEnd(i, (intptr_t*)ids, xs, ys);
 }
