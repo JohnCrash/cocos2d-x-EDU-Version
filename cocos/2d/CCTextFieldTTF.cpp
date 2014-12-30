@@ -425,7 +425,7 @@ void TextFieldTTF::setText(const char * text, size_t len)
         insert.erase(pos);
 		isEnter = true;
     }
-	//´¥·¢ÊÂ¼þ
+	//Â¥â€¢âˆ‘Â¢Â Â¬ÂºË›
 	if (_delegate && _delegate->onTextFieldInsertText(this, insert.c_str(), len))
 	{
 		// delegate doesn't want to insert text
@@ -767,8 +767,9 @@ Vec2 TextFieldTTF::convertToWindowSpace2(const Vec2& nodePoint)const
 	Vec2 worldPoint = this->convertToWorldSpace(nodePoint);
 	return Director::getInstance()->convertToUI2(worldPoint);
 }
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 /*
-	ÕâÀï×ø±ê×ª»»º¯ÊýconvertToUI´æÔÚÎÊÌâ£¬ÎÒ½«Æä¸Ä½øÎªconvertToUI2
+	â€™â€šÂ¿Ã”â—ŠÂ¯Â±Ãâ—Šâ„¢ÂªÂªâˆ«Ã˜Â ËconvertToUIÂ¥ÃŠâ€˜â„Å’Â Ãƒâ€šÂ£Â¨Å’â€œÎ©Â´âˆ†â€°âˆÆ’Î©Â¯Å’â„¢convertToUI2
 */
 Rect TextFieldTTF::getContentRect()
 {
@@ -787,8 +788,8 @@ Rect TextFieldTTF::getContentRect()
 	Vec2 wpp = convertToWindowSpace2(pp);
 //	CCLOG("wp = %f,%f", wp.x, wp.y);
 //	CCLOG("size_wp = %f,%f", wpp.x, wpp.y);
-	//convertToWindowSpace²¢²»¿¼ÂÇÖ¡»º³åµ½ÆÁÄ»µÄÓ³Éä
-	//Ëü½ö½öÓ³Éäµ½Éè¼ÆÊÓÍ¼
+	//convertToWindowSpaceâ‰¤Â¢â‰¤ÂªÃ¸ÂºÂ¬Â«Ã·Â°Âªâˆ«â‰¥Ã‚ÂµÎ©âˆ†Â¡Æ’ÂªÂµÆ’â€â‰¥â€¦â€°
+	//Ã€Â¸Î©Ë†Î©Ë†â€â‰¥â€¦â€°ÂµÎ©â€¦Ã‹Âºâˆ†Â â€Ã•Âº
 	GLView * pglview = Director::getInstance()->getOpenGLView();
 	Size frame_size = pglview->getFrameSize();
 	Size design_size = pglview->getDesignResolutionSize();
@@ -810,7 +811,7 @@ Rect TextFieldTTF::getContentRect()
 		wp.y *= sy;
 		wpp.x = wpp.x*sy + dw;
 		wpp.y *= sy;
-	case ResolutionPolicy::NO_BORDER: //²»Ì«Àí½âº¬Òå£¬ÔÝÊ±°´SHOW_ALL´¦Àí
+	case ResolutionPolicy::NO_BORDER: //â‰¤ÂªÃƒÂ´Â¿ÃŒÎ©â€šâˆ«Â¨â€œÃ‚Â£Â¨â€˜â€ºÂ Â±âˆžÂ¥SHOW_ALLÂ¥Â¶Â¿ÃŒ
 	case ResolutionPolicy::SHOW_ALL:
 		{
 			float df = design_size.height / design_size.width;
@@ -865,6 +866,23 @@ Rect TextFieldTTF::getContentRect()
 	*/
 	return Rect(wp.x, wp.y, abs(wpp.x-wp.x),abs(wpp.y-wp.y));
 }
+#else
+Rect TextFieldTTF::getContentRect()
+{
+    Vec2 p = getPosition();
+    Size s = getContentSize();
+    Vec2 ap = this->getAnchorPoint();
+    //	CCLOG("p = %f,%f", p.x, p.y);
+    p.x -= s.width*ap.x;
+    p.y -= s.height*ap.y;
+    Vec2 pp;
+    pp.x = p.x + s.width;
+    pp.y = p.y + s.height;
+    Vec2 wp = convertToWorldSpace(p);
+    Vec2 wpp = convertToWorldSpace(pp);
+    return Rect(wp.x, wp.y, abs(wpp.x-wp.x),abs(wpp.y-wp.y));
+}
+#endif
 
 void TextFieldTTF::setTextColor(const Color4B &color)
 {
