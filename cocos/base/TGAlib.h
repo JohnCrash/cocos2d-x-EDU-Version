@@ -25,8 +25,10 @@ THE SOFTWARE.
 
 #ifndef __SUPPORT_DATA_SUPPORT_TGALIB_H__
 #define __SUPPORT_DATA_SUPPORT_TGALIB_H__
+#include "CCPlatformMacros.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
+//namespace cocos2d {
 
 enum {
     TGA_OK,
@@ -71,6 +73,6 @@ void tgaRGBtogreyscale(tImageTGA *info);
 /// releases the memory used for the image
 void tgaDestroy(tImageTGA *info);
 
-}//namespace cocos2d 
-
+//}//namespace cocos2d 
+NS_CC_END
 #endif // __SUPPORT_DATA_SUPPORT_TGALIB_H__
