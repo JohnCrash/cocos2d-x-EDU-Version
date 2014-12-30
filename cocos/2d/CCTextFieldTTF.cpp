@@ -802,24 +802,21 @@ Rect TextFieldTTF::getContentRect()
 	switch (pglview->getResolutionPolicy())
 	{
 	case ResolutionPolicy::FIXED_WIDTH:
-//		CCLOG("FIXED_WIDTH");
 		wp.x *= sx;
-		wp.y *= sx + dh;
+		wp.y =wp.y*sx + dh;
 		wpp.x *= sx;
-		wpp.y *= sx + dh;
+		wpp.y = wpp.y*sx + dh;
 	case ResolutionPolicy::FIXED_HEIGHT:
-//		CCLOG("FIXED_HEIGHT");
-		wp.x *= sy + dw;
+		wp.x = wp.y*sy + dw;
 		wp.y *= sy;
-		wpp.x *= sy + dw;
+		wpp.x = wpp.x*sy + dw;
 		wpp.y *= sy;
 	case ResolutionPolicy::NO_BORDER: //≤ªÃ´¿ÌΩ‚∫¨“Â£¨‘› ±∞¥SHOW_ALL¥¶¿Ì
 	case ResolutionPolicy::SHOW_ALL:
-//		CCLOG("SHOW_ALL");
 		{
 			float df = design_size.height / design_size.width;
 			float ff = frame_size.height / frame_size.width;
-			if (ff < df){//fixed_width
+			if (ff > df){//fixed_width
 				wp.x *= sx;
 				wp.y = wp.y*sx + dh;
 				wpp.x *= sx;
@@ -836,7 +833,6 @@ Rect TextFieldTTF::getContentRect()
 		break;
 	case ResolutionPolicy::UNKNOWN:
 	case ResolutionPolicy::EXACT_FIT:
-//		CCLOG("EXACT_FIT");
 	default:
 		wp.x *= sx;
 		wp.y *= sy;
