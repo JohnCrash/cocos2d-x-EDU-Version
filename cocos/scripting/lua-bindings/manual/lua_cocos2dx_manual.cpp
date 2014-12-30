@@ -5163,7 +5163,7 @@ static int tolua_cocos2dx_EventListenerMouse_create(lua_State* tolua_S)
     
     argc = lua_gettop(tolua_S) - 1;
     
-    if (argc == 1)
+    if (argc == 0)
     {
         cocos2d::EventListenerMouse* tolua_ret = cocos2d::EventListenerMouse::create();
         if(nullptr == tolua_ret)
