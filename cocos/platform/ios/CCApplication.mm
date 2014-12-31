@@ -52,14 +52,14 @@ int Application::run()
 {
     if (applicationDidFinishLaunching()) 
     {
-        [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
+        [[CCDirectorCaller_v3 sharedDirectorCaller] startMainLoop];
     }
     return 0;
 }
 
 void Application::setAnimationInterval(double interval)
 {
-    [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
+    [[CCDirectorCaller_v3 sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

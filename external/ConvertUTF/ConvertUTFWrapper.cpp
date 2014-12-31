@@ -15,7 +15,7 @@
 #include <assert.h>
 #include <memory.h>
 
-namespace llvm {
+namespace llvm_v3 {
 
 bool ConvertUTF8toWide(unsigned WideCharWidth, const std::string& Source,
                        char *&ResultPtr, const UTF8 *&ErrorPtr) {

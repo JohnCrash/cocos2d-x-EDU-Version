@@ -133,7 +133,7 @@ bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
     char* utf16ptr = reinterpret_cast<char*>(utf16);
     const UTF8* error = nullptr;
 
-    if (llvm::ConvertUTF8toWide(2, utf8, utf16ptr, error))
+    if (llvm_v3::ConvertUTF8toWide(2, utf8, utf16ptr, error))
     {
         outUtf16 = utf16;
         ret = true;
@@ -152,7 +152,7 @@ bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8)
         return true;
     }
 
-    return llvm::convertUTF16ToUTF8String(utf16, outUtf8);
+    return llvm_v3::convertUTF16ToUTF8String(utf16, outUtf8);
 }
 
 std::vector<char16_t> getChar16VectorFromUTF16String(const std::u16string& utf16)

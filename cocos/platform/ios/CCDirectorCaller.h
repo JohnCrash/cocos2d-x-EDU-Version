@@ -28,7 +28,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CCDirectorCaller : NSObject {
+@interface CCDirectorCaller_v3 : NSObject {
         id displayLink;
         int interval;
 }

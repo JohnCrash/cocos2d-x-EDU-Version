@@ -30,7 +30,7 @@
 #include "base/CCScheduler.h"
 #include "2d/CCNode.h"
 
-bool CC_DLL cc_assert_script_compatible(const char *msg)
+bool CC_DLL cc_assert_script_compatible_v3(const char *msg)
 {
     cocos2d::ScriptEngineProtocol* engine = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine();
     if (engine && engine->handleAssert(msg))

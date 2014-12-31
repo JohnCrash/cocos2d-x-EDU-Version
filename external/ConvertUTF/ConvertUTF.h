@@ -177,7 +177,7 @@ int getUTF8StringLength(const UTF8* utf8);
 #include <vector>
 #include <string>
 
-namespace llvm {
+namespace llvm_v3 {
 
 /**
  * Convert an UTF8 StringRef to UTF8, UTF16, or UTF32 depending on

@@ -165,7 +165,7 @@ float GLView::getContentScaleFactor() const
 
 void GLView::end()
 {
-    [CCDirectorCaller destroy];
+    [CCDirectorCaller_v3 destroy];
     
     // destroy EAGLView
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;

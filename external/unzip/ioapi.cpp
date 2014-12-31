@@ -9,7 +9,7 @@
          For more info read MiniZip_info.txt
 
 */
-
+#include "CCPlatformMacros.h"
 #include "ioapi.h"
 
 namespace cocos2d {

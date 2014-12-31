@@ -42,7 +42,7 @@ static id s_sharedDirectorCaller;
 -(void) invalidate;
 @end
 
-@implementation CCDirectorCaller
+@implementation CCDirectorCaller_v3
 
 @synthesize interval;
 
@@ -50,7 +50,7 @@ static id s_sharedDirectorCaller;
 {
     if (s_sharedDirectorCaller == nil)
     {
-        s_sharedDirectorCaller = [CCDirectorCaller new];
+        s_sharedDirectorCaller = [CCDirectorCaller_v3 new];
     }
     
     return s_sharedDirectorCaller;
