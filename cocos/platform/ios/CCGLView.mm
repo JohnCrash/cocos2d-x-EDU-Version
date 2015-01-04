@@ -80,7 +80,7 @@ GLView* GLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-GLView::GLView()
+GLView::GLView():_ifEndtoExit(false)
 {
 }
 
@@ -176,14 +176,16 @@ void GLView::end()
     /*
         强制关闭App
      */
-    UIApplication *app = [UIApplication sharedApplication];
-    [app performSelector:@selector(suspend)];
-    //wait 2 seconds while app is going background
-    [NSThread sleepForTimeInterval:1.0];
-    //exit app when app is in background
-    NSLog(@"exit");
-    exit(0);
-    
+    if(_ifEndtoExit)
+    {
+        UIApplication *app = [UIApplication sharedApplication];
+        [app performSelector:@selector(suspend)];
+        //wait 2 seconds while app is going background
+        [NSThread sleepForTimeInterval:1.0];
+        //exit app when app is in background
+        NSLog(@"exit");
+        exit(0);
+    }
 }
 
 

@@ -294,7 +294,10 @@ public:
      * @lua endToLua
      */
     void end();
-
+    /*
+     * end被调用完成然后调用这个被设置的函数
+     */
+    void setEndAfterCall(void(*func)());
     /** Pauses the running scene.
      The running scene will be _drawed_ but all scheduled timers will be paused
      While paused, the draw rate will be 4 FPS to reduce CPU consumption
@@ -423,6 +426,10 @@ protected:
     void initTextureCache();
     void destroyTextureCache();
 
+    /*
+     * end 后调用
+     */
+    void (*_callAfterEndFunc)();
     /** Scheduler associated with this director
      @since v2.0
      */

@@ -65,6 +65,7 @@ public:
     /** returns the objective-c CCEAGLView instance */
     void* getEAGLView() const { return _eaglview; }
 
+    void ifEndToExit( bool b ){_ifEndtoExit = b; }
     // overrides
     virtual bool isOpenGLReady() override;
     virtual void end() override;
@@ -81,6 +82,7 @@ protected:
 
     // the objective-c CCEAGLView instance
     void *_eaglview;
+    bool _ifEndtoExit;
 };
 
 NS_CC_END

@@ -108,6 +108,7 @@ bool Director::init(void)
 {
     setDefaultValues();
 
+    _callAfterEndFunc = nullptr;
     // scenes
     _runningScene = nullptr;
     _nextScene = nullptr;
@@ -998,6 +999,11 @@ void Director::end()
     _purgeDirectorInNextLoop = true;
 }
 
+void Director::setEndAfterCall(void (*func)())
+{
+    _callAfterEndFunc = func;
+}
+
 void Director::purgeDirector()
 {
     // cleanup scheduler
@@ -1060,6 +1066,9 @@ void Director::purgeDirector()
 
     // delete Director
     release();
+    
+    if( _callAfterEndFunc )
+        _callAfterEndFunc();
 }
 
 void Director::setNextScene()
