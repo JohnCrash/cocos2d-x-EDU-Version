@@ -58,6 +58,8 @@ static id s_sharedDirectorCaller;
 
 +(void) destroy
 {
+    cocos2d::Director* director = cocos2d::Director::getInstance();
+    [(CCEAGLView*)director->getOpenGLView()->getEAGLView() releaseRendererImmediate];
     [s_sharedDirectorCaller stopMainLoop];
     [s_sharedDirectorCaller release];
     s_sharedDirectorCaller = nil;

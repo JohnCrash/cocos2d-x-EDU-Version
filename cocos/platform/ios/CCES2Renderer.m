@@ -39,7 +39,7 @@
 #define NSLog(...)       do {} while (0)
 #endif
 
-@implementation CCES2Renderer
+@implementation CCES2Renderer_v3
 
 @synthesize context=context_;
 @synthesize defaultFramebuffer=defaultFramebuffer_;
@@ -210,45 +210,51 @@
     return msaaColorbuffer_;
 }
 
+- (void)releaseImmediate
+{
+    if( context_ )
+    {
+        // Tear down GL
+        if (defaultFramebuffer_) {
+            glDeleteFramebuffers(1, &defaultFramebuffer_);
+            defaultFramebuffer_ = 0;
+        }
+        
+        if (colorRenderbuffer_) {
+            glDeleteRenderbuffers(1, &colorRenderbuffer_);
+            colorRenderbuffer_ = 0;
+        }
+        
+        if( depthBuffer_ ) {
+            glDeleteRenderbuffers(1, &depthBuffer_ );
+            depthBuffer_ = 0;
+        }
+        
+        if ( msaaColorbuffer_)
+        {
+            glDeleteRenderbuffers(1, &msaaColorbuffer_);
+            msaaColorbuffer_ = 0;
+        }
+        
+        if ( msaaFramebuffer_)
+        {
+            glDeleteRenderbuffers(1, &msaaFramebuffer_);
+            msaaFramebuffer_ = 0;
+        }
+        
+        // Tear down context
+        if ([EAGLContext currentContext] == context_)
+            [EAGLContext setCurrentContext:nil];
+        
+        [context_ release];
+        context_ = nil;
+    }
+}
 - (void)dealloc
 {
 //    CCLOGINFO("deallocing CCES2Renderer: %p", self);
 
-    // Tear down GL
-    if (defaultFramebuffer_) {
-        glDeleteFramebuffers(1, &defaultFramebuffer_);
-        defaultFramebuffer_ = 0;
-    }
-
-    if (colorRenderbuffer_) {
-        glDeleteRenderbuffers(1, &colorRenderbuffer_);
-        colorRenderbuffer_ = 0;
-    }
-
-    if( depthBuffer_ ) {
-        glDeleteRenderbuffers(1, &depthBuffer_ );
-        depthBuffer_ = 0;
-    }
-    
-    if ( msaaColorbuffer_)
-    {
-        glDeleteRenderbuffers(1, &msaaColorbuffer_);
-        msaaColorbuffer_ = 0;
-    }
-    
-    if ( msaaFramebuffer_)
-    {
-        glDeleteRenderbuffers(1, &msaaFramebuffer_);
-        msaaFramebuffer_ = 0;
-    }
-
-    // Tear down context
-    if ([EAGLContext currentContext] == context_)
-        [EAGLContext setCurrentContext:nil];
-
-    [context_ release];
-    context_ = nil;
-
+    [self releaseImmediate];
     [super dealloc];
 }
 

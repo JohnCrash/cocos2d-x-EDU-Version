@@ -218,7 +218,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
                                     pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
     
     
-    renderer_ = [[CCES2Renderer alloc] initWithDepthFormat:depthFormat_
+    renderer_ = [[CCES2Renderer_v3 alloc] initWithDepthFormat:depthFormat_
                                          withPixelFormat:[self convertPixelFormat:pixelformat_]
                                           withSharegroup:sharegroup
                                        withMultiSampling:multiSampling_
@@ -239,6 +239,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     CHECK_GL_ERROR();
     
     return YES;
+}
+
+-(void) releaseRendererImmediate
+{
+    [renderer_ releaseImmediate];
 }
 
 - (void) dealloc

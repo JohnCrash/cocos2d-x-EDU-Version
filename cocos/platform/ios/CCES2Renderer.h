@@ -36,7 +36,7 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-@interface CCES2Renderer : NSObject <CCESRenderer>
+@interface CCES2Renderer_v3 : NSObject <CCESRenderer>
 {
     // The pixel dimensions of the CAEAGLLayer
     GLint backingWidth_;
@@ -77,6 +77,7 @@
 @property (nonatomic,readonly) EAGLContext* context;
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
+- (void)releaseImmediate;
 @end
 
 
