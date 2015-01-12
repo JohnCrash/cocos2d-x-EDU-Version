@@ -55726,7 +55726,9 @@ int lua_cocos2dx_GLViewProtocol_setDesignResolutionSize(lua_State* tolua_S)
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
         if(!ok)
             return 0;
+		CCLOG("lua call setDesignResolutionSize 1");
         cobj->setDesignResolutionSize(arg0, arg1, arg2);
+		CCLOG("lua call setDesignResolutionSize 2");
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setDesignResolutionSize",argc, 3);

@@ -36,9 +36,15 @@ import android.graphics.Rect;
 import android.widget.FrameLayout;
 import android.os.ResultReceiver;
 import android.os.Bundle;
-import android.view.ViewTreeObserver
-;public class Cocos2dxGLSurfaceView extends GLSurfaceView {
+import android.view.ViewTreeObserver;
 
+public class Cocos2dxGLSurfaceView extends GLSurfaceView {
+	//
+	private  Cocos2dxCallback _activityCallback = null;
+	public void setActivityCallback( Cocos2dxCallback funcs )
+	{
+		_activityCallback = funcs;
+	}
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -380,6 +386,8 @@ import android.view.ViewTreeObserver
 		if(!this.isInEditMode()) {
 			this.mCocos2dxRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
 		}
+		if( _activityCallback!=null )
+			_activityCallback.onSizeChanged(pNewSurfaceWidth, pNewSurfaceHeight);
 	}
 
 	@Override
