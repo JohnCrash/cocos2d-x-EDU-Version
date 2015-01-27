@@ -9377,6 +9377,52 @@ int lua_register_cocos2dx_ui_LoadingBar(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_ui_ScrollView_setCancelOffset(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+	
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_setCancelOffset'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
+
+        if(!ok)
+            return 0;
+        float ret = cobj->setCancelOffset((float)arg0);
+		tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setCancelOffset",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_setCancelOffset'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
 int lua_cocos2dx_ui_ScrollView_scrollToTop(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10970,6 +11016,7 @@ int lua_register_cocos2dx_ui_ScrollView(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"ScrollView");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_ScrollView_constructor);
+		tolua_function(tolua_S,"setCancelOffset",lua_cocos2dx_ui_ScrollView_setCancelOffset);
         tolua_function(tolua_S,"scrollToTop",lua_cocos2dx_ui_ScrollView_scrollToTop);
         tolua_function(tolua_S,"scrollToPercentHorizontal",lua_cocos2dx_ui_ScrollView_scrollToPercentHorizontal);
         tolua_function(tolua_S,"isInertiaScrollEnabled",lua_cocos2dx_ui_ScrollView_isInertiaScrollEnabled);

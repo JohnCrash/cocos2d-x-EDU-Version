@@ -59,7 +59,7 @@ _autoScrollDestination(Vec2::ZERO),
 _bePressed(false),
 _slidTime(0.0f),
 _moveChildPoint(Vec2::ZERO),
-_childFocusCancelOffset(5.0f),
+_childFocusCancelOffset(10.0f),
 _leftBounceNeeded(false),
 _topBounceNeeded(false),
 _rightBounceNeeded(false),
@@ -93,7 +93,14 @@ ScrollView* ScrollView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
-    
+
+float ScrollView::setCancelOffset(float d)
+{
+	float tmp = _childFocusCancelOffset;
+	_childFocusCancelOffset = d;
+	return tmp;
+}
+
 void ScrollView::onEnter()
 {
 #if CC_ENABLE_SCRIPT_BINDING

@@ -101,6 +101,7 @@ public:
      */
     virtual void setDirection(Direction dir);
     
+	float setCancelOffset(float d);
     /**
      * Gets scroll direction of scrollview.
      *
