@@ -1296,9 +1296,15 @@ void Node::onEnter()
     
     _isTransitionFinished = false;
     
+	/*
+	 FixBUG: 如果onEnter中addChild将会出现异常
     for( const auto &child: _children)
         child->onEnter();
-    
+    */
+	auto children = _children;
+	for (const auto &child : children)
+		child->onEnter();
+
     this->resume();
     
     _running = true;
