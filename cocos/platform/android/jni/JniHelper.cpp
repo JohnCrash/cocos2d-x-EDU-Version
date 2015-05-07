@@ -62,6 +62,16 @@ namespace cocos2d {
     jmethodID JniHelper::loadclassMethod_methodID = nullptr;
     jobject JniHelper::classloader = nullptr;
 
+	void JniHelper::Android_JNI_ThreadDestroyed(void* value)
+	{
+		/* The thread is being destroyed, detach it from the Java VM and set the g_key value to NULL as required */
+		JNIEnv *env = (JNIEnv*) value;
+		if (env != NULL) {
+			_psJavaVM->DetachCurrentThread();
+			pthread_setspecific(g_key, NULL);
+		}
+	}
+
     JavaVM* JniHelper::getJavaVM() {
         pthread_t thisthread = pthread_self();
         LOGD("JniHelper::getJavaVM(), pthread_self() = %ld", thisthread);
@@ -73,7 +83,7 @@ namespace cocos2d {
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %ld", javaVM, thisthread);
         _psJavaVM = javaVM;
 
-        pthread_key_create(&g_key, nullptr);
+        pthread_key_create(&g_key, JniHelper::Android_JNI_ThreadDestroyed);
     }
 
     JNIEnv* JniHelper::cacheEnv(JavaVM* jvm) {
@@ -89,7 +99,6 @@ namespace cocos2d {
                 
         case JNI_EDETACHED :
             // Thread not attached
-                
             // TODO : If calling AttachCurrentThread() on a native thread
             // must call DetachCurrentThread() in future.
             // see: http://developer.android.com/guide/practices/design/jni.html

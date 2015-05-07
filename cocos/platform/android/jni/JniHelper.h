@@ -62,7 +62,7 @@ public:
 
 private:
     static JNIEnv* cacheEnv(JavaVM* jvm);
-
+	static void Android_JNI_ThreadDestroyed(void* value);
     static bool getMethodInfo_DefaultClassLoader(JniMethodInfo &methodinfo,
                                                  const char *className,
                                                  const char *methodName,
