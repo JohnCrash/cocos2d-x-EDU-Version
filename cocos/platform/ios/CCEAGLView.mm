@@ -623,6 +623,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         psz[j++] = pszText[i];
     }
     cocos2d::IMEDispatcher::sharedDispatcher()->dispatchSetIMEText(psz, j);
+	delete [] psz;
 }
 - (void)unmarkText;
 {
