@@ -60,7 +60,16 @@ Ref::~Ref()
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
+		//FIXBUG : 在调用toEndLua()，个别windows机器会出现异常
+		//	问题出在pmgr=nullptr上
+		//ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
+		auto pmgr = ScriptEngineManager::getInstance();
+		if( pmgr )
+		{
+			auto peng = pmgr->getScriptEngine();
+			if( peng )
+				peng->removeScriptObjectByObject(this);
+		}
     }
     else
     {

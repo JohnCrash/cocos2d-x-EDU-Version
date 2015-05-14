@@ -110,6 +110,7 @@ TextFieldTTF::TextFieldTTF()
 ,_cx(0),_cy(0),_cwidth(1),_cheight(32)
 ,_showcursor(false)
 ,_selpos(-1)
+,_imepos(-1)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
@@ -227,6 +228,8 @@ int TextFieldTTF::cursorPos(Vec2 pt)
 
 void TextFieldTTF::selectDrag(Vec2 pt)
 {
+	if(_imepos>=0)return;
+	
 	if( _selpos < 0 )
 	{//first
 		_selx = _cx;
@@ -351,6 +354,8 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
 
 void TextFieldTTF::onClick(Vec2 pt)
 {
+	if(_imepos>=0)return;	
+	
 	_cpos = cursorPos(pt);
 	_selpos = -1;
 	updateCursor();
@@ -412,7 +417,7 @@ void TextFieldTTF::setText(const char * text, size_t len)
 {
     std::string insert(text, len);
 
-	if( _selpos > 0 )
+	if( _selpos >= 0 )
 	{
 		deleteSelect();
 	}
@@ -438,11 +443,38 @@ void TextFieldTTF::setText(const char * text, size_t len)
 		detachWithIME();	
 }
 
+/*
+ 输入法中间字符串显示
+ */
+void TextFieldTTF::setIMEText(const char * text, size_t len)
+{
+    if(len>0){
+        if( _imepos<0 )
+        {
+            _selx = _cx;
+            _imepos = _cpos;
+            insertText(text, len);
+            _selpos = _imepos;
+        }else{
+            insertText(text, len);
+            _selpos = _imepos;
+        }
+    }else
+    {
+        if( _selpos >= 0 )
+        {
+            deleteSelect();
+        }
+        _imepos = -1;
+        _selpos = -1;
+    }
+}
+
 void TextFieldTTF::insertText(const char * text, size_t len)
 {
     std::string insert(text, len);
 
-	if( _selpos > 0 )
+	if( _selpos >= 0 )
 	{
 		deleteSelect();
 	}

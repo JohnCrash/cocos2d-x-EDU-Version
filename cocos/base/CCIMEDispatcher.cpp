@@ -258,6 +258,20 @@ void IMEDispatcher::dispatchSetText(const char * text, size_t len)
     } while (0);
 }
 
+/*
+ 传递输入法输入时的临时字符串
+ */
+void IMEDispatcher::dispatchSetIMEText(const char * text, size_t len)
+{
+    do
+    {        
+        // there is no delegate attached to IME
+        CC_BREAK_IF(! _impl->_delegateWithIme);
+        
+        _impl->_delegateWithIme->setIMEText(text, len);
+    } while (0);
+}
+
 void IMEDispatcher::dispatchDeleteBackward()
 {
     do 
@@ -371,7 +385,7 @@ static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBo
                     if( info.begin.origin.x > 0 )
                         p.y = pp.y + info.end.size.width - info.begin.size.width;
                     else
-                        p.y = pp.y + info.end.size.width - info.begin.size.height;
+						p.y = pp.y + info.end.size.height - info.begin.size.height;
                     pscene->setPosition(p);
                 }
                 s_Scene = pscene;

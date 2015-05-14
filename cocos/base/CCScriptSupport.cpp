@@ -56,7 +56,16 @@ ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
     if (_handler != 0 )
     {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+        //FIXBUG : 在部分退出时出现脚本引擎已经释放,而放在PoolManager中的ScriptHandlerEntry
+		//再释放将导致crash
+		//ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+		auto pmgr = ScriptEngineManager::getInstance();
+		if( pmgr )
+		{
+			auto peng = pmgr->getScriptEngine();
+			if( peng )
+				peng->removeScriptHandler(_handler);
+		}
         LUALOG("[LUA] Remove event handler: %d", _handler);
         _handler = 0;
     }

@@ -604,6 +604,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     }
     markedText_ = markedText;
     [markedText_ retain];
+    
+    const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
+    int len = strlen(pszText);
+    char * psz = new char[len+6];
+    int j = 0;
+    memset(psz,0,len+6);
+    for(int i=0;i<len;i++)
+    {
+        if((unsigned char)pszText[i]==0xe2 && i+2<len &&
+           (unsigned char)pszText[i+1]==0x80 &&
+           (unsigned char)pszText[i+2]==0x86)
+        {
+            i+=2;
+            psz[j++] = ' ';
+            continue;
+        }
+        psz[j++] = pszText[i];
+    }
+    cocos2d::IMEDispatcher::sharedDispatcher()->dispatchSetIMEText(psz, j);
 }
 - (void)unmarkText;
 {
@@ -614,6 +633,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     }
     const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
     cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+    cocos2d::IMEDispatcher::sharedDispatcher()->dispatchSetIMEText("", 0);
     [markedText_ release];
     markedText_ = nil;
 }

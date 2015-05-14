@@ -177,6 +177,7 @@ protected:
     virtual bool canDetachWithIME() override;
     virtual void insertText(const char * text, size_t len) override;
 	virtual void setText(const char * text, size_t len) override;
+	virtual void setIMEText(const char * text, size_t len) override;
     virtual void deleteBackward() override;
 	virtual void deleteForward() override;
 	virtual void moveCursor(int,bool) override;
@@ -208,7 +209,9 @@ protected:
 	float _selx;
 	static TextFieldTTF *_currentActive;
 	CustomCommand _renderCmd;
-
+    //ime text
+    int _imepos;
+    
 	void drawCursor(Renderer *renderer,const cocos2d::Mat4 &transform, uint32_t flags);
 	void updateCursor();
 	void onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags);
