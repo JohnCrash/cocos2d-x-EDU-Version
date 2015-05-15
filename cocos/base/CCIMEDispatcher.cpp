@@ -346,6 +346,8 @@ Rect IMEDispatcher::getContentRect()
 //////////////////////////////////////////////////////////////////////////
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 static Scene *s_Scene = nullptr;
+static MoveTo *s_pmove = nullptr;
+static bool s_isClose;
 #endif
 static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBoxRect,bool b)
 {
@@ -360,6 +362,13 @@ static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBo
             if( b )
             {
                 Vec2 p;
+                //刚打开又要关闭
+                if( s_pmove && !s_pmove->isDone() && s_isClose )
+                {
+                    s_pmove->stop();
+                    s_pmove->release();
+                    s_pmove = nullptr;
+                }				
                 if( pp.y == 0 && s_Scene==nullptr)
                 {
                     // int vy = textBoxRect.origin.y+info.end.size.width + textBoxRect.size.height;
@@ -372,8 +381,11 @@ static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBo
                     {
                         p.x = 0;
                         p.y = -vy+12; //多向上推一点
-                        MoveTo *pmove = MoveTo::create(info.duration,p);
-                        pscene->runAction( pmove );
+                        if(s_pmove)s_pmove->release();
+                        s_pmove = MoveTo::create(info.duration,p);
+                        s_isClose = false;
+                        s_pmove->retain();
+                        pscene->runAction( s_pmove );			  
                     }
                     else{
                         p.x = 0;
@@ -391,8 +403,11 @@ static void moveSceneIfNeed(IMEKeyboardNotificationInfo& info,const Rect& textBo
                 s_Scene = pscene;
             }else if(s_Scene == pscene )
             {
-                MoveTo *pmove = MoveTo::create(info.duration,Vec2(0,0));
-                pscene->runAction( pmove );
+                if(s_pmove)s_pmove->release();
+                s_pmove = MoveTo::create(info.duration,Vec2(0,0));
+                s_isClose = true;
+                s_pmove->retain();
+                pscene->runAction( s_pmove );			 
                 s_Scene = nullptr;
             }
             else
