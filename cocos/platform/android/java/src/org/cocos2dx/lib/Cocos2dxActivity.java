@@ -168,39 +168,19 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         
         ViewGroup.LayoutParams edittext_layout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                       ViewGroup.LayoutParams.WRAP_CONTENT); 
-        
-        /*
-         这里增加一个额外的控件，用来在软键盘弹出的时候作为一个mask
-         因为在软键盘弹出的时候将上推图层，但是不会上推FrameLayout中mask空洞。
-         这导致编辑控件被绘制覆盖
-         */
-        Cocos2dxEditText mask = new Cocos2dxEditText(this);
-        FrameLayout.LayoutParams mask_layout_params =
-                new FrameLayout.LayoutParams(1,
-                                           1);         
-        //mask_layout_params.setMargins(332,668,0, 0);
-        mask.setLayoutParams(mask_layout_params);
-                
+                                       ViewGroup.LayoutParams.WRAP_CONTENT);
         Cocos2dxEditText edittext = new Cocos2dxEditText(this);
         edittext.setLayoutParams(edittext_layout_params);
 
-
+        mFrameLayout.addView(edittext);
+        
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
 
         // ...add to FrameLayout
         mFrameLayout.addView(this.mGLSurfaceView);
 
-        mFrameLayout.addView(mask);
-        
-        // ...add to FrameLayout
-        mFrameLayout.addView(edittext);
-        
-        edittext.setVisibility(4); //hide edittext
-        //edittext.setImeOptions(6); //actionDone|flagNoFullscreen
         edittext.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI|android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
-        mask.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI|android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
         edittext.setSingleLine();
         
         // Switch to supported OpenGL (ARGB888) mode on emulator
@@ -208,7 +188,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
 
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-        this.mGLSurfaceView.setCocos2dxEditText(edittext,mask);
+        this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(mFrameLayout);

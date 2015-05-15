@@ -85,27 +85,24 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		//}
 		int nModified = s.length() - this.mText.length();
 		if (nModified > 0) {
-			//final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-			//this.mCocos2dxGLSurfaceView.insertText(insertText);
+			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
+			this.mCocos2dxGLSurfaceView.insertText(insertText);
 			/*
 			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "insertText(" + insertText + ")");
 			}
 			*/
 		} else {
-		//	for (; nModified < 0; ++nModified) {
-		//		this.mCocos2dxGLSurfaceView.deleteBackward();
+			for (; nModified < 0; ++nModified) {
+				this.mCocos2dxGLSurfaceView.deleteBackward();
 				/*
 				if (BuildConfig.DEBUG) {
 					Log.d(TAG, "deleteBackward");
 				}
 				*/
-		//	}
+			}
 		}
 		this.mText = s.toString();
-
-		//Log.d("afterTextChanged",this.mText);
-		this.mCocos2dxGLSurfaceView.setText(this.mText);
 	}
 
 	@Override
@@ -116,7 +113,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		}
 		*/
 		this.mText = pCharSequence.toString();
-		//Log.d("beforeTextChanged",this.mText);
 	}
 
 	@Override
@@ -126,12 +122,11 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView ) {
+		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
 			// user press the action button, delete all old text and insert new text
 			if (null != mOriginText) {
 				for (int i = this.mOriginText.length(); i > 0; i--) {
 					this.mCocos2dxGLSurfaceView.deleteBackward();
-					Log.d("deleteBackward",mOriginText);
 					/*
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "deleteBackward");
@@ -144,7 +139,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			
 			if (text != null) {
 				/* If user input nothing, translate "\n" to engine. */
-			
 				if ( text.compareTo("") == 0) {
 					text = "\n";
 				}
@@ -152,12 +146,10 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 				if ( '\n' != text.charAt(text.length() - 1)) {
 					text += '\n';
 				}
-			} 
+			}
 			
 			final String insertText = text;
-			//Log.d("mCocos2dxGLSurfaceView.insertText",text);
-			//this.mCocos2dxGLSurfaceView.insertText(insertText);
-			this.mCocos2dxGLSurfaceView.setText(insertText);
+			this.mCocos2dxGLSurfaceView.insertText(insertText);
 			/*
 			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "insertText(" + insertText + ")");

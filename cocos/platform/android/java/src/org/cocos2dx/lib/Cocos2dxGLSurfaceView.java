@@ -124,7 +124,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		}
 		else
 		{
-			//Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.INVISIBLE);
+			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.INVISIBLE);
 			FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(1,1);
 			lp.setMargins(0, 0, 1, 1);
 			Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setLayoutParams(lp);
@@ -152,7 +152,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
              }			
 		});
 	}
-	private boolean _imeIsOpen = false;
+
 	protected void initView() {
 		this.setEGLContextClientVersion(2);
 		this.setFocusableInTouchMode(true);
@@ -167,14 +167,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			public void handleMessage(final Message msg) {
 				switch (msg.what) {
 					case HANDLER_OPEN_IME_KEYBOARD:
-						enableEdit(true);
-						if(_imeIsOpen){
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
-							final String text = (String) msg.obj;
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
-							return;
-						}
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
+							enableEdit(true);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
 							final String text = (String) msg.obj;
@@ -182,21 +176,23 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0 );
+							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
 							Log.d("GLSurfaceView", "showSoftInput");
-							_imeIsOpen = true;
 						}
 						break;
 
 					case HANDLER_CLOSE_IME_KEYBOARD:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
-							enableEdit(false);
+							//enableEdit(false);
+							//final String text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().toString();
+							//Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
+							//Log.d("GLSurfaceView", "HideSoftInput"+text);
+							//Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(4);
+							
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
 							Cocos2dxGLSurfaceView.this.requestFocus();
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setVisibility(android.view.View.INVISIBLE);
-							_imeIsOpen = false;
 							Log.d("GLSurfaceView", "HideSoftInput");
 						}
 						break;
@@ -240,9 +236,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		return this.mCocos2dxEditText;
 	}
 
-	public void setCocos2dxEditText(final Cocos2dxEditText pCocos2dxEditText,final Cocos2dxEditText pMask) {
+	public void setCocos2dxEditText(final Cocos2dxEditText pCocos2dxEditText) {
 		this.mCocos2dxEditText = pCocos2dxEditText;
-		this.mCocos2dxEditMask = pMask;
 		
 		if (null != this.mCocos2dxEditText && null != Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper) {
 			this.mCocos2dxEditText.setOnEditorActionListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
