@@ -141,9 +141,9 @@ void IMEDispatcher::addDelegate(IMEDelegate* delegate)
 bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
 {
     bool ret = false;
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	if (isAttachIME)return false; //∑Òæˆ»´≤ø‘Ÿ¥Œattach≤Ÿ◊˜
-#endif
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+//	if (isAttachIME)return false; //∑Òæˆ»´≤ø‘Ÿ¥Œattach≤Ÿ◊˜
+//#endif
     do
     {
         CC_BREAK_IF(! _impl || ! delegate);

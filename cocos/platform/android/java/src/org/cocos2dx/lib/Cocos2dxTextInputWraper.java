@@ -156,8 +156,9 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			*/
 		}
-		
+		Log.d(TAG, "Actions !");
 		if (pActionID == EditorInfo.IME_ACTION_DONE) {
+			Log.d(TAG, "DONE!");
 			this.mCocos2dxGLSurfaceView.requestFocus();
 		}
 		return false;

@@ -180,8 +180,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // ...add to FrameLayout
         mFrameLayout.addView(this.mGLSurfaceView);
 
-        edittext.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI|android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
-        edittext.setSingleLine();
+        //edittext.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI|android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        //edittext.setSingleLine();
         
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
