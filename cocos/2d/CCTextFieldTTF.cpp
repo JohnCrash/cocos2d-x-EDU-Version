@@ -742,6 +742,7 @@ void TextFieldTTF::optKey(int key)
 void TextFieldTTF::deleteBackward()
 {
     size_t len = _inputText.length();
+	//CCLOG("deleteBackward len = %d _selpos = %d _cpos = %d",len,_selpos,_cpos);
     if (! len)
     {
         // there is no string
@@ -750,8 +751,14 @@ void TextFieldTTF::deleteBackward()
 
 	if( _selpos >= 0 )
 	{
-		deleteSelect();
-		return; 
+		if( _selpos != _cpos )
+		{
+			deleteSelect();
+			return; 
+		}else
+		{
+			_selpos = -1;
+		}
 	}
     // get the delete byte number
     size_t deleteLen = 1;    // default, erase 1 byte
