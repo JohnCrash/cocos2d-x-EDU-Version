@@ -109,6 +109,7 @@ TextFieldTTF::TextFieldTTF()
 ,_cursorb(false)
 ,_cx(0),_cy(0),_cwidth(1),_cheight(32)
 ,_showcursor(false)
+, _outcursor(false)
 ,_selpos(-1)
 ,_imepos(-1)
 {
@@ -132,19 +133,22 @@ void TextFieldTTF::updateCursor()
 		_cheight = fontDef._fontSize;
 		Size size;
 		getStringSize(s,size);
+		_cheight = size.height;
+		Size csize = getContentSize();
 		_cx = size.width;
-        int dh = (size.height-_cheight)/2;
-		_cy = dh;//(float)_labelHeight - _cheight - dh;
+		_cy = csize.height - size.height;
 		if( _cy < 0 )_cy = 0;
+		_outcursor = size.width>csize.width;
 	}
 	else
 	{
 		Size size;
 		size = getContentSize();	
 		_cheight = _fontDefinition._fontSize;
-		_cy =  (size.height-_cheight)/2;
+		_cy =  size.height-_cheight;
 		if( _cy < 0 )_cy = 0;
 		_cx = 0;
+		_outcursor = false;
 	}
 	_cursorb = 0.5; //show cursor
 }
@@ -259,15 +263,15 @@ void TextFieldTTF::onDrawCursor(const cocos2d::Mat4 &transform, uint32_t flags)
 	director->pushMatrix(currentActiveStackType);
 	director->loadMatrix(currentActiveStackType,transform);
 	if(_selpos>=0)
-		DrawPrimitives::drawSolidRect(Vec2(_cx,_cy),Vec2(_selx,_cy+_cheight),Color4F(0,0,1,0.5));
-	if(_cursorb)
+		DrawPrimitives::drawSolidRect(Vec2(_cx, _cy), Vec2(_selx, _cy + _cheight), Color4F(0, 0, 1, 0.5));
+	if (_cursorb && !_outcursor )
 	{
 		GL::blendFunc(GL_ONE ,GL_ONE );
 		glGetIntegerv(GL_BLEND_EQUATION_RGB,&mode);
 		glBlendEquation(GL_FUNC_SUBTRACT);
 		glLineWidth(_cwidth);
 		DrawPrimitives::setDrawColor4B(255,255,255,255);
-		DrawPrimitives::drawLine(Vec2(_cx,_cy),Vec2(_cx,_cy+_cheight));
+		DrawPrimitives::drawLine(Vec2(_cx, _cy), Vec2(_cx, _cy + _cheight));
 		glBlendEquation(mode);
 	}
 	director->popMatrix(currentActiveStackType);

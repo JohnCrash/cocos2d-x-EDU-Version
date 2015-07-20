@@ -204,6 +204,7 @@ protected:
 	float _cwidth,_cheight;
 	bool _cursorb;
 	bool _showcursor;
+	bool _outcursor;
 	//select
 	int _selpos;
 	float _selx;
