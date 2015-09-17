@@ -183,6 +183,7 @@ public:
     virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     void attachWithIME();
+	void detachWithIME();
     virtual void onEnter() override;
     
     void setTextAreaSize(const Size &size);

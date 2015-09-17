@@ -115,6 +115,14 @@
 #define CANDIDATE_MB_TYPE_DIRECT0    (1 << 12)
 
 
+enum OutputFormat {
+    FMT_MPEG1,
+    FMT_H261,
+    FMT_H263,
+    FMT_MJPEG,
+};
+
+
 /**
  * Draw a horizontal band if supported.
  *
@@ -124,4 +132,4 @@ void ff_draw_horiz_band(AVCodecContext *avctx, AVFrame *cur, AVFrame *last,
                         int y, int h, int picture_structure, int first_field,
                         int low_delay);
 
-#endif /* AVCODEC_PICTTYPE_H */
+#endif /* AVCODEC_MPEGUTILS_H */
