@@ -1804,17 +1804,21 @@ bool Image::initWithGifData(const unsigned char *data, ssize_t dataLen)
 					int bytePerPixel = 4;
 					_dataLen = _width * _height * bytePerPixel;
 					_data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+					memset(_data, 0, _dataLen);
 					unsigned char transparent_idx;
 					bool has_transparent = false;
 					if( sp->ExtensionBlockCount>0 &&sp->ExtensionBlocks )
 					{
-						if( sp->ExtensionBlocks[0].ByteCount == 4 &&sp->ExtensionBlocks[0].Bytes )
+						for (int i = 0; i < sp->ExtensionBlockCount; i++)
 						{
-							unsigned char packed_fields = sp->ExtensionBlocks[0].Bytes[0];
-							if( packed_fields & 1 )
-							{ //has transparent index
-								transparent_idx = sp->ExtensionBlocks[0].Bytes[3];
-								has_transparent = true;
+							if (sp->ExtensionBlocks[i].ByteCount == 4 && sp->ExtensionBlocks[i].Bytes)
+							{
+								unsigned char packed_fields = sp->ExtensionBlocks[i].Bytes[0];
+								if (packed_fields & 1)
+								{ //has transparent index
+									transparent_idx = sp->ExtensionBlocks[i].Bytes[3];
+									has_transparent = true;
+								}
 							}
 						}
 					}
