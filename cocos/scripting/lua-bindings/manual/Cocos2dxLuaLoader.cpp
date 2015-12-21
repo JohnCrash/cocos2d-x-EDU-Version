@@ -99,7 +99,10 @@ extern "C"
         if (chunk)
         {
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-            stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
+			//确保在lua调试的时候有完整的源文件路径
+			//stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
+			std::string full = utils->fullPathForFilename(chunkName);
+			stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, full.c_str());
             delete []chunk;
         }
         else
