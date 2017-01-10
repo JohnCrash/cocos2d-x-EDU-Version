@@ -210,7 +210,8 @@ bool ScriptEngineManager::sendNodeEventToJSExtended(Node* node, int action)
 void ScriptEngineManager::sendNodeEventToLua(Node* node, int action)
 {
     auto scriptEngine = getInstance()->getScriptEngine();
-    
+	if (!scriptEngine)return;
+
     BasicScriptData data(node,(void*)&action);
     ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
     

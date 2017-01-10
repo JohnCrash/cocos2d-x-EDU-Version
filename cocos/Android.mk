@@ -208,15 +208,15 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 					$(LOCAL_PATH)/../external/giflib
 
 
-LOCAL_LDLIBS := -lGLESv2 \
-                -llog \
-                -lz \
-                -landroid
+#LOCAL_LDLIBS := -lGLESv2 \
+#                -llog \
+#                -lz \
+#                -landroid
 
-LOCAL_EXPORT_LDLIBS := -lGLESv2 \
-                       -llog \
-                       -lz \
-                       -landroid
+#LOCAL_EXPORT_LDLIBS := -lGLESv2 \
+#                       -llog \
+#                       -lz \
+#                       -landroid
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static

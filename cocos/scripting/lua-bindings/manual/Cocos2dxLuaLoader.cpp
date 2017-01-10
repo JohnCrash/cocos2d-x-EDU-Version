@@ -102,6 +102,23 @@ extern "C"
 			//确保在lua调试的时候有完整的源文件路径
 			//stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
 			std::string full = utils->fullPathForFilename(chunkName);
+			/*
+			 * 这导致臃肿的显示，保留一层目录即可
+			 */
+			int fc = 0;
+			std::string::size_type pos = std::string::npos;
+			for (auto i = full.rbegin(); i != full.rend(); i++){
+				if (*i == '\\'||*i == '/'){
+					fc++;
+					if (fc == 2){
+						pos = i-full.rbegin();
+						break;
+					}
+				}
+			}
+			if (pos != std::string::npos){
+				full = full.substr(full.length()-pos);
+			}
 			stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, full.c_str());
             delete []chunk;
         }

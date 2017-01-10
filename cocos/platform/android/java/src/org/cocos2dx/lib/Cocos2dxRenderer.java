@@ -27,9 +27,15 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import android.graphics.Rect;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import org.cocos2dx.lib.Cocos2dxHelper;
 public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
+	private  Cocos2dxCallback _activityCallback = null;
+	public void setActivityCallback( Cocos2dxCallback funcs )
+	{
+		_activityCallback = funcs;
+	}	
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -68,14 +74,18 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
+	private boolean isCocosNativeInit = false;
 	@Override
 	public void onSurfaceCreated(final GL10 pGL10, final EGLConfig pEGLConfig) {
+		Log.w("Cocos2dxRenderer","onSurfaceCreated");
 		Cocos2dxRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
 		this.mLastTickInNanoSeconds = System.nanoTime();
+		isCocosNativeInit = true;
 	}
 
 	@Override
 	public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight) {
+		Log.w("Cocos2dxRenderer","onSurfaceChanged");
 		Cocos2dxRenderer.nativeOnSurfaceChanged(pWidth, pHeight);
 	}
 
@@ -95,6 +105,8 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 		// "ghost"
 		Cocos2dxRenderer.nativeRender();
 
+		if(_activityCallback!=null)
+			_activityCallback.onDrawFrame();
 		/*
 		// fps controlling
 		if (interval < Cocos2dxRenderer.sAnimationInterval) {
@@ -146,12 +158,14 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 
 	public void handleOnPause() {
 		Cocos2dxHelper.onEnterBackground();
-		Cocos2dxRenderer.nativeOnPause();
+		if(isCocosNativeInit)
+			Cocos2dxRenderer.nativeOnPause();
 	}
 
 	public void handleOnResume() {
 		Cocos2dxHelper.onEnterForeground();
-		Cocos2dxRenderer.nativeOnResume();
+		if(isCocosNativeInit)
+			Cocos2dxRenderer.nativeOnResume();
 	}
 
 	private static native void nativeInsertText(final String pText);
